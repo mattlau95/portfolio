@@ -33,6 +33,12 @@ each sub-step here as it lands.
   - Contrast was independently re-confirmed via the actual axe-core/Lighthouse
     runs (100/100 accessibility both pages) on top of the earlier manual
     calculation — not a finding.
+- **MAT-360 — Fix all P0 findings.** Promoted `.identity-name` to a real
+  `<h1>`, with explicit `font-size`/`font-weight` added so it doesn't pick
+  up the browser's default bold/large `h1` styling (no visual regression —
+  screenshot-confirmed). Added `padding-block` to `.socials a` — GitHub/
+  LinkedIn went from 21-22px tall to 33.5px, clearing the WCAG 2.2 24px
+  Target Size floor. Re-ran axe-core: 0 violations (was 1).
 
 ---
 
