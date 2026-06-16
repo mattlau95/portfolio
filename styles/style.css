@@ -363,10 +363,14 @@ main section code {
 }
 
 .project-card--featured {
-  grid-column: 1 / -1;
+  grid-column: span 2;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius);
   padding: var(--space-6);
+}
+
+.project-card--featured .project-thumb {
+  aspect-ratio: 8 / 3;
 }
 
 .featured-label {
