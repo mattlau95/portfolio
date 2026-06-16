@@ -40,6 +40,17 @@ footer → Writing decision). Logging each sub-step here as it lands.
   plain bullet lists, not the new pill lists or the timeline `<ol>` itself.
   Dated markers used here only — per PROJECT.md's "structure encodes
   meaning" rule, no other section gets this treatment.
+- **MAT-352 — Wire Projects section (5 standard cards).** ollae, pocalab,
+  Worship Slides Generator, VBS Scheduler, Kumon Grading Automation. Auto-fit
+  grid (`minmax(240px, 1fr)`), `#projects` opts out of the 65ch reading-width
+  cap since thumbnail cards need more room. Each card gets a fixed
+  `aspect-ratio: 4/3` placeholder div (no real thumbnails exist yet — locking
+  the ratio now means no layout shift once real images drop in). Missing repo
+  links render as plain `.link-pending` text rather than dead anchors that go
+  nowhere. Only VBS Scheduler's repo is confirmed/real. pocalab's two
+  unconfirmed stack tags omitted rather than shown as visible brackets.
+  Edison Dental intentionally excluded — separate featured-case-study ticket
+  (MAT-353).
 
 ---
 
