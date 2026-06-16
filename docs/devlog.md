@@ -19,6 +19,13 @@ footer → Writing decision). Logging each sub-step here as it lands.
   **Known gap:** `/assets/resume.pdf` doesn't exist yet — the link is wired
   but will 404 until the file is added. "Other" social (CodePen/X/Ko-fi)
   skipped per CONTENT.md's own placeholder, pending a platform/URL decision.
+- **MAT-349 — Wire About section.** Three short paragraphs from CONTENT.md's
+  About block. Added the first real content-section typography rules (65ch
+  measure, DM Serif Display `h2`, paragraph spacing, `var(--space-24)` between
+  sections). Since `#about` now has a visible `h2`, removed its Phase 1
+  `aria-label` — the heading provides the accessible name instead (per the
+  Phase 1 plan's own follow-up note). "What I'm looking for" optional line
+  skipped for now per user decision.
 
 ---
 
