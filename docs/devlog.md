@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-06-16 — Phase 2: Content (in progress)
+
+Tracked as Linear MAT-344, broken into sub-tickets MAT-348–355 (identity →
+About → How I Work → Experience → Projects cards → Edison case study →
+footer → Writing decision). Logging each sub-step here as it lands.
+
+- **MAT-348 — Wire identity (sidebar).** Real name and tagline ("I design and
+  build accessible web apps — end to end.") replace the Phase 1 bracket
+  placeholders. Added a `.sidebar-bottom` group (Résumé link + GitHub/LinkedIn,
+  laid out horizontally) mirroring the existing `.sidebar-top` pattern — no
+  CSS changes needed beyond that since `.sidebar`'s `space-between` already
+  pins it to the bottom. Social links and the résumé link open in a new tab.
+  **Known gap:** `/assets/resume.pdf` doesn't exist yet — the link is wired
+  but will 404 until the file is added. "Other" social (CodePen/X/Ko-fi)
+  skipped per CONTENT.md's own placeholder, pending a platform/URL decision.
+
+---
+
 ## 2026-06-16 — Phase 1: Layout shell
 
 - Built the body structure: `<header class="sidebar">` (identity placeholders,
