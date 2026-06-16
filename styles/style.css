@@ -418,3 +418,18 @@ footer p:last-child {
 .footer-date {
   font-family: var(--font-mono);
 }
+
+/* Group-hover dim — Phase 3 */
+
+@media (hover: hover) {
+  .timeline:hover > .experience-entry,
+  .project-cards:hover > .project-card {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .timeline:hover > .experience-entry:hover,
+  .project-cards:hover > .project-card:hover {
+    opacity: 1;
+  }
+}
