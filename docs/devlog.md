@@ -25,6 +25,12 @@ polish/content items rather than build-plan phases).
   Condensed each item to one short line while keeping the specific proof
   details (`/capture`, `/triage`, `/audit`). Synced `CONTENT.md`'s How I
   Work section to match the new condensed per-card copy.
+- **Resize featured Edison card.** Was `grid-column: 1 / -1` (full row,
+  however many columns existed); changed to `span 2` so it reads as a
+  bigger card rather than a banner dominating the row. Gave its thumbnail
+  `aspect-ratio: 8/3` (double the standard 4/3 ratio) so at ~2x the width
+  its rendered height lands within 7px of a standard thumbnail's height —
+  measured directly via Playwright, not eyeballed.
 
 ---
 
