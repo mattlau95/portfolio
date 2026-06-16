@@ -39,6 +39,18 @@ each sub-step here as it lands.
   screenshot-confirmed). Added `padding-block` to `.socials a` — GitHub/
   LinkedIn went from 21-22px tall to 33.5px, clearing the WCAG 2.2 24px
   Target Size floor. Re-ran axe-core: 0 violations (was 1).
+- **MAT-361 — Fix P1 findings.** Added an inline-SVG favicon (zero-asset,
+  no build step) to both pages so the browser stops auto-requesting
+  `/favicon.ico` and logging a 404. Guarded group-hover-dim's opacity
+  transition behind `prefers-reduced-motion: no-preference` — the dim
+  itself still applies instantly under reduced motion, only the animated
+  transition is removed (verified: `transition-duration` is `0s` under
+  reduced motion vs `0.2s` normally, opacity still correctly reaches 0.5
+  either way). Marked the Google Fonts stylesheet link
+  `fetchpriority="high"` on both pages as a lightweight LCP lever for
+  Edison Dental's 2.6s reading — didn't hardcode Google's dynamic gstatic
+  font URLs for a direct `rel=preload`, since those aren't stable enough
+  to link directly. Re-measuring the real LCP impact is MAT-362's job.
 
 ---
 
