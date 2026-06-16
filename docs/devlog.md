@@ -4,11 +4,11 @@
 
 ---
 
-## 2026-06-16 — Phase 2: Content (in progress)
+## 2026-06-16 — Phase 2: Content
 
 Tracked as Linear MAT-344, broken into sub-tickets MAT-348–355 (identity →
 About → How I Work → Experience → Projects cards → Edison case study →
-footer → Writing decision). Logging each sub-step here as it lands.
+footer → Writing decision). All 8 sub-tickets done.
 
 - **MAT-348 — Wire identity (sidebar).** Real name and tagline ("I design and
   build accessible web apps — end to end.") replace the Phase 1 bracket
@@ -71,6 +71,21 @@ footer → Writing decision). Logging each sub-step here as it lands.
   `index.html` and the case study page's footers. Studio attribution stays
   plain text rather than a dead link, per user decision — no real studio hub
   URL yet.
+- **MAT-355 — Hide Writing section.** Zero "Shipped by Design" posts exist,
+  so the `#writing` nav link and empty section are removed rather than left
+  as a visibly dead stub (user decision) — trivial to re-add once there's
+  content. Also removed the Phase 1 `min-height: 10vh` debug rule on `main
+  section`, now dead weight since every remaining section has real content
+  with natural height.
+
+**Open gaps carried forward (pre-launch, not phase-blocking):** `/assets/resume.pdf`
+missing; "other" social platform undecided; most project repo links not yet
+public; pocalab framework/PDF-lib unconfirmed; all thumbnails missing;
+Edison Dental Lighthouse/CWV/SEO before-after scores + framework tag +
+thumbnail missing; studio hub URL undecided.
+
+**Next:** Phase 3 — Interactions (spotlight, scroll-spy, hover-dim,
+line-grow, reduced-motion/touch guards).
 
 ---
 
