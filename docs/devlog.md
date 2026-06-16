@@ -58,6 +58,12 @@ each sub-step here as it lands.
   `fetchpriority` hint + removing the failed favicon request together
   overshot expectations; index.html held flat at ~2.2-2.3s (no LCP-specific
   fix was needed there). Final numbers feed the MAT-363 badge.
+- **MAT-363 — Add the CWV/Lighthouse badge to the footer.** Reused the
+  existing `.badges` pill component as-is (no new CSS) — each page shows
+  its own real post-fix numbers (index.html: 96/100/100, LCP 2.3s;
+  edison-dental.html: 99/100/100, LCP 1.4s), with a caption line making the
+  dogfooding explicit. Screenshot-confirmed clean rendering on both footers,
+  zero console errors.
 
 ---
 
