@@ -135,6 +135,35 @@ a {
   gap: var(--space-4);
 }
 
+nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding-block: var(--space-1);
+  transition: color 0.2s ease;
+}
+
+.nav-indicator {
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background-color: var(--color-text-muted);
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+nav a.is-active {
+  color: var(--color-text);
+}
+
+nav a.is-active .nav-indicator {
+  width: 4rem;
+  background-color: var(--color-accent);
+}
+
 main {
   flex: 1 1 0%;
   min-width: 0;
