@@ -174,15 +174,57 @@ main section ul:not([role="list"]) {
   padding-left: var(--space-6);
 }
 
-main section li {
+main section ul:not([role="list"]) > li {
   margin-bottom: var(--space-2);
 }
 
-main section li:last-child {
+main section ul:not([role="list"]) > li:last-child {
   margin-bottom: 0;
 }
 
 main section code {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
+}
+
+/* Experience timeline */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.experience-dates {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.experience-entry h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+
+.badges,
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.badges li,
+.tags li {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.badges li {
+  color: var(--color-accent);
 }
