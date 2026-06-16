@@ -21,6 +21,18 @@ here as it lands.
   content stays visually above the glow (`.spotlight` itself is `z-index: 0`).
   Verified via Playwright: CSS vars update on mousemove, element is absent
   under touch emulation and reduced-motion emulation, zero console errors.
+- **MAT-357 — Scroll-spy nav with indicator line-grow.** `IntersectionObserver`
+  with `rootMargin: '-40% 0px -40% 0px'` watches each `main section[id]`;
+  whichever section crosses the resulting thin band at the viewport's
+  vertical center gets `.is-active` added to its nav link. CSS grows the
+  `.nav-indicator` line `2rem → 4rem` and brightens the link color on
+  transition. Verified by wrapping `IntersectionObserver` to log every
+  callback the production code receives — confirmed correct section
+  detection on load and after scrolling to each anchor. One timing nuance
+  worth noting: the very first callback can occasionally fire before
+  Google Fonts swap in and settle layout, so the initial highlight can lag
+  by a fraction of a second on first paint — resolves on any scroll/resize,
+  not a functional issue.
 
 ---
 
