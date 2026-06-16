@@ -142,3 +142,29 @@ main section {
     overflow-y: visible;
   }
 }
+
+/* Content sections — Phase 2 */
+
+main section {
+  max-width: 65ch;
+}
+
+main section + section {
+  margin-top: var(--space-24);
+}
+
+main section h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-6);
+}
+
+main section p {
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+main section p:last-child {
+  margin-bottom: 0;
+}
