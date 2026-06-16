@@ -196,9 +196,16 @@ This is from my own checklist; the site must pass it.
     /thumbnails       # project previews, consistent dimensions
     og.png
     resume.pdf
+  /projects
+    edison-dental.html  # featured case study — dedicated page, not inline
   CONTENT.md          # content as data — wire the markup to this
   PROJECT.md
 ```
+
+> `/projects` was added during Phase 2 to give the Edison Dental featured
+> case study a dedicated page (decided over an inline expandable view —
+> see devlog 2026-06-16). This is the one deviation from "single page,
+> anchored sections" in §2; every other section stays on `index.html`.
 
 ---
 
