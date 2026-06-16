@@ -51,6 +51,20 @@ footer → Writing decision). Logging each sub-step here as it lands.
   unconfirmed stack tags omitted rather than shown as visible brackets.
   Edison Dental intentionally excluded — separate featured-case-study ticket
   (MAT-353).
+- **MAT-353 — Build Edison Dental featured case study.** Decided a dedicated
+  page over an inline expandable view (user call) — new
+  `/projects/edison-dental.html`, reusing `tokens.css`/`style.css` and the
+  existing content-section typography (it inherits `main section`'s
+  rules for free since it nests `<section>`s inside `<main>` too). Added a
+  full-width featured card to the main Projects grid (accent border,
+  "Featured case study" label) linking to it, kept in CONTENT.md's original
+  source position between Worship Slides and VBS Scheduler rather than
+  promoted to the front. Updated PROJECT.md §10 to document the new
+  `/projects` directory — the one deviation from "single page, anchored
+  sections."
+  **Known gaps:** Lighthouse/CWV/SEO before-after scores not yet captured
+  (flagged inline as a pending note — CONTENT.md calls this the single best
+  proof point); framework tag and thumbnail still missing.
 
 ---
 
