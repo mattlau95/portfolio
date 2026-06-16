@@ -124,6 +124,11 @@ a {
   gap: var(--space-8);
 }
 
+.identity-name {
+  font-size: var(--text-base);
+  font-weight: 400;
+}
+
 .sidebar-bottom {
   display: flex;
   flex-direction: column;
@@ -133,6 +138,12 @@ a {
 .socials {
   display: flex;
   gap: var(--space-4);
+}
+
+.socials a {
+  display: inline-flex;
+  align-items: center;
+  padding-block: var(--space-1);
 }
 
 nav a {
