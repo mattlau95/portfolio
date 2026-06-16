@@ -62,28 +62,23 @@ interfaces that tell you what's happening.
 > 2026 portfolios are expected to show your AI stack — and for me it's a real
 > system, not a buzzword. Keep this a compact section (or a few lines); don't let
 > process narration crowd out the actual work.
+>
+> Rendered as 4 compact horizontal cards (not a bulleted list) — see
+> `index.html` `#process`. Copy below is the condensed, per-card version.
 
-I run a lightweight, spec-driven workflow built around Claude Code and Linear:
+I run a lightweight, spec-driven workflow built around Claude Code and Linear.
 
-- **Capture, then triage — separately.** A `/capture` command drops quick ideas,
-  bugs, and feature notes into an `INBOX.md` so nothing breaks focus. A `/triage`
-  command later turns those into properly written Linear issues, with a
-  confirmation step. Capturing and refining are different jobs; splitting them
-  removed my biggest source of workflow friction.
-- **Spec before code.** Each project starts as a `PROJECT.md` (the build plan)
-  and, when it needs one, a `CONTENT.md` (content as data) — version-controlled,
-  so the plan and the build stay in sync. This site was built that way.
-- **Linear as the backbone.** One project per app, mood-aware labels
-  (Deep Work / Quick Win) so I can match work to energy, weekly cycles as
-  sprints, and a devlog in each repo. Plan first, build in small steps, commit and
-  log each one.
-- **UX as tooling.** I encoded my UX + WCAG 2.2 standards into a repeatable
-  `/audit` command, so quality checks stay consistent across projects instead of
-  living in my head.
+- **Capture, then triage.** Quick notes go into an inbox via `/capture`; a
+  separate `/triage` pass turns them into proper Linear issues.
+- **Spec before code.** Every project starts as a version-controlled build
+  plan, so the plan and the build stay in sync. This site was built that way.
+- **Linear as the backbone.** One project per app, weekly cycles as sprints, a
+  devlog in every repo.
+- **UX as tooling.** My UX and WCAG 2.2 standards live in a repeatable
+  `/audit` command.
 
-The point isn't the tools — it's that I treat my own process like a product:
-spot the friction, build the system, ship faster. (Same instinct as the
-projects themselves.)
+The point isn't the tools — it's treating my own process like a product: spot
+the friction, build the system, ship faster.
 
 ---
 
