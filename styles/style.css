@@ -228,3 +228,53 @@ main section code {
 .badges li {
   color: var(--color-accent);
 }
+
+/* Projects */
+
+#projects {
+  max-width: none;
+}
+
+.project-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-thumb {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  background-color: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.project-card h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}
+
+.link-pending {
+  color: var(--color-text-muted);
+}
