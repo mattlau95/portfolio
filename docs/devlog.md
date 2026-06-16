@@ -4,11 +4,11 @@
 
 ---
 
-## 2026-06-16 — Phase 4: A11y + perf pass (in progress)
+## 2026-06-16 — Phase 4: A11y + perf pass
 
 Tracked as Linear MAT-346, broken into sub-tickets MAT-365, 360–364 (run
-audit → fix P0 → fix P1 → re-audit → badge → final verification). Logging
-each sub-step here as it lands.
+audit → fix P0 → fix P1 → re-audit → badge → final verification). All 6
+sub-tickets done.
 
 - **MAT-365 — Run `/audit` against the local static server.** Full
   Lighthouse + axe-core + pa11y pass against both pages (root + Edison
@@ -64,6 +64,24 @@ each sub-step here as it lands.
   edison-dental.html: 99/100/100, LCP 1.4s), with a caption line making the
   dogfooding explicit. Screenshot-confirmed clean rendering on both footers,
   zero console errors.
+- **MAT-364 — Final verification + devlog close-out.** Comprehensive
+  Playwright pass tying everything together: zero console errors on both
+  pages; touch targets re-measured at 375px (GitHub/LinkedIn now 32px,
+  holding well clear of the 24px floor); `<h1>` confirmed present;
+  reduced-motion correctly removes only the spotlight while scroll-spy
+  still functions; both footers' badges render the correct real numbers;
+  sticky sidebar regression-checked (still pins at y=0 after a 1500px
+  scroll). PROJECT.md §12's Phase 4 done-criteria are met: `/audit` shows
+  zero P0s, CWV is in the green and shown on the page.
+
+**Open gaps carried forward (pre-launch, not phase-blocking):** all the
+same asset/content gaps from Phase 2 (`resume.pdf`, project repo links,
+thumbnails, pocalab's stack, studio hub URL) — none of this phase's fixes
+touched those. The P2 Consistent-Help judgment call (Edison Dental page
+lacking socials/résumé) was left as-is.
+
+**Next:** Phase 5 — SEO + deploy. Meta/OG/schema, build `og.png`, deploy,
+point Porkbun DNS, verify live.
 
 ---
 
