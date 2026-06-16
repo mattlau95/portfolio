@@ -4,11 +4,10 @@
 
 ---
 
-## 2026-06-16 — Phase 3: Interactions (in progress)
+## 2026-06-16 — Phase 3: Interactions
 
 Tracked as Linear MAT-345, broken into sub-tickets MAT-356–359 (spotlight →
-scroll-spy → group-hover-dim → final verification). Logging each sub-step
-here as it lands.
+scroll-spy → group-hover-dim → final verification). All 4 sub-tickets done.
 
 - **MAT-356 — Cursor-following spotlight.** `position: fixed` div with a
   `radial-gradient` tracking `--x`/`--y` CSS vars (added to `tokens.css`,
@@ -40,6 +39,22 @@ here as it lands.
   hover) are unaffected. Verified opacity values directly via computed
   style and confirmed `(hover: hover)` correctly evaluates false in a touch
   context.
+- **MAT-359 — Verify all interactions + sticky-layout regression.** Full
+  end-to-end pass now that all three interactions exist together:
+  - **Phase 1's known limitation is resolved.** With real content, the page
+    now has 4348px of scroll room (was 0px against placeholder content) —
+    anchor-jump to `#projects` lands at y≈0, confirming the mechanism was
+    always correct and just needed real content height.
+  - Sticky sidebar stays pinned at y=0 scrolling 1500px down.
+  - Focus on a project's "Live demo" link is not obscured by the sidebar
+    (focused link x=584 vs. sidebar's right edge at x=520).
+  - Reduced-motion removes only the spotlight — scroll-spy and hover-dim
+    are unaffected, as intended (they're discrete state changes, not
+    continuous motion).
+  - Zero console errors throughout.
+
+**Next:** Phase 4 — A11y + perf pass. Run `/audit`, fix every P0 then P1,
+add the CWV/Lighthouse badge.
 
 ---
 
