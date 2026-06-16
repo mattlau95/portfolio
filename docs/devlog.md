@@ -4,6 +4,26 @@
 
 ---
 
+## 2026-06-16 — Phase 3: Interactions (in progress)
+
+Tracked as Linear MAT-345, broken into sub-tickets MAT-356–359 (spotlight →
+scroll-spy → group-hover-dim → final verification). Logging each sub-step
+here as it lands.
+
+- **MAT-356 — Cursor-following spotlight.** `position: fixed` div with a
+  `radial-gradient` tracking `--x`/`--y` CSS vars (added to `tokens.css`,
+  defaulted to `50vw`/`50vh` to avoid a flash before the first
+  `mousemove`). `main.js` updates the vars on `mousemove` and outright
+  removes the spotlight element on touch devices or
+  `prefers-reduced-motion: reduce` — belt-and-suspenders with the CSS
+  `@media (prefers-reduced-motion: reduce) { display: none }` guard.
+  `.layout`/`.case-study` got `position: relative; z-index: 1` so real
+  content stays visually above the glow (`.spotlight` itself is `z-index: 0`).
+  Verified via Playwright: CSS vars update on mousemove, element is absent
+  under touch emulation and reduced-motion emulation, zero console errors.
+
+---
+
 ## 2026-06-16 — Phase 2: Content
 
 Tracked as Linear MAT-344, broken into sub-tickets MAT-348–355 (identity →
