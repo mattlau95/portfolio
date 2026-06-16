@@ -31,6 +31,13 @@ polish/content items rather than build-plan phases).
   `aspect-ratio: 8/3` (double the standard 4/3 ratio) so at ~2x the width
   its rendered height lands within 7px of a standard thumbnail's height —
   measured directly via Playwright, not eyeballed.
+- **Add `docs/CONTENT-TODO.md`.** A single fill-in checklist for every
+  remaining content gap needing real data: repo links per project,
+  pocalab/Edison tech-stack tags, `resume.pdf`, the "other" social, the
+  studio hub URL, Edison's Lighthouse before/after, project metrics, and
+  thumbnail files (recommended filenames already match what `CONTENT.md`
+  references, plus recommended aspect ratios and checkboxes). Noted in
+  `PROJECT.md` §10's file structure for consistency.
 
 ---
 
