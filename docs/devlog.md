@@ -4,6 +4,31 @@
 
 ---
 
+## 2026-06-16 — MAT-372: Featured card alignment (research spike)
+
+Diagnosed by direct Playwright measurement before touching any CSS:
+`.project-card--featured`'s `padding: var(--space-6)` inset its thumbnail
+25px below the grid row's top edge while the standard neighbor card's
+thumbnail sat flush — a visible top-edge mismatch. The same padding also
+made the two cards' natural heights diverge (647px vs 683px) despite the
+grid's default stretch behavior.
+
+**Fix (spike option 1 — chosen over a redesigned visual treatment or
+accepting the "card within a card" look):** moved the padding off the
+card itself onto a new `.project-card-body` wrapper around everything
+except `.project-thumb`. The card now uses `overflow: hidden` +
+`border-radius` so the thumbnail bleeds flush to the card edges exactly
+like standard cards do, with the accent border framing the whole card
+(thumbnail included) rather than just the text content.
+
+Re-measured after the fix: thumbnail tops align within 1px (the border
+width) across the row, and the two cards' heights now match exactly
+(647px both, down from a 36px gap) — resolved as a side effect of the
+same change, not a separate fix. Verified at mobile width too (375px) —
+clean stack, no regression. Zero console errors.
+
+---
+
 ## 2026-06-16 — MAT-370: Profile photo placeholder
 
 Both MAT-370 and MAT-371 were data-blocked (no real photos in `assets/`;
