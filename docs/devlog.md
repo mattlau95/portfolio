@@ -65,6 +65,12 @@ footer → Writing decision). Logging each sub-step here as it lands.
   **Known gaps:** Lighthouse/CWV/SEO before-after scores not yet captured
   (flagged inline as a pending note — CONTENT.md calls this the single best
   proof point); framework tag and thumbnail still missing.
+- **MAT-354 — Wire footer.** Added the build-credit line (Claude Code, plain
+  HTML/CSS/JS, no framework — reinforces PROJECT.md §6's "surface the
+  AI-augmented workflow" proof point) and a last-updated date to both
+  `index.html` and the case study page's footers. Studio attribution stays
+  plain text rather than a dead link, per user decision — no real studio hub
+  URL yet.
 
 ---
 
