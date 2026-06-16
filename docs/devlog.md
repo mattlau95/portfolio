@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-06-16 — MAT-370: Profile photo placeholder
+
+Both MAT-370 and MAT-371 were data-blocked (no real photos in `assets/`;
+`CONTENT-TODO.md` §3 metrics still blank). Asked the user how to proceed:
+build MAT-370's mechanism now with placeholders (2-image hover swap,
+pure CSS); leave MAT-371 untouched since there's no real metric data yet
+and the ticket itself forbids fabricating placeholder numbers.
+
+- **MAT-370 — profile photo placeholder with 2-image hover swap.** Added
+  `.profile-photo` as the first child of `.sidebar-top` (above the name) —
+  two stacked placeholder divs, hovering cross-fades from "Photo 1" to
+  "Photo 2." 96px box (`var(--space-24)`) with `var(--radius)` corners,
+  matching the site's existing soft-rounded-square thumbnail/badge
+  language rather than introducing a circular avatar. Hover gated behind
+  `@media (hover: hover)` (same guard as group-hover-dim) and the
+  transition gated behind `prefers-reduced-motion: no-preference` (same
+  fix pattern as MAT-361) — verified the opacity state still swaps
+  instantly under reduced motion, only the animated cross-fade is removed.
+  Not `aria-hidden`, matching how `.project-thumb`'s pending-state
+  placeholders are already handled. Blocked on real photos to swap in;
+  the mechanism itself is fully built and verified.
+- **MAT-371 — left untouched in Backlog.** No real metrics exist yet for
+  ollae/pocalab/Worship Slides/VBS Scheduler; nothing changed.
+
+---
+
 ## 2026-06-16 — Inbox triage: content fixes & polish
 
 Captured via `/capture` into `docs/INBOX.md`, triaged via `/triage`. Quick
