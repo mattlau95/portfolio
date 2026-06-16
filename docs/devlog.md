@@ -26,6 +26,12 @@ footer → Writing decision). Logging each sub-step here as it lands.
   `aria-label` — the heading provides the accessible name instead (per the
   Phase 1 plan's own follow-up note). "What I'm looking for" optional line
   skipped for now per user decision.
+- **MAT-350 — Wire How I Work (process) section.** Compact section from
+  CONTENT.md's How I Work block: capture/triage split, spec-before-code,
+  Linear as backbone, UX-as-tooling `/audit` command. Trimmed the "mood-aware
+  labels" detail and closing parenthetical for compactness per CONTENT.md's
+  own note not to let process narration crowd out the work. Added list/code
+  styling shared by all content sections.
 
 ---
 
