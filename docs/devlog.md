@@ -32,6 +32,14 @@ footer → Writing decision). Logging each sub-step here as it lands.
   labels" detail and closing parenthetical for compactness per CONTENT.md's
   own note not to let process narration crowd out the work. Added list/code
   styling shared by all content sections.
+- **MAT-351 — Wire Experience timeline.** Semantic `<ol>` with 4 role entries
+  + education, each using `<time>` for dates, metric badges (Kumon ~96% /
+  10–13 hrs → 25 min, Collette −30% / +20% / 200+ tests), and skill tags as
+  pill lists. Tightened the over-broad `main section li` spacing rule from
+  MAT-350 to `main section ul:not([role="list"]) > li` so it only touches
+  plain bullet lists, not the new pill lists or the timeline `<ol>` itself.
+  Dated markers used here only — per PROJECT.md's "structure encodes
+  meaning" rule, no other section gets this treatment.
 
 ---
 
