@@ -278,3 +278,78 @@ main section code {
 .link-pending {
   color: var(--color-text-muted);
 }
+
+.project-card--featured {
+  grid-column: 1 / -1;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+}
+
+.featured-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+/* Edison Dental case study page */
+
+.case-study {
+  max-width: 65ch;
+  margin-inline: auto;
+  padding: var(--space-16) var(--space-8);
+}
+
+.back-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-8);
+}
+
+.case-study-header {
+  margin-bottom: var(--space-16);
+}
+
+.case-study-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.case-study-header h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-2);
+}
+
+.case-study-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.case-study-links {
+  display: flex;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-top: var(--space-4);
+}
+
+.pending-note {
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.case-study footer {
+  margin-top: var(--space-24);
+}
