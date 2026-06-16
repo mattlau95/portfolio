@@ -41,4 +41,8 @@
   /* Layout */
   --max-width: 1400px;
   --radius: 0.5rem;
+
+  /* Spotlight cursor position — updated by main.js on mousemove */
+  --x: 50vw;
+  --y: 50vh;
 }

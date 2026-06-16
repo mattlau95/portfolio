@@ -74,9 +74,27 @@ a {
   outline-offset: 2px;
 }
 
+/* Spotlight — Phase 3 */
+
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(600px circle at var(--x) var(--y), rgb(96 200 240 / 0.15), transparent 80%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight {
+    display: none;
+  }
+}
+
 /* Layout shell — Phase 1 */
 
 .layout {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: var(--space-16);
   max-width: var(--max-width);
@@ -294,6 +312,8 @@ main section code {
 /* Edison Dental case study page */
 
 .case-study {
+  position: relative;
+  z-index: 1;
   max-width: 65ch;
   margin-inline: auto;
   padding: var(--space-16) var(--space-8);
