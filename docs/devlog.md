@@ -4,6 +4,38 @@
 
 ---
 
+## 2026-06-16 — Phase 4: A11y + perf pass (in progress)
+
+Tracked as Linear MAT-346, broken into sub-tickets MAT-365, 360–364 (run
+audit → fix P0 → fix P1 → re-audit → badge → final verification). Logging
+each sub-step here as it lands.
+
+- **MAT-365 — Run `/audit` against the local static server.** Full
+  Lighthouse + axe-core + pa11y pass against both pages (root + Edison
+  Dental case study), plus a manual Part B code review and exhaustive
+  Playwright-verified checks (touch targets measured directly at 375px/1440px,
+  focus-not-obscured checked across all 6 main-content links × 5 scroll
+  positions = 30 combinations, zero violations). Report: `audit-2026-06-16.md`.
+  **Result: 2 P0s, 3 P1s, 1 P2.**
+  - P0: `index.html` has no `<h1>` (axe-core `page-has-heading-one` violation).
+  - P0: social links (GitHub/LinkedIn) measure 21-22px tall, under the WCAG
+    2.2 Target Size 24px floor — confirmed by direct measurement, not
+    speculation (nav links and résumé link already pass).
+  - P1: missing favicon causes a 404 console error, docking Best Practices
+    on both pages.
+  - P1: group-hover-dim's opacity transition (Phase 3) has no
+    `prefers-reduced-motion` guard, unlike the spotlight.
+  - P1: Edison Dental's LCP measures 2.6s, just over the 2.5s threshold
+    (partly a cold-localhost measurement artifact, but a real preload
+    opportunity exists).
+  - P2: Consistent-Help judgment call (case study page lacks socials/résumé)
+    — likely fine as-is given the back-link escape hatch, no action planned.
+  - Contrast was independently re-confirmed via the actual axe-core/Lighthouse
+    runs (100/100 accessibility both pages) on top of the earlier manual
+    calculation — not a finding.
+
+---
+
 ## 2026-06-16 — Phase 3: Interactions
 
 Tracked as Linear MAT-345, broken into sub-tickets MAT-356–359 (spotlight →
