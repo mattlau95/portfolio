@@ -144,7 +144,7 @@ B.A. Computer Science · Rutgers University · 2013–2017
 > **I build small, real tools for the communities I'm part of — usually to
 > replace something paywalled, limited, or annoying.** ollae (no-account RSVP for
 > Thursday volleyball), pocalab (instead of fighting Canva), worship-slides (for
-> retreats), VBS Scheduler (replaced paywalled Doodle), Edison (killed a $50/mo
+> retreats), VBS Scheduler (replaced paywalled Doodle), Edison (killed a $50/yr
 > Elementor sub). That's a sharper, truer story than a pile of unrelated demos —
 > it says "this person spots friction and ships the fix."
 
@@ -192,7 +192,7 @@ modern rebuild — cleaner, faster, and actually findable on Google.
 - Thumbnail: `[/assets/thumbnails/edison-dental.webp]`
 
 **The problem.** The old Elementor site was buggy and fragile, invisible to Google
-(it didn't even register as a *dentist*), and locked behind a ~$50/mo subscription.
+(it didn't even register as a *dentist*), and locked behind a ~$50/yr subscription.
 
 **What I built:**
 - **Local SEO foundation** — `Dentist`/`LocalBusiness` structured data (JSON-LD)
@@ -207,10 +207,10 @@ modern rebuild — cleaner, faster, and actually findable on Google.
   no overnight lead is lost.
 - **Proper Open Graph** so links shared by text/Facebook/email unfurl with the
   practice name and photo instead of a broken card.
-- **Killed a dependency** — eliminated the ~$50/mo (~$600/yr) Elementor cost.
+- **Killed a dependency** — eliminated the ~$50/yr Elementor cost.
 
 **Honest framing for impact:** the site is a recent rebuild, so lead with
-*capabilities delivered* (built in 2 days, ~$600/yr cost removed, full local-SEO
+*capabilities delivered* (built in 2 days, ~$50/yr cost removed, full local-SEO
 foundation where there was none, non-technical staff unblocked) rather than
 traffic numbers you don't have yet. Then quantify what you *can*:
 - **Capture Lighthouse / CWV + SEO scores, old vs. new** — a real "before 4X /
