@@ -33,6 +33,13 @@ here as it lands.
   Google Fonts swap in and settle layout, so the initial highlight can lag
   by a fraction of a second on first paint — resolves on any scroll/resize,
   not a functional issue.
+- **MAT-358 — Group-hover dim.** Pure CSS, no JS: `.timeline:hover >
+  .experience-entry` and `.project-cards:hover > .project-card` fade
+  siblings to 0.5 opacity, with `:hover` on the entry itself restoring full
+  opacity. Gated behind `@media (hover: hover)` so touch devices (no real
+  hover) are unaffected. Verified opacity values directly via computed
+  style and confirmed `(hover: hover)` correctly evaluates false in a touch
+  context.
 
 ---
 
