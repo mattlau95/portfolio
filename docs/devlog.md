@@ -51,6 +51,13 @@ each sub-step here as it lands.
   Edison Dental's 2.6s reading — didn't hardcode Google's dynamic gstatic
   font URLs for a direct `rel=preload`, since those aren't stable enough
   to link directly. Re-measuring the real LCP impact is MAT-362's job.
+- **MAT-362 — Re-run audit, capture final CWV numbers.** Zero P0s confirmed
+  (axe-core + pa11y both clean on both pages — satisfies PROJECT.md §12's
+  literal done-criterion). Best Practices hit 100/100 on both pages (was
+  96/96). Edison Dental's LCP dropped 2.6s → **1.4s** — the font
+  `fetchpriority` hint + removing the failed favicon request together
+  overshot expectations; index.html held flat at ~2.2-2.3s (no LCP-specific
+  fix was needed there). Final numbers feed the MAT-363 badge.
 
 ---
 
