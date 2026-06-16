@@ -436,11 +436,17 @@ footer p:last-child {
   .timeline:hover > .experience-entry,
   .project-cards:hover > .project-card {
     opacity: 0.5;
-    transition: opacity 0.2s ease;
   }
 
   .timeline:hover > .experience-entry:hover,
   .project-cards:hover > .project-card:hover {
     opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .timeline > .experience-entry,
+  .project-cards > .project-card {
+    transition: opacity 0.2s ease;
   }
 }
