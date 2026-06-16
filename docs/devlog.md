@@ -7,9 +7,9 @@
 ## 2026-06-16 — Inbox triage: content fixes & polish
 
 Captured via `/capture` into `docs/INBOX.md`, triaged via `/triage`. Quick
-wins done directly below; the rest became Linear issues (parented under a
-new tracking structure, not phase milestones, since these are post-Phase-4
-polish/content items rather than build-plan phases).
+wins done directly below; the rest became standalone Linear issues (no
+milestone — these are post-Phase-4 polish/content items, not part of the
+phase build plan).
 
 - **Fix Edison Dental cost figure ($50/yr, not $50/mo).** The Elementor
   subscription was actually $50/*year*, not $50/month — the
@@ -38,6 +38,15 @@ polish/content items rather than build-plan phases).
   thumbnail files (recommended filenames already match what `CONTENT.md`
   references, plus recommended aspect ratios and checkboxes). Noted in
   `PROJECT.md` §10's file structure for consistency.
+
+**Linear issues created for the rest:** MAT-368 (strengthen Edison Dental
+hook/metrics + SEO copy, High/Deep Work — ties into Phase 5), MAT-369
+(update About section, Medium — flagged too vague to act on without
+clarification), MAT-370 (profile picture placeholder + hover-cycling,
+Medium/Deep Work — blocked on real photos), MAT-371 (add metric badges to
+more projects, Medium/Quick Win — blocked on `CONTENT-TODO.md` §3's data).
+`docs/INBOX.md` cleared back to just the header — all 8 captured items
+triaged.
 
 ---
 
