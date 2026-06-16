@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-06-16 — Inbox triage: content fixes & polish
+
+Captured via `/capture` into `docs/INBOX.md`, triaged via `/triage`. Quick
+wins done directly below; the rest became Linear issues (parented under a
+new tracking structure, not phase milestones, since these are post-Phase-4
+polish/content items rather than build-plan phases).
+
+- **Fix Edison Dental cost figure ($50/yr, not $50/mo).** The Elementor
+  subscription was actually $50/*year*, not $50/month — the
+  "$50/mo (~$600/yr)" figure used everywhere was wrong (the $600/yr was
+  incorrectly derived by multiplying by 12). Corrected all 9 mentions across
+  `CONTENT.md`, the featured project card on `index.html`, and the Edison
+  Dental case study page (meta description, problem statement, what-I-built
+  list, impact framing). Verified on both rendered pages, zero console
+  errors.
+
+---
+
 ## 2026-06-16 — Phase 4: A11y + perf pass
 
 Tracked as Linear MAT-346, broken into sub-tickets MAT-365, 360–364 (run
