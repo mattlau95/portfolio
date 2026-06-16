@@ -49,7 +49,17 @@
         <p>I publish my independent work under <strong>MCL Studio</strong>, a small studio where I design, build, and ship products. Most of them start as a tool for a community I'm actually part of — an RSVP app for Thursday volleyball (ollae), a photocard generator I built because I was tired of fighting Canva (pocalab), a worship-slide generator for retreats, a few tools for the VBS kids this summer. I care about the details that make software feel trustworthy — accessibility, performance, and interfaces that tell you what's happening.</p>
         <p>I'm a Rutgers Computer Science grad, currently sharpening the engineering side through Boot.dev and Anthropic Academy — and chipping away at Mandarin as a long game.</p>
       </section>
-      <section id="process" aria-label="How I Work"></section>
+      <section id="process">
+        <h2>How I Work</h2>
+        <p>I run a lightweight, spec-driven workflow built around Claude Code and Linear:</p>
+        <ul>
+          <li><strong>Capture, then triage — separately.</strong> A <code>/capture</code> command drops quick ideas, bugs, and feature notes into an inbox so nothing breaks focus. A <code>/triage</code> command later turns those into properly written Linear issues, with a confirmation step.</li>
+          <li><strong>Spec before code.</strong> Each project starts as a <code>PROJECT.md</code> (the build plan) and, when it needs one, a <code>CONTENT.md</code> (content as data) — version-controlled, so the plan and the build stay in sync. This site was built that way.</li>
+          <li><strong>Linear as the backbone.</strong> One project per app, weekly cycles as sprints, a devlog in each repo. Plan first, build in small steps, commit and log each one.</li>
+          <li><strong>UX as tooling.</strong> My UX and WCAG 2.2 standards live in a repeatable <code>/audit</code> command, so quality checks stay consistent instead of living in my head.</li>
+        </ul>
+        <p>The point isn't the tools — it's treating my own process like a product: spot the friction, build the system, ship faster.</p>
+      </section>
       <section id="experience" aria-label="Experience"></section>
       <section id="projects" aria-label="Projects"></section>
       <section id="writing" aria-label="Writing"></section>

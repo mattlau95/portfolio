@@ -168,3 +168,21 @@ main section p {
 main section p:last-child {
   margin-bottom: 0;
 }
+
+main section ul:not([role="list"]) {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+main section li {
+  margin-bottom: var(--space-2);
+}
+
+main section li:last-child {
+  margin-bottom: 0;
+}
+
+main section code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
