@@ -19,6 +19,12 @@ polish/content items rather than build-plan phases).
   Dental case study page (meta description, problem statement, what-I-built
   list, impact framing). Verified on both rendered pages, zero console
   errors.
+- **Redesign How I Work as compact horizontal cards.** Replaced the 4-item
+  bulleted list (long sentences, big vertical footprint) with an auto-fit
+  grid of 4 compact cards that collapses to a single column on mobile.
+  Condensed each item to one short line while keeping the specific proof
+  details (`/capture`, `/triage`, `/audit`). Synced `CONTENT.md`'s How I
+  Work section to match the new condensed per-card copy.
 
 ---
 
