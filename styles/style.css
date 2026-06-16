@@ -123,10 +123,6 @@ main {
   padding-block: var(--space-16);
 }
 
-main section {
-  min-height: 10vh; /* Phase 1 debug aid so empty anchors are visible/testable; remove once Phase 2 content gives sections natural height */
-}
-
 @media (max-width: 1024px) {
   .layout {
     flex-direction: column;
