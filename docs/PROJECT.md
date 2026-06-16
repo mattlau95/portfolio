@@ -199,6 +199,7 @@ This is from my own checklist; the site must pass it.
   /projects
     edison-dental.html  # featured case study — dedicated page, not inline
   CONTENT.md          # content as data — wire the markup to this
+  CONTENT-TODO.md     # fill-in sheet for repo links, metrics, thumbnails
   PROJECT.md
 ```
 
