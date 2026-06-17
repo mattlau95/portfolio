@@ -74,6 +74,33 @@ a {
   outline-offset: 2px;
 }
 
+/* Skip link */
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link {
+    transition: transform 0.15s ease;
+  }
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 /* Spotlight — Phase 3 */
 
 .spotlight {
@@ -173,6 +200,13 @@ a {
   gap: var(--space-3);
 }
 
+.resume-link--pending {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
 .socials {
   display: flex;
   gap: var(--space-4);
@@ -181,7 +215,7 @@ a {
 .socials a {
   display: inline-flex;
   align-items: center;
-  padding-block: var(--space-1);
+  padding-block: var(--space-2);
 }
 
 nav a {
@@ -192,7 +226,7 @@ nav a {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   text-decoration: none;
-  padding-block: var(--space-1);
+  padding-block: var(--space-2);
   transition: color 0.2s ease;
 }
 
@@ -358,9 +392,21 @@ main section code {
 
 .project-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-8);
   margin-top: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .project-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .project-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-card {
@@ -396,21 +442,29 @@ main section code {
   margin-top: var(--space-2);
 }
 
+.project-links a {
+  padding-block: var(--space-2);
+}
+
 .link-pending {
   color: var(--color-text-muted);
 }
 
 .project-card--featured {
-  grid-column: span 2;
+  grid-column: 1 / -1;
+  flex-direction: row;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
 .project-card--featured .project-thumb {
-  aspect-ratio: 8 / 3;
+  flex: 0 0 38%;
+  aspect-ratio: unset;
+  align-self: stretch;
   border-radius: 0;
   margin-bottom: 0;
+  min-height: 200px;
 }
 
 .project-card-body {
@@ -424,6 +478,19 @@ main section code {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: var(--space-2);
+}
+
+@media (max-width: 580px) {
+  .project-card--featured {
+    flex-direction: column;
+  }
+
+  .project-card--featured .project-thumb {
+    flex: none;
+    aspect-ratio: 4 / 3;
+    align-self: auto;
+    min-height: unset;
+  }
 }
 
 /* Edison Dental case study page */

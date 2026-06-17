@@ -33,6 +33,8 @@
     linkForSection.get(id)?.classList.add('is-active');
   };
 
+  setActive('about');
+
   const observer = new IntersectionObserver(
     (entries) => {
       const visible = entries

@@ -4,6 +4,26 @@
 
 ---
 
+## 2026-06-16 — Projects grid redesign + audit sweep
+
+**Projects section (`#projects > ul`):** The `auto-fit` grid with `grid-column: span 2` on the featured card was creating a phantom gap next to Worship Slides — the featured card couldn't start at column 2, so it forced a new row and left column 2 empty. Fixed by switching to an explicit `repeat(3, 1fr)` grid and moving the featured Edison Dental card to the last position (`grid-column: 1 / -1`, always full-width regardless of column count). The featured card also got a horizontal layout (`flex-direction: row`) — thumbnail fills the left 38%, body fills the right — which gives it a visually distinct "case study" feel rather than just a stretched version of the regular cards. Responsive: 2-col at ≤900px, 1-col at ≤580px; featured card flips to vertical column layout on mobile.
+
+**`/audit` run (Lighthouse 12 / axe-core 4.11.4 / pa11y):** Full results in `audit-2026-06-16.md` (re-audit section appended). Scores: Performance 94, Accessibility 100, Best Practices 100. INP 20ms, CLS 0.002 — both excellent. Two P0s, two P1s, three P2s found. All seven fixed this session.
+
+**P0 fixes:**
+- **Skip-to-main-content link** (WCAG 2.4.1 Level A) — `<a class="skip-link" href="#about">` added as first child of `<body>`, visually hidden off-screen, slides into view on `:focus-visible`. Keyboard users can now bypass the 7-element sidebar with one Tab.
+- **Résumé link 404** — `/assets/resume.pdf` doesn't exist. Converted the `<a>` to `<span aria-disabled="true" class="resume-link--pending">` with muted mono styling matching the `link-pending` pattern used in the projects section. Swap back to a real link when the PDF is ready.
+
+**P1 fixes:**
+- **Async font loading** — Google Fonts CSS was render-blocking at 796ms wasted, holding LCP at exactly 2.5s. Changed `<link rel="stylesheet">` to `<link rel="preload" as="style" onload="…">` + `<noscript>` fallback. Body text falls back to system font during load; `display=swap` was already in the URL so the swap is clean.
+- **Touch targets** — nav links, social links, and project links were 26–34px tall (pass WCAG 2.2's 24px minimum but miss the 44px comfortable guideline). Bumped all three from `padding-block: --space-1` to `--space-2`.
+
+**P2 fixes:**
+- **Scroll-spy initial state** — added `setActive('about')` before the IntersectionObserver initializes so About is active on fresh page load instead of no item being active until the first scroll.
+- **Cache headers** — created `vercel.json` with `Cache-Control: public, max-age=31536000, immutable` on `/styles/*`, `/scripts/*`, `/assets/*`.
+
+---
+
 ## 2026-06-16 — MAT-372: Featured card alignment (research spike)
 
 Diagnosed by direct Playwright measurement before touching any CSS:

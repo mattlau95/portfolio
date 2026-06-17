@@ -9,12 +9,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet" fetchpriority="high">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css">
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#about">Skip to content</a>
+
   <div class="spotlight" aria-hidden="true"></div>
 
   <div class="layout">
@@ -39,7 +42,7 @@
       </div>
 
       <div class="sidebar-bottom">
-        <a class="resume-link" href="/assets/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+        <span class="resume-link resume-link--pending" aria-disabled="true">Résumé — coming soon</span>
 
         <ul role="list" class="socials" aria-label="Social links">
           <li><a href="https://github.com/mattlau95" target="_blank" rel="noopener noreferrer">GitHub</a></li>
@@ -209,25 +212,6 @@
             </p>
           </li>
 
-          <li class="project-card project-card--featured">
-            <div class="project-thumb">Thumbnail — pending</div>
-            <div class="project-card-body">
-              <p class="featured-label">★ Featured case study</p>
-              <h3>Edison Dental 27 — client redesign + local SEO</h3>
-              <p>Rebuilt a real local dental practice's site from the ground up — local SEO foundation, self-service admin, time-aware lead capture. Built in 2 days, killed a ~$50/yr subscription.</p>
-              <ul role="list" class="tags" aria-label="Tech stack">
-                <li>Schema.org / JSON-LD</li>
-                <li>Google Places API</li>
-                <li>Auth'd admin</li>
-                <li>Local SEO</li>
-                <li>Responsive</li>
-              </ul>
-              <p class="project-links">
-                <a href="/projects/edison-dental.html">Read the case study</a>
-              </p>
-            </div>
-          </li>
-
           <li class="project-card">
             <div class="project-thumb">Thumbnail — pending</div>
             <h3>VBS Scheduler</h3>
@@ -260,6 +244,25 @@
               <span class="link-pending">No public demo — writeup coming soon</span>
               <span class="link-pending">Repo — coming soon</span>
             </p>
+          </li>
+
+          <li class="project-card project-card--featured">
+            <div class="project-thumb">Thumbnail — pending</div>
+            <div class="project-card-body">
+              <p class="featured-label">★ Featured case study</p>
+              <h3>Edison Dental 27 — client redesign + local SEO</h3>
+              <p>Rebuilt a real local dental practice's site from the ground up — local SEO foundation, self-service admin, time-aware lead capture. Built in 2 days, killed a ~$50/yr subscription.</p>
+              <ul role="list" class="tags" aria-label="Tech stack">
+                <li>Schema.org / JSON-LD</li>
+                <li>Google Places API</li>
+                <li>Auth'd admin</li>
+                <li>Local SEO</li>
+                <li>Responsive</li>
+              </ul>
+              <p class="project-links">
+                <a href="/projects/edison-dental.html">Read the case study</a>
+              </p>
+            </div>
           </li>
         </ul>
       </section>
