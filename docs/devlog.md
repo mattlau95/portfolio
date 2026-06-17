@@ -4,6 +4,33 @@
 
 ---
 
+## 2026-06-17 — MAT-391: "How I Work" — asymmetric command-list layout
+
+Replaced the horizontal 4-card grid (`.process-cards`) with a scannable vertical stack. Each row splits into a fixed 140px left column (muted mono command token) and a flex-1 right column (bold h3 + body copy). Removed the old `.process-cards`, `.process-card`, `.process-card h3`, `.process-card p` rules entirely.
+
+- **Intro sentence** — `Claude Code` and `Linear` wrapped in `<code class="inline-token">`, styled with `border: 1px solid var(--color-border)` and mono font to match the existing tag pill language. No colored backgrounds — strictly monochromatic per spec.
+- **Four workflow rows** — `/_ capture`, `system.md`, `↳ linear`, `/_ audit` as left-column tokens; updated copy for all four rows; removed the old trailing paragraph ("The point isn't the tools…").
+- **Responsive** — `flex-direction: column` below 768px, command token drops cleanly above its h3.
+- **Group-hover-dim** — extended the existing `.timeline` / `.project-cards` opacity pattern to cover `.workflow-list` / `.workflow-row`, consistent with site-wide interaction language.
+
+Verified at 1440px and 375px via Playwright — 2-col layout holds on desktop, collapses correctly on mobile. `↳` glyph renders cleanly in DM Mono.
+
+---
+
+## 2026-06-17 — MAT-390: Kumon experience block reframe
+
+Pure copy swap, no CSS or layout changes. Reframed the role around workflow optimization and internal tooling to match a Design Engineer portfolio framing.
+
+- **Title** — `Administrative Assistant` → `Operations & Tooling Assistant`
+- **Summary** — replaced one-liner with "Leveraged custom automation to optimize daily learning center workflows and student progress pipelines."
+- **Badge 1** — `~96% time cut` → `~96% Latency Reduction`
+- **Bullets** — replaced 2 bullets with 3: automation engineering, student pipeline impact, platform/asset work
+- **Tags** — `JavaScript`, `Automation`, `Bookmarklet` → `JavaScript`, `Workflow Automation`, `Scripting`, `Internal Tools`
+
+Verified the parallel Kumon Grading Automation project card in `#projects` was untouched — still shows original badge text and `Bookmarklet` tag as expected.
+
+---
+
 ## 2026-06-16 — Projects grid redesign + audit sweep
 
 **Projects section (`#projects > ul`):** The `auto-fit` grid with `grid-column: span 2` on the featured card was creating a phantom gap next to Worship Slides — the featured card couldn't start at column 2, so it forced a new row and left column 2 empty. Fixed by switching to an explicit `repeat(3, 1fr)` grid and moving the featured Edison Dental card to the last position (`grid-column: 1 / -1`, always full-width regardless of column count). The featured card also got a horizontal layout (`flex-direction: row`) — thumbnail fills the left 38%, body fills the right — which gives it a visually distinct "case study" feel rather than just a stretched version of the regular cards. Responsive: 2-col at ≤900px, 1-col at ≤580px; featured card flips to vertical column layout on mobile.
