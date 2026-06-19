@@ -4,6 +4,17 @@
 
 ---
 
+## 2026-06-19 — MAT-428: `.badges` and `.tags` — vertical padding to tighten inter-list gap
+
+Added `padding-block: var(--space-2)` to the shared `.badges, .tags` rule, plus two override rules to zero the margin between adjacent badge/tag sibling lists:
+
+- `.badges { margin-bottom: 0 }` — removes the bottom margin so the `.badges` container has no gap below it.
+- `.badges + .tags { margin-top: 0 }` — removes the top margin when `.tags` immediately follows `.badges` (project cards and some experience entries).
+
+The net effect: the two sibling containers are adjacent (0px margin gap), while the `padding-block` gives each list internal breathing room so items don't appear flush with the container edge. The 0px container gap is clearly smaller than the 8px `gap` between wrapped rows within each list, making `.badges` + `.tags` read as a tight metadata pair rather than two floating blocks. Cases where `.tags` follows a plain `<ul>` (Collette, Freelance UX entries) are unaffected — the adjacent-sibling selector doesn't fire there, and the plain `<ul>`'s UA margins provide the spacing.
+
+---
+
 ## 2026-06-19 — MAT-425: Section order research spike + implementation
 
 Research spike concluded the current order (About → How I Work → Experience → Projects) buried Projects — the strongest proof of "design engineer who ships" — behind ~1,000 words of narrative. Recommendation written to `docs/MAT-425-section-order-recommendation.md`.
