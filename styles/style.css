@@ -400,8 +400,17 @@ main section code {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  padding-block: var(--space-2);
   margin-top: var(--space-2);
   margin-bottom: var(--space-4);
+}
+
+.badges {
+  margin-bottom: 0;
+}
+
+.badges + .tags {
+  margin-top: 0;
 }
 
 .badges li,
