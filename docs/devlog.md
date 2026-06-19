@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-06-19 — MAT-422 + MAT-423 + MAT-424: Sidebar polish — spacing, photo, name font
+
+Three quick-wins to make the sidebar feel more intentional.
+
+- **MAT-422** — Changed `main` `padding-block` from `--space-16` to `--space-12` to match the sidebar, resolving the uneven vertical offset between the two columns.
+- **MAT-423** — Profile photo: `border-radius` → `50%`, added `box-shadow: 0 0 0 2px var(--color-accent)` ring. Replaced the old placeholder-div CSS on `.profile-photo-img` (flex centering, padding, mono font, border background) with `object-fit: cover` + full `width`/`height` so the real photo fills the circle edge-to-edge. Added 4px `margin-inline-start` to offset the photo from the sidebar's left wall.
+- **MAT-424** — `.identity-name` now uses `var(--font-display)` (DM Serif Display) at `--text-lg` with `line-height: var(--leading-tight)`, making the name typographically distinct from the body copy nav links below it.
+
+---
+
 ## 2026-06-19 — MAT-426: Featured card — two-column top + full-width footer
 
 Redesigned `.project-card--featured` from a single horizontal flex row into a two-zone layout:
