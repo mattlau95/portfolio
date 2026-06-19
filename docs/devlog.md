@@ -4,6 +4,19 @@
 
 ---
 
+## 2026-06-19 — MAT-426: Featured card — two-column top + full-width footer
+
+Redesigned `.project-card--featured` from a single horizontal flex row into a two-zone layout:
+
+- **Top:** `.featured-card-top` — `flex-direction: row`; image fills left column (1/3 width, `position: absolute; inset: 0; object-fit: cover` so it fills whatever height the text drives); label + h3 + description + project links in `.project-card-body` on the right.
+- **Footer:** `.featured-card-footer` — full-width strip below a `border-top` separator, holds the tech stack badges only.
+- **Image:** switched from the old placeholder crop (`edison-dental.webp`) to a full-page hero screenshot (`edison-dental-thm.webp`).
+- **Mobile (≤580px):** `.featured-card-top` stacks to column, `.project-thumb-wrap` gets `aspect-ratio: 16/9` so the absolutely-positioned image has a defined height to fill.
+
+Removed the old `position: relative` + absolute-fill approach on `.project-thumb-wrap` that was specific to the previous layout and replaced it with an equivalent pattern scoped to `.project-card--featured .project-thumb`.
+
+---
+
 ## 2026-06-17 — MAT-391: "How I Work" — asymmetric command-list layout
 
 Replaced the horizontal 4-card grid (`.process-cards`) with a scannable vertical stack. Each row splits into a fixed 140px left column (muted mono command token) and a flex-1 right column (bold h3 + body copy). Removed the old `.process-cards`, `.process-card`, `.process-card h3`, `.process-card p` rules entirely.

@@ -25,8 +25,8 @@
     <header class="sidebar">
       <div class="sidebar-top">
         <div class="profile-photo">
-          <div class="profile-photo-img profile-photo-img--primary">Photo 1 — pending</div>
-          <div class="profile-photo-img profile-photo-img--secondary">Photo 2 — pending</div>
+          <img class="profile-photo-img profile-photo-img--primary" src="/assets/photo-primary.webp" alt="Matthew Lau">
+          <img class="profile-photo-img profile-photo-img--secondary" src="/assets/photo-secondary.webp" alt="Matthew Lau" aria-hidden="true">
         </div>
         <h1 class="identity-name">Matthew C. Lau</h1>
         <p class="identity-tagline">I design and build accessible web apps — end to end.</p>
@@ -181,9 +181,12 @@
 
         <ul role="list" class="project-cards">
           <li class="project-card">
-            <div class="project-thumb">Thumbnail — pending</div>
+            <img class="project-thumb" src="/assets/thumbnails/ollae.webp" alt="ollae — Create Event screen" width="800" height="600">
             <h3>ollae</h3>
             <p>RSVP collection for casual events — no accounts, shareable across any chat platform. Built it for Thursday volleyball; works for anything informal.</p>
+            <ul role="list" class="badges" aria-label="Highlights">
+              <li>100+ RSVPs collected</li>
+            </ul>
             <ul role="list" class="tags" aria-label="Tech stack">
               <li>Go</li>
               <li>PostgreSQL</li>
@@ -191,27 +194,38 @@
             </ul>
             <p class="project-links">
               <a href="https://ollae.app" target="_blank" rel="noopener noreferrer">Live demo</a>
-              <span class="link-pending">Repo — coming soon</span>
+              <a href="https://github.com/mattlau95/ollae" target="_blank" rel="noopener noreferrer">Repo</a>
             </p>
           </li>
 
           <li class="project-card">
-            <div class="project-thumb">Thumbnail — pending</div>
+            <img class="project-thumb" src="/assets/thumbnails/pocalab.webp" alt="pocalab — K-pop photocard maker" width="800" height="600">
             <h3>pocalab</h3>
-            <p>Crop photocards to spec and generate print-ready, double-sided US Letter PDFs — with two-hole duplex calibration so they line up when you print and cut. Built it to replace the manual Canva workflow I used to fight every time I printed a sheet.</p>
+            <p>Browser-based K-pop photocard maker — upload, crop, and arrange cards into print-ready PDF sheets. Duplex calibration handles front/back registration automatically.</p>
+            <ul role="list" class="badges" aria-label="Highlights">
+              <li>45 min → 12 min per sheet</li>
+              <li>~70% faster</li>
+            </ul>
             <ul role="list" class="tags" aria-label="Tech stack">
-              <li>Client-side web app</li>
+              <li>React 19</li>
+              <li>TypeScript</li>
+              <li>Vite</li>
+              <li>pdf-lib</li>
             </ul>
             <p class="project-links">
               <a href="https://pocalab.com" target="_blank" rel="noopener noreferrer">Live demo</a>
-              <span class="link-pending">Repo — coming soon</span>
+              <a href="https://github.com/mattlau95/pocalab" target="_blank" rel="noopener noreferrer">Repo</a>
             </p>
           </li>
 
           <li class="project-card">
-            <div class="project-thumb">Thumbnail — pending</div>
+            <img class="project-thumb" src="/assets/thumbnails/worship-slides.webp" alt="Worship Slides Generator — upload screen" width="800" height="600">
             <h3>Worship Slides Generator</h3>
             <p>Drag in a Planning Center PDF export, it parses the content, you reorder/edit the slides, and it exports a PPTX ready to drop into Google Slides. Made for small groups, quick events, and retreats.</p>
+            <ul role="list" class="badges" aria-label="Highlights">
+              <li>96% faster</li>
+              <li>4-song set 2 hrs → 4 min</li>
+            </ul>
             <ul role="list" class="tags" aria-label="Tech stack">
               <li>Node.js</li>
               <li>Express</li>
@@ -221,14 +235,18 @@
             </ul>
             <p class="project-links">
               <a href="https://worship-slides-mattlau.fly.dev" target="_blank" rel="noopener noreferrer">Live demo</a>
-              <span class="link-pending">Repo — coming soon</span>
+              <a href="https://github.com/mattlau95/worship-slides-generator" target="_blank" rel="noopener noreferrer">Repo</a>
             </p>
           </li>
 
           <li class="project-card">
-            <div class="project-thumb">Thumbnail — pending</div>
+            <img class="project-thumb" src="/assets/thumbnails/vbs-scheduler.webp" alt="VBS Scheduler — Who's free when" width="800" height="600">
             <h3>VBS Scheduler</h3>
             <p>Availability scheduler for planning the VBS team's meetings and practices. Each team member fills a shared response form; a Google Apps Script endpoint reads those responses live from a Drive folder, and the app shows me real availability to plan around.</p>
+            <ul role="list" class="badges" aria-label="Highlights">
+              <li>8-person team</li>
+              <li>70 responses · full-summer view</li>
+            </ul>
             <ul role="list" class="tags" aria-label="Tech stack">
               <li>JavaScript</li>
               <li>Google Apps Script</li>
@@ -241,7 +259,7 @@
           </li>
 
           <li class="project-card">
-            <div class="project-thumb">Thumbnail — pending</div>
+            <img class="project-thumb" src="/assets/thumbnails/kumon-automation.webp" alt="Kumon Grading Automation — browser extension popup" width="800" height="600">
             <h3>Kumon Grading Automation</h3>
             <p>JavaScript bookmarklet that clears the old grading-correction logs on Kumon Connect automatically, so students aren't blocked from progressing.</p>
             <ul role="list" class="badges" aria-label="Highlights">
@@ -255,26 +273,38 @@
             </ul>
             <p class="project-links">
               <span class="link-pending">No public demo — writeup coming soon</span>
-              <span class="link-pending">Repo — coming soon</span>
+              <a href="https://github.com/mattlau95/kumon-connect-automation-tool-extension" target="_blank" rel="noopener noreferrer">Repo</a>
             </p>
           </li>
 
           <li class="project-card project-card--featured">
-            <div class="project-thumb">Thumbnail — pending</div>
-            <div class="project-card-body">
-              <p class="featured-label">★ Featured case study</p>
-              <h3>Edison Dental 27 — client redesign + local SEO</h3>
-              <p>Rebuilt a real local dental practice's site from the ground up — local SEO foundation, self-service admin, time-aware lead capture. Built in 2 days, killed a ~$50/yr subscription.</p>
+            <div class="featured-card-top">
+              <div class="project-thumb-wrap">
+                <img class="project-thumb" src="/assets/thumbnails/edison-dental-thm.webp" alt="Edison Dental 27 — hero section" width="800" height="600">
+              </div>
+              <div class="project-card-body">
+                <p class="featured-label">★ Featured case study</p>
+                <h3>Edison Dental 27 — client redesign + local SEO</h3>
+                <p>Rebuilt a real local dental practice's site from the ground up — local SEO foundation, self-service admin, time-aware lead capture. Built in 2 days, killed a ~$50/yr subscription.</p>
+                <p class="project-links">
+                  <a href="/projects/edison-dental.html">Read the case study</a>
+                  <a href="https://github.com/mattlau95/edison-dental-27" target="_blank" rel="noopener noreferrer">Repo</a>
+                </p>
+              </div>
+            </div>
+            <div class="featured-card-footer">
               <ul role="list" class="tags" aria-label="Tech stack">
+                <li>Next.js 16</li>
+                <li>TypeScript</li>
+                <li>React 19</li>
+                <li>Tailwind CSS v4</li>
+                <li>Shadcn/ui</li>
+                <li>Upstash Redis</li>
+                <li>Resend</li>
                 <li>Schema.org / JSON-LD</li>
-                <li>Google Places API</li>
-                <li>Auth'd admin</li>
                 <li>Local SEO</li>
-                <li>Responsive</li>
+                <li>Vercel</li>
               </ul>
-              <p class="project-links">
-                <a href="/projects/edison-dental.html">Read the case study</a>
-              </p>
             </div>
           </li>
         </ul>
