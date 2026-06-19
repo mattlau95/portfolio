@@ -4,6 +4,23 @@
 
 ---
 
+## 2026-06-19 — MAT-425: Section order research spike + implementation
+
+Research spike concluded the current order (About → How I Work → Experience → Projects) buried Projects — the strongest proof of "design engineer who ships" — behind ~1,000 words of narrative. Recommendation written to `docs/MAT-425-section-order-recommendation.md`.
+
+A planning discussion also surfaced that the proposed trimmed About (one sentence) was nearly identical to the sidebar tagline already on the page, making About redundant. Decision: absorb the bio into the sidebar and remove About from main entirely.
+
+**Implementation:**
+- **Removed `#about` section** from `<main>` and its nav item.
+- **Added `<p class="identity-bio">`** to the sidebar below the tagline: "Designer with a CS degree. 2 years building enterprise UX at Collette, now shipping under MCL Studio." Sidebar now carries the full identity story (tagline + credential).
+- **Reordered sections** to Projects → Experience → How I Work. Projects opens the scroll immediately after the sidebar; How I Work closes as a process differentiator after the reader has seen the work.
+- **Updated skip-link** target from `#about` to `#projects`.
+- **Nav updated** to 3 items in new order (Projects / Experience / How I Work).
+
+Scroll-spy JS and CSS were confirmed order-agnostic (ID-based, no `nth-child` or sibling dependencies) before touching anything.
+
+---
+
 ## 2026-06-19 — MAT-422 + MAT-423 + MAT-424: Sidebar polish — spacing, photo, name font
 
 Three quick-wins to make the sidebar feel more intentional.
