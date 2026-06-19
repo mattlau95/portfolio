@@ -4,14 +4,27 @@
 
 ---
 
+## 2026-06-19 — Featured card: image window padding
+
+Iterated on the `.project-card--featured` image layout to get the image window correctly padded and filling.
+
+**What didn't work:** `inset: var(--space-6)` on the absolutely-positioned `.project-thumb` shrank the image — it floated inside the wrap with card background visible around it. That's a floating image, not a padded window.
+
+**What works:** `margin: var(--space-6) 0 var(--space-6) var(--space-6)` on `.project-thumb-wrap` itself. The wrap is the "window" — margined away from the card edges to match `.project-card-body`'s `padding: var(--space-6)`. The image fills the wrap with `inset: 0; width: 100%; height: 100%`. Added `border-radius: var(--radius)` to the wrap (clipped by existing `overflow: hidden`). Right margin is 0 because the body column's own `padding-left: space-6` already provides the gap between image and text.
+
+Mobile override (`≤580px`): `width: auto` instead of `width: 100%` so horizontal margins don't overflow, `margin: var(--space-6) var(--space-6) 0 var(--space-6)` for symmetric inset.
+
+---
+
 ## 2026-06-19 — MAT-428: `.badges` and `.tags` — vertical padding to tighten inter-list gap
 
-Added `padding-block: var(--space-2)` to the shared `.badges, .tags` rule, plus two override rules to zero the margin between adjacent badge/tag sibling lists:
+Three rounds of iteration to land the correct fix.
 
-- `.badges { margin-bottom: 0 }` — removes the bottom margin so the `.badges` container has no gap below it.
-- `.badges + .tags { margin-top: 0 }` — removes the top margin when `.tags` immediately follows `.badges` (project cards and some experience entries).
+**Root cause discovered mid-fix:** `ul[role="list"]` in the CSS reset has specificity (0,1,1) — one element + one attribute selector — which beats `.badges, .tags` at (0,1,0). Every `padding-block` and `margin` set in the shared rule was silently overridden to 0, leaving the lists literally touching. Fixed by changing the selectors to `ul.badges, ul.tags` (specificity (0,1,1), wins by source order since it comes after the reset).
 
-The net effect: the two sibling containers are adjacent (0px margin gap), while the `padding-block` gives each list internal breathing room so items don't appear flush with the container edge. The 0px container gap is clearly smaller than the 8px `gap` between wrapped rows within each list, making `.badges` + `.tags` read as a tight metadata pair rather than two floating blocks. Cases where `.tags` follows a plain `<ul>` (Collette, Freelance UX entries) are unaffected — the adjacent-sibling selector doesn't fire there, and the plain `<ul>`'s UA margins provide the spacing.
+**Final state:**
+- `ul.badges, ul.tags`: `padding-block: var(--space-2)` for internal breathing room; `margin-top: var(--space-2)`; `margin-bottom: var(--space-4)`.
+- `ul.badges + ul.tags { margin-top: 0 }`: eliminates the doubled margin-top when tags directly follows badges (project cards, Kumon entry). Cases where a plain `<ul>` sits between them (Collette, Freelance UX) are unaffected.
 
 ---
 
