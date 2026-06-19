@@ -405,10 +405,6 @@ main section code {
   margin-bottom: var(--space-4);
 }
 
-.badges {
-  margin-bottom: 0;
-}
-
 .badges + .tags {
   margin-top: 0;
 }
