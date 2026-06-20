@@ -181,7 +181,7 @@ a {
 }
 
 @media (hover: hover) {
-  .profile-photo:hover .profile-photo-img--secondary {
+  .sidebar:hover .profile-photo-img--secondary {
     opacity: 1;
   }
 }

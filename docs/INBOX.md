@@ -1,3 +1,3 @@
 # Inbox
 
-- ul badges and ul tags need top and bottom padding. The space between one row of badges and another, (same with one row of tags) is greater than the space between the two ul.
+- body > div.layout > header > div.sidebar-top > h1 can be larger text! In addition, there is no "." after C. weirdly enough my middle name is the letter C.
