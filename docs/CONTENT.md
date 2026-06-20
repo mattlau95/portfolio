@@ -16,7 +16,7 @@
 - **Socials:**
   - GitHub — github.com/mattlau95
   - LinkedIn — linkedin.com/in/matthew-lau
-  - `[other? CodePen / X / Ko-fi once live]`
+  - *(GitHub + LinkedIn only — no additional socials)*
 - **Résumé:** `/assets/resume.pdf`
 
 ### Tagline (pick one, or use as a starting point — make it mine, not Brittany's)
@@ -147,29 +147,28 @@ B.A. Computer Science · Rutgers University · 2013–2017
 RSVP collection for casual events — no accounts, shareable across any chat
 platform. Built it for Thursday volleyball; works for anything informal.
 - Tags: `Go` `PostgreSQL` `React 19`
-- Demo: https://ollae.app  ·  Repo: `[https://github.com/...]`
+- Demo: https://ollae.app  ·  Repo: https://github.com/mattlau95/ollae
 - Thumbnail: `[/assets/thumbnails/ollae.webp]`
+- **Badge:** 100+ RSVPs collected
 - Note: the no-account, drop-a-link flow is the point — friction is the thing it
   removes.
 
 ### pocalab — pocalab.com
-Crop photocards to spec and generate print-ready, double-sided US Letter PDFs —
-with two-hole duplex calibration so they line up when you print and cut. Built it
-to replace the manual Canva workflow I used to fight every time I printed a sheet.
-- Tags: `Client-side web app` `[framework? — fill in]` `[PDF lib — pdf-lib / jsPDF?]`
-- Demo: https://pocalab.com  ·  Repo: `[https://github.com/...]`
+Browser-based K-pop photocard maker — upload, crop, and arrange cards into print-ready PDF sheets. Manage multiple decks, set per-card or shared backs, adjust copy counts, and choose standard print layout presets. Built it to replace the manual Canva workflow I used to fight every time I printed a sheet.
+- Tags: `React 19` `TypeScript` `Vite` `pdf-lib` `react-easy-crop` `Vercel`
+- Demo: https://pocalab.com  ·  Repo: https://github.com/mattlau95/pocalab
 - Thumbnail: `[/assets/thumbnails/pocalab.webp]`
-- Note: a real personal-pain-point tool, and a nice engineering detail — the
-  locked print spec (bleed/trim/safe, 300 DPI, duplex calibration) is exactly the
-  kind of precision worth one sentence in the case study.
+- **Badge:** 45 min → 12 min per sheet · ~70% faster · ~26 hrs/yr saved
+- Note: a real personal-pain-point tool. The duplex registration eliminated the gluing step entirely — fronts and backs now print straight onto cardstock, cut-ready.
 
 ### Worship Slides Generator
 Drag in a Planning Center PDF export, it parses the content, you reorder/edit the
 slides, and it exports a PPTX ready to drop into Google Slides. Made for small
 groups, quick events, and retreats.
 - Tags: `Node.js` `Express` `pdf-parse` `PptxGenJS` `Vanilla JS`
-- Demo: https://worship-slides-mattlau.fly.dev  ·  Repo: `[https://github.com/...]`
+- Demo: https://worship-slides-mattlau.fly.dev  ·  Repo: https://github.com/mattlau95/worship-slides-generator
 - Thumbnail: `[/assets/thumbnails/worship-slides.webp]`
+- **Badge:** 96% faster · 4-song set 2 hrs → 4 min
 - Note: PDF parsing → editable slide phase → file export. The pipeline is the
   interesting engineering part — worth a sentence on the case study.
 
@@ -181,9 +180,8 @@ groups, quick events, and retreats.
 Rebuilt a real local dental practice's site from the ground up. I'd built them a
 rough WordPress/Elementor site ~8 years ago (edisondental27.com); this is the
 modern rebuild — cleaner, faster, and actually findable on Google.
-- Tags: `[framework — Vercel deploy]` `Schema.org / JSON-LD` `Google Places API`
-  `Auth'd admin` `Local SEO` `Responsive`
-- New: https://edison-dental-27.vercel.app  ·  Old (the "before"): edisondental27.com
+- Tags: `Next.js 16` `TypeScript` `React 19` `Shadcn/ui` `Tailwind CSS v4` `Resend` `Upstash Redis` `Schema.org / JSON-LD` `Google Places API` `Auth'd admin` `Local SEO` `Vercel`
+- New: https://edison-dental-27.vercel.app  ·  Old (the "before"): edisondental27.com  ·  Repo: https://github.com/mattlau95/edison-dental-27
 - Thumbnail: `[/assets/thumbnails/edison-dental.webp]`
 
 **The problem.** The old Elementor site was buggy and fragile, invisible to Google
@@ -208,8 +206,11 @@ modern rebuild — cleaner, faster, and actually findable on Google.
 *capabilities delivered* (built in 2 days, ~$50/yr cost removed, full local-SEO
 foundation where there was none, non-technical staff unblocked) rather than
 traffic numbers you don't have yet. Then quantify what you *can*:
-- **Capture Lighthouse / CWV + SEO scores, old vs. new** — a real "before 4X /
-  after 9X" pair on a paying client's site is the single best proof point here.
+- **Lighthouse (mobile), old vs. new:**
+  | | Perf | A11y | Best Practices | SEO |
+  |---|---|---|---|---|
+  | Old (Elementor) | 61 | 88 | 96 | 100 |
+  | New (rebuilt) | 95 | 100 | 100 | 100 |
 - Once it's the live domain, track search impressions, ranking for "dentist
   Edison NJ," and form submissions over time — that's the follow-up metric.
 
@@ -221,16 +222,15 @@ to plan around.
 - Tags: `JavaScript` `Google Apps Script` `Static / GitHub Pages`
 - Demo: https://mattlau95.github.io/vbs-scheduler  ·  Repo: github.com/mattlau95/vbs-scheduler
 - Thumbnail: `[/assets/thumbnails/vbs-scheduler.webp]`
-- Note: replaced **Doodle** (paywalled + limited) with something free and tailored
-  to the team. A static front end + an Apps Script endpoint as the data layer is a
-  clean, zero-cost architecture worth a sentence — no server, no subscription.
+- **Badge:** 8-person team · 70 responses · full-summer view
+- Note: replaced **Doodle** (capped at 1 month, harder to read) with a free tool scoped to the whole summer and matched to the team's own schedule sheet. Static front end + Apps Script endpoint — no server, no subscription.
 
 ### Kumon Grading Automation
 JavaScript bookmarklet that clears the old grading-correction logs on Kumon
 Connect automatically, so students aren't blocked from progressing.
 - Tags: `JavaScript` `Automation` `Bookmarklet`
 - **Badge:** ~96% time cut · 10–13 hrs → ~25 min
-- Repo: `[https://github.com/...]`  ·  No public demo — link a short writeup / GIF
+- Repo: https://github.com/mattlau95/kumon-connect-automation-tool-extension  ·  No public demo — link a short writeup / GIF
 - Thumbnail: `[/assets/thumbnails/kumon-automation.webp]`
 
 > **Also built (optional "archive" line, not a full card):** a links / schedule /

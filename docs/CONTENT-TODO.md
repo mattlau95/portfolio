@@ -13,23 +13,25 @@ Every project card needs a public repo with a real README before launch
 (`CONTENT.md`'s own rule). Add the URL, then check it off once the repo is
 actually public.
 
-- [ ] **ollae** — `https://github.com/___`
-- [ ] **pocalab** — `https://github.com/___`
-- [ ] **Worship Slides Generator** — `https://github.com/___`
+- [x] **ollae** — `https://github.com/mattlau95/ollae`
+- [x] **pocalab** — `https://github.com/mattlau95/pocalab`
+- [x] **Worship Slides Generator** — `https://github.com/mattlau95/worship-slides-generator`
 - [x] **VBS Scheduler** — `https://github.com/mattlau95/vbs-scheduler` *(already public, confirmed)*
-- [ ] **Kumon Grading Automation** — `https://github.com/___`
-- [ ] **Edison Dental 27** — no repo link currently planned (client project — confirm whether to omit or link a private/portfolio-only repo)
+- [x] **Kumon Grading Automation** — `https://github.com/mattlau95/kumon-connect-automation-tool-extension`
+- [x] **Edison Dental 27** — `https://github.com/mattlau95/edison-dental-27`
 
 ---
 
 ## 2. Other content gaps
 
-- [ ] **Tech stack — pocalab.** Framework + PDF library still unconfirmed in `CONTENT.md` (`[framework?]`, `[PDF lib — pdf-lib / jsPDF?]`).
-- [ ] **Tech stack — Edison Dental.** Framework tag still unconfirmed (`[framework — Vercel deploy]` — Next.js? Plain static?).
-- [ ] **Résumé file.** `/assets/resume.pdf` is linked from the sidebar but the file doesn't exist yet — add it at that exact path.
-- [ ] **"Other" social link.** CodePen / X / Ko-fi — pick a platform and provide the URL, or leave permanently skipped.
-- [ ] **Studio hub URL.** The footer's "an MCL Studio project" line is plain text, not a link, until this exists.
-- [ ] **Edison Dental Lighthouse before/after.** Old-site vs. new-site Lighthouse/CWV/SEO scores — `CONTENT.md` calls this "the single best proof point" for the case study; currently a `.pending-note` placeholder on the case study page.
+- [x] **Tech stack — pocalab.** React 19 + TypeScript + Vite, pdf-lib (client-side PDF), react-easy-crop, deployed on Vercel.
+- [x] **Tech stack — Edison Dental.** Next.js 16 (App Router) + TypeScript + React 19, Shadcn/ui + Radix UI, Tailwind CSS v4, Resend (email), Upstash Redis (data/state), React Compiler, Vercel.
+- [x] **Résumé file.** `/assets/resume.pdf` — file added.
+- [x] **"Other" social link.** Permanently skipped — GitHub + LinkedIn only.
+- [ ] **Studio hub URL.** TBD — footer stays as plain text until the studio hub exists.
+- [x] **Edison Dental Lighthouse before/after** (mobile):
+  - Old (edisondental27.com): Performance 61 · Accessibility 88 · Best Practices 96 · SEO 100
+  - New (edison-dental-27.vercel.app): Performance 95 · Accessibility 100 · Best Practices 100 · SEO 100
 
 ---
 
@@ -40,10 +42,10 @@ in below and they'll get wired into `.badges` pills on the project cards
 (same visual treatment as the Kumon/Collette badges already live in
 Experience and on the Kumon Grading Automation card).
 
-- **ollae** — metric(s): `___`
-- **pocalab** — metric(s): `___`
-- **Worship Slides Generator** — metric(s): `___`
-- **VBS Scheduler** — metric(s): `___`
+- **ollae** — 100+ RSVPs collected in personal use (Thursday volleyball + casual events)
+- **pocalab** — 45 min → 12 min per sheet (~70% faster, ~30 min saved); ~26 hrs/yr back at one sheet/week. Gluing step eliminated entirely via front/back registration.
+- **Worship Slides Generator** — 96% reduction in slide prep time; 4-song set ~1.5–2 hrs → ~4 min; 8-song night ~3–4 hrs → ~8 min
+- **VBS Scheduler** — 8-person team, 70 availability responses collected across the full summer. Replaced Doodle (which capped at 1 month at a time); results view designed to match the team's own schedule sheet.
 - **Kumon Grading Automation** — already has a badge (~96% time cut · 10–13 hrs → ~25 min). Additional metric(s) if any: `___`
 - **Edison Dental 27** — already covered via the case study's "what I built" + impact framing; the Lighthouse before/after (see §2) is the one still-missing metric here.
 
@@ -62,12 +64,12 @@ Drop each file in at the exact filename below — `CONTENT.md` and the markup
 already reference these paths, so no code changes needed once they exist.
 Check the box once the real file is in place.
 
-- [ ] `/assets/thumbnails/ollae.webp` (4:3)
-- [ ] `/assets/thumbnails/pocalab.webp` (4:3)
-- [ ] `/assets/thumbnails/worship-slides.webp` (4:3)
-- [ ] `/assets/thumbnails/vbs-scheduler.webp` (4:3)
-- [ ] `/assets/thumbnails/kumon-automation.webp` (4:3)
-- [ ] `/assets/thumbnails/edison-dental.webp` (8:3 — wider)
+- [x] `/assets/thumbnails/ollae.webp` (4:3)
+- [x] `/assets/thumbnails/pocalab.webp` (4:3)
+- [x] `/assets/thumbnails/worship-slides.webp` (4:3)
+- [x] `/assets/thumbnails/vbs-scheduler.webp` (4:3)
+- [x] `/assets/thumbnails/kumon-automation.webp` (4:3)
+- [x] `/assets/thumbnails/edison-dental.webp` — portrait crop of hero section (450×600)
 
 ---
 

@@ -25,11 +25,16 @@
       <h1>Edison Dental 27 — client redesign + local SEO</h1>
       <p class="case-study-meta">Built in 2 days</p>
       <ul role="list" class="tags" aria-label="Tech stack">
+        <li>Next.js 16</li>
+        <li>TypeScript</li>
+        <li>React 19</li>
+        <li>Tailwind CSS v4</li>
+        <li>Shadcn/ui</li>
+        <li>Upstash Redis</li>
+        <li>Resend</li>
         <li>Schema.org / JSON-LD</li>
-        <li>Google Places API</li>
-        <li>Auth'd admin</li>
         <li>Local SEO</li>
-        <li>Responsive</li>
+        <li>Vercel</li>
       </ul>
       <p class="case-study-links">
         <a href="https://edison-dental-27.vercel.app" target="_blank" rel="noopener noreferrer">New site</a>
@@ -56,7 +61,16 @@
     <section>
       <h2>Impact</h2>
       <p>This is a recent rebuild, so the honest framing leads with capabilities delivered rather than traffic numbers I don't have yet: built in 2 days, ~$50/yr in cost removed, a full local-SEO foundation where there was none before, and non-technical staff unblocked from needing a developer for routine changes.</p>
-      <p class="pending-note">Lighthouse / Core Web Vitals + SEO scores, old vs. new — pending capture. This before/after pair is the single best proof point for this case study and will be added once measured.</p>
+      <table class="lighthouse-table">
+        <caption>Lighthouse scores (mobile) — old Elementor site vs. rebuild</caption>
+        <thead>
+          <tr><th></th><th>Performance</th><th>Accessibility</th><th>Best Practices</th><th>SEO</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Old (Elementor)</th><td>61</td><td>88</td><td>96</td><td>100</td></tr>
+          <tr><th>New (rebuilt)</th><td>95</td><td>100</td><td>100</td><td>100</td></tr>
+        </tbody>
+      </table>
       <p>Once it's the live domain, the follow-up metrics worth tracking are search impressions, ranking for "dentist Edison NJ," and form submissions over time.</p>
     </section>
 
