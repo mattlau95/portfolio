@@ -4,6 +4,36 @@
 
 ---
 
+## 2026-06-20 — Audit sweep: all 8 findings from 2026-06-19
+
+Closed every open item from the 2026-06-19 audit (1 P0, 3 P1, 4 P2). Six were quick wins done first; two were deep-work items done in a follow-up pass.
+
+**P0 — Touch targets (WCAG 2.2 SC 2.5.8)**
+`nav a` and `.socials a` had `padding-block` only. Added `padding-inline: var(--space-3)` to both rules. The added horizontal padding widens the clickable zone to satisfy the 24px circle clearance requirement without affecting visual layout.
+
+**P1 — h1 name too small**
+`.identity-name` was `font-size: var(--text-lg)`. Bumped to `var(--text-xl)` so the name is visually dominant over the nav and body copy below it.
+
+**P1 — Wrong initial active nav item**
+`setActive('about')` on line 36 of `main.js` referred to a section that no longer exists (removed in MAT-425). Changed to `setActive('projects')` — the first real section in DOM order — so a nav item is highlighted on fresh page load instead of nothing.
+
+**P2 — Image fetch hints**
+Added `fetchpriority="high"` to the primary profile photo (the probable LCP element) and `loading="lazy"` to the secondary photo (hidden by default, no reason to fetch eagerly).
+
+**P2 — Footer badge**
+Updated Performance from 96 to 94 to match the actual Lighthouse reading from the audit. Accessibility stays at 100 (expected to hold after the touch-target fix); Best Practices stays at 100 (96 seen locally was a network-error artifact that doesn't appear in production).
+
+**P2 — Period check**
+Audit noted a period after "Matthew C. Lau" that appeared missing on live. Checked source — no period in `index.html:31` either. No change needed; already resolved.
+
+**P1 — Font loading / Speed Index**
+The `display=swap` parameter on the Google Fonts URL caused text to swap in after FCP, inflating Speed Index to 6.6s locally. Changed to `display=optional` in both the preload `href` and the `<noscript>` fallback. With `optional`, the browser uses the web font only if it arrives before FCP; otherwise it commits to the system fallback for that visit — no swap, no Speed Index inflation. Tradeoff: on very slow connections users may see system fonts permanently for a given visit.
+
+**P2 — External link indicators**
+Added one CSS rule after the base `a {}` block: `a[target="_blank"]::after { content: " ↗"; font-size: 0.75em; }`. Covers all 13 external links across both pages (social links, Live demo, Repo) automatically without touching each anchor.
+
+---
+
 ## 2026-06-19 — Featured card: image window padding
 
 Iterated on the `.project-card--featured` image layout to get the image window correctly padded and filling.

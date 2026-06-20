@@ -9,8 +9,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css">
   <link rel="stylesheet" href="/styles/style.css">
@@ -25,8 +25,8 @@
     <header class="sidebar">
       <div class="sidebar-top">
         <div class="profile-photo">
-          <img class="profile-photo-img profile-photo-img--primary" src="/assets/photo-primary.webp" alt="Matthew Lau">
-          <img class="profile-photo-img profile-photo-img--secondary" src="/assets/photo-secondary.webp" alt="Matthew Lau" aria-hidden="true">
+          <img class="profile-photo-img profile-photo-img--primary" src="/assets/photo-primary.webp" alt="Matthew Lau" fetchpriority="high">
+          <img class="profile-photo-img profile-photo-img--secondary" src="/assets/photo-secondary.webp" alt="Matthew Lau" aria-hidden="true" loading="lazy">
         </div>
         <h1 class="identity-name">Matthew C. Lau</h1>
         <p class="identity-tagline">I design and build accessible web apps — end to end.</p>
@@ -309,7 +309,7 @@
         <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
         <p class="footer-date">Last updated June 2026</p>
         <ul role="list" class="badges cwv-badge" aria-label="Lighthouse scores">
-          <li>Performance 96</li>
+          <li>Performance 94</li>
           <li>Accessibility 100</li>
           <li>Best Practices 100</li>
           <li>LCP 2.3s</li>
