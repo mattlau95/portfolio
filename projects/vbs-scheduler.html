@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBS Band Scheduler — Case Study | Matthew C. Lau</title>
+  <meta name="description" content="Replaced Doodle for a church band — cross-references Google Form availability from 10+ members to surface shared free windows, with live sync and a built-in practice calendar.">
+  <meta property="og:title" content="VBS Band Scheduler — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="Replaced Doodle for a church band — cross-references Google Form availability from 10+ members to surface shared free windows, with live sync and a built-in practice calendar.">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional"></noscript>
+
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <main class="case-study">
+    <a class="back-link" href="/#projects">← Back to projects</a>
+
+    <header class="case-study-header">
+      <p class="case-study-label">Case study</p>
+      <h1>VBS Band Scheduler</h1>
+      <p class="case-study-deck">Replaced Doodle for a church band — cross-references Google Form availability from 10+ members to surface shared free windows, with live sync and a built-in practice calendar.</p>
+      <p class="case-study-meta-row">Role: Design + Engineering · 2026 · Shipped</p>
+      <ul role="list" class="case-study-metrics">
+        <li>
+          <span class="metric-value">Replaces</span>
+          <span class="metric-label">Doodle — no account, no paywall</span>
+        </li>
+        <li>
+          <span class="metric-value">10+</span>
+          <span class="metric-label">members scheduled</span>
+        </li>
+        <li>
+          <span class="metric-value">3 hrs</span>
+          <span class="metric-label">→ 10 min per audit cycle</span>
+        </li>
+      </ul>
+      <ul role="list" class="tags" aria-label="Tech stack">
+        <li>Vanilla JS</li>
+        <li>Google Apps Script</li>
+        <li>Google Sheets CSV</li>
+        <li>GitHub Pages</li>
+        <li>localStorage</li>
+      </ul>
+      <p class="case-study-links">
+        <a href="https://mattlau95.github.io/vbs-scheduler/" target="_blank" rel="noopener noreferrer">Live demo</a>
+        <a href="https://github.com/mattlau95/vbs-scheduler" target="_blank" rel="noopener noreferrer">Repo</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Overview</h2>
+      <p>VBS Band Scheduler is a single-page tool that finds open rehearsal windows for the VBS Praise 2026 band. Members submit availability through a Google Form; the app cross-references every response against already-scheduled practices and surfaces the slots where everyone — or enough people — can make it. It replaced the team's prior ad-hoc Doodle polls with something purpose-built, zero-cost, and always up to date.</p>
+    </section>
+
+    <section>
+      <h2>The problem</h2>
+      <p>Every few weeks, coordinating a rehearsal meant someone posting a Doodle link, chasing down the six people who hadn't responded, manually checking it against practices already on the calendar, and then messaging a time — only to find out one key person had a conflict that wasn't in Doodle. The tools available were generic; none of them knew about existing commitments, and none held the band's roster.</p>
+      <p>The friction wasn't technical — it was the repeated, manual assembly of information that already existed in three places (a Google Form, a calendar, and someone's memory).</p>
+    </section>
+
+    <section>
+      <h2>Role &amp; constraints</h2>
+      <p>I owned the full stack: form design, the Google Apps Script backend, the front-end UI, and hosting. The constraints shaped most of the decisions:</p>
+      <ul>
+        <li><strong>Zero ongoing cost.</strong> No servers, no paid services, nothing to maintain.</li>
+        <li><strong>Non-technical team.</strong> Updating the schedule had to mean editing a Google Sheet, not touching code.</li>
+        <li><strong>No logins.</strong> The link gets shared in a group chat; requiring auth would kill adoption.</li>
+        <li><strong>The data already lived in Google Drive.</strong> Meeting people where the data was meant less migration friction.</li>
+      </ul>
+    </section>
+
+    <section class="case-study-section--approach">
+      <h2>Approach</h2>
+
+      <h3>Design</h3>
+      <p>The UI is organized around a single question: <em>when can we all meet?</em> The finder defaults to showing every slot where the full roster is free, with a segmented control to relax that down to "most people." Chips let you filter by person or time-of-day without navigating away.</p>
+      <p>A second tab shows the practice calendar as a plain chronological list — upcoming entries are full opacity, past ones are dimmed, and the next practice gets a "Next" badge. No calendar grid, no hover states to learn. The point was readability in a quick glance, not a feature-complete calendar widget.</p>
+      <p>The status pill in the corner — <strong>Live</strong>, <strong>Cached</strong>, or <strong>Snapshot</strong> — makes the data freshness visible without interrupting the flow. Clicking it retries the live fetch and shows a pulsing "Fetching…" state so the user knows something is happening.</p>
+      <p>Accessibility was treated as a first-class constraint, not an afterthought. A full audit (axe-core, pa11y, Lighthouse) surfaced 24 violations and 12 actionable findings. All 12 were fixed in the same session: contrast ratios, ARIA labeling, landmark structure, LCP image, and focus management.</p>
+
+      <h3>Engineering</h3>
+      <p>The backend is a Google Apps Script endpoint that reads a folder of Form response sheets and returns a normalized JSON payload — no database, no auth layer, no deployment pipeline. The front-end fetches it on load.</p>
+      <p>The schedule data comes from a published Google Sheets CSV. The URL is entered once into a text input and saved to <code>localStorage</code>; from then on it loads automatically. The CSV parser handles quoted fields with embedded commas, human-readable date strings (<code>"Sunday, May 31"</code>), and flexible column names (<code>label</code>, <code>name</code>, <code>event</code>, <code>location</code>, etc.) — because the sheet format isn't something I controlled.</p>
+      <p>Offline resilience has three layers: live fetch → <code>localStorage</code> rolling cache → a hardcoded snapshot. If the script endpoint is down or slow (9s timeout), the app falls back gracefully and tells the user exactly which layer it's showing.</p>
+      <p>Filtering is done client-side at the <code>normalize()</code> layer — before data ever reaches the component state — so excluded members are invisible regardless of which data source is active.</p>
+    </section>
+
+    <section>
+      <h2>Key decisions &amp; tradeoffs</h2>
+      <dl class="key-decisions">
+        <dt>Plain HTML/CSS/JS over a framework</dt>
+        <dd>The app has no build step, no <code>node_modules</code>, no CI pipeline. It loads in one request and runs on GitHub Pages for free. The tradeoff is that any real state complexity would become painful fast — but for a tool this focused, it never got there.</dd>
+
+        <dt>Google Sheets as the schedule source, not the Apps Script</dt>
+        <dd>Routing the practice calendar through the same script endpoint would have been cleaner architecturally — one data source instead of two. But it would have made updating the schedule dependent on someone editing a Drive folder structure rather than a spreadsheet row. Non-technical users edit cells; they don't think in terms of Drive folders. I traded a cleaner data model for a workflow that matched how the team actually operates.</dd>
+
+        <dt>Client-side filtering over server-side</dt>
+        <dd>Excluding a person from all views could have been done at the Apps Script layer, but that would mean deploying a script change every time the roster shifts. Keeping the filter list in the front-end JS means the script stays generic and the app owns its own roster.</dd>
+
+        <dt>No accounts, ever</dt>
+        <dd>The tool is intentionally opaque to anonymous usage. There's no way to know how many people are using it at any moment, and no persistent state per user. That's a real limitation if the team ever wanted to track attendance or send reminders — but it also meant there was nothing to maintain and nothing to break.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Outcome</h2>
+      <ul>
+        <li><strong>Replaced Doodle</strong> entirely — the team links directly to the app rather than creating a new poll each cycle.</li>
+        <li><strong>10+ members</strong> across the roster, with availability cross-referenced automatically.</li>
+        <li><strong>Lighthouse score 95+</strong> after the UX audit pass — from a starting point that had 24 accessibility violations.</li>
+        <li>A full audit cycle went from roughly <strong>3 hours manually to under 10 minutes</strong> with tooling — the leverage came from structured issue creation, which is the part that normally gets skipped.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>The multi-layer fallback (Live → Cached → Snapshot) was worth building. The Apps Script endpoint occasionally times out, and without it the app would just show a blank state. That said, if I rebuilt this, I'd probably move the schedule data into the same script endpoint rather than a separate Sheets CSV — the two-source architecture creates a subtle state mismatch that I papered over with client-side merging logic.</p>
+      <p>The accessibility audit was the most surprising part of the build. A tool that looked finished had 24 violations. Running the audit as an explicit step rather than relying on "looks fine" was the only reason those got caught.</p>
+    </section>
+
+    <footer>
+      <p>an MCL Studio project</p>
+      <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
+      <p class="footer-date">Last updated June 2026</p>
+    </footer>
+  </main>
+
+  <script src="/scripts/main.js" defer></script>
+</body>
+</html>

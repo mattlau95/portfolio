@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ollae — Case Study | Matthew C. Lau</title>
+  <meta name="description" content="A zero-friction group RSVP tool — share one link in the group chat, see who's in. No accounts, no apps, no friction. Named after the Korean phrase for 'wanna come?'">
+  <meta property="og:title" content="Ollae — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="A zero-friction group RSVP tool — share one link in the group chat, see who's in. No accounts, no apps, no friction.">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional"></noscript>
+
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <main class="case-study">
+    <a class="back-link" href="/#projects">← Back to projects</a>
+
+    <header class="case-study-header">
+      <p class="case-study-label">Case study</p>
+      <h1>Ollae</h1>
+      <p class="case-study-deck">A zero-friction group RSVP tool — share one link in the group chat, see who's in. No accounts, no apps, no friction. Named after the Korean phrase for "wanna come?"</p>
+      <p class="case-study-meta-row">Role: Design + Engineering (solo, full-stack) · May–June 2026 · Shipped</p>
+      <ul role="list" class="case-study-metrics">
+        <li>
+          <span class="metric-value">8</span>
+          <span class="metric-label">RSVPs on launch day</span>
+        </li>
+        <li>
+          <span class="metric-value">21</span>
+          <span class="metric-label">dev sessions, zero to live</span>
+        </li>
+        <li>
+          <span class="metric-value">5</span>
+          <span class="metric-label">messaging platforms with OG previews</span>
+        </li>
+      </ul>
+      <ul role="list" class="tags" aria-label="Tech stack">
+        <li>Go</li>
+        <li>PostgreSQL</li>
+        <li>React 19</li>
+        <li>TypeScript</li>
+        <li>Tailwind CSS</li>
+        <li>Vite</li>
+        <li>Vercel</li>
+        <li>Fly.io</li>
+        <li>Claude API</li>
+        <li>Resend</li>
+        <li>Figma</li>
+      </ul>
+      <p class="case-study-links">
+        <a href="https://ollae.app" target="_blank" rel="noopener noreferrer">Live demo</a>
+        <a href="https://github.com/mattlau95/ollae" target="_blank" rel="noopener noreferrer">Repo</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Overview</h2>
+      <p>Ollae is a group RSVP tool built for informal events — pickup games, team lunches, karaoke nights. The organizer creates an event and shares a single URL; participants tap it, enter their name, and RSVP. No accounts, no app to download. It went from zero to live with real users in one week, with eight RSVPs on the day it first hit a group chat.</p>
+    </section>
+
+    <section>
+      <h2>The problem</h2>
+      <p>Every recurring group event has the same coordination problem: someone floats the idea, replies scatter across a thread, and the organizer is left manually counting heads. Existing tools either require everyone to create an account — a real barrier in a casual group context — or are buried inside another platform that not everyone uses.</p>
+      <p>The right tool for this problem is a link. Share it the way you'd share a YouTube video. The person on the other end shouldn't need to do anything before they can interact with it.</p>
+    </section>
+
+    <section>
+      <h2>Role &amp; constraints</h2>
+      <p>I owned the whole thing: product decisions, Figma designs, backend, frontend, deployment, and the naming when a trademark search forced a rebrand mid-project. The original name — Showup.gg — had a pending trademark registration in Class 042 (SaaS) from another company, discovered the day before launch.</p>
+      <p>The no-accounts constraint was a product decision, not a technical limitation. It shaped every other decision that followed: how identity works, how editing works, how organizer access works. The entire system had to be link-based or it wasn't worth building.</p>
+    </section>
+
+    <section class="case-study-section--approach">
+      <h2>Approach</h2>
+
+      <h3>Design</h3>
+      <p>The RSVP flow has three states — default, selected, and success — all designed in Figma before a line of frontend code was written. Every interactive element sits in the lower half of the screen, matching the thumb zone for single-handed phone use. The dark-first UI was designed that way from the start, not adapted from light.</p>
+      <p>The most considered UX decision was "Remind Me." The original design had three equal buttons: In, Out, Maybe. Three equal choices invite hedging — "maybe" gives people permission not to decide. I reframed it: two clear primary buttons (I'm in / Can't make it), with "Remind me closer to the date" as a small text link below. Forcing a real binary first, with an escape hatch for genuine indecision, is a different product surface. The data model reflects this — <code>remind_me</code> is a distinct RSVP status that triggers a 24-hour email reminder via Resend, not a soft maybe.</p>
+      <p>The design system uses Figma Variables (colors, spacing, radius) with the same token names as the Tailwind config. <code>status/in</code> in Figma is <code>status-in</code> in CSS — zero translation cost between design and code.</p>
+
+      <h3>Engineering</h3>
+      <p>The backend is Go (chi router) on Fly.io; the frontend is React 19 + TypeScript on Vercel. The interesting problems weren't in the stack — they were in the edge cases.</p>
+      <p>iMessage fetches link previews from the device using a regular browser User-Agent, not a bot UA, so the usual "detect crawler, serve different HTML" pattern doesn't trigger. The fix: every <code>/events/:slug</code> URL routes through a Go handler that returns a server-rendered HTML page with full OG meta tags, then immediately redirects real users to the React SPA via a JavaScript <code>location.replace()</code>. iMessage reads the tags and stops; users get the app. Facebook's crawler (<code>facebookexternalhit</code>) and WeChat's (<code>MicroMessenger</code>) both execute JavaScript, so they followed the redirect and landed on the bare SPA with no tags. A <code>isCrawlerUA()</code> check in the handler conditionally omits the redirect script for known JS-executing scrapers.</p>
+      <p>The OG image itself is a 1200×630 PNG rendered server-side in Go using <code>fogleman/gg</code>. Each event gets a Claude-generated emoji that appears faded in the card background and as a small badge in the corner — personality at zero extra cost, because the emoji is picked in the same API call that parses the event description.</p>
+      <p>The event creation flow uses Claude Haiku to parse a freeform description ("Volleyball Saturday 2pm · Venice Beach Court 4") into structured fields shown in an editable preview. The API call fires on submit, not on keystroke — streaming autocomplete would have the same payoff at ten times the complexity.</p>
+      <p>Organizer edit access works without accounts: a 24-char token is generated at creation and returned alongside the share link. <code>PATCH /events/:slug</code> validates it with a single <code>WHERE slug = $1 AND admin_token = $2</code> query — wrong or missing token returns 403.</p>
+    </section>
+
+    <section>
+      <h2>Key decisions &amp; tradeoffs</h2>
+      <dl class="key-decisions">
+        <dt>Submit-and-parse over streaming</dt>
+        <dd>Streaming the Claude response on every keystroke would have felt more alive, but required continuous API calls for a 10–15 word input. One call on submit is fast enough to feel instant and costs a fraction. The tradeoff is that there's no real-time feedback as you type — acceptable here.</dd>
+
+        <dt>Wall-clock time, not UTC conversion</dt>
+        <dd>Ollae events are in-person and local. Storing the time as entered (without timezone conversion) and displaying it as entered is what organizers expect. A user who types "7pm" wants to see "7pm" on the RSVP page — not the UTC-converted equivalent for other time zones. This required actively stripping the <code>Z</code> suffix before constructing Date objects in the display layer.</dd>
+
+        <dt>Admin token in the URL, no accounts</dt>
+        <dd>The organizer's edit link contains their token as a query parameter (<code>?admin=TOKEN</code>). This exposes the token in browser history. The tradeoff was accepted: for a casual group event tool, the convenience of a tappable link outweighs the risk, and it's consistent with the no-accounts model everywhere else.</dd>
+
+        <dt>fogleman/gg over Satori for OG images</dt>
+        <dd>Satori is a popular choice for dynamic OG cards but runs in Node. The backend is Go — adding a separate Node service for one endpoint would have doubled the infrastructure. <code>fogleman/gg</code> is a Go 2D graphics library with enough capability for this layout. The tradeoff: no CSS, so layout math had to be explicit (computing Y positions with space-between logic rather than flexbox).</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Outcome</h2>
+      <p>Launched May 19, 2026. Eight RSVPs came in on the first day — including one participant who RSVPed on behalf of eight players from another group, which surfaced group RSVP as an edge case within hours and directly shaped the guest count feature shipped a week later. OG preview cards work across iMessage, Facebook Messenger, WeChat, WhatsApp, and Telegram.</p>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>The timezone bug appeared twice, in different forms. Both times the root cause was the same: treating a naive datetime string as UTC somewhere in the pipeline. The lesson — decide your time semantics once, at the schema level, and enforce them everywhere — is easy to state and apparently hard to remember.</p>
+      <p>The naming process cost most of a session. In hindsight, the trademark search should have been the first step, not something discovered the day before launch. "Ollae" turned out to be a better name anyway.</p>
+    </section>
+
+    <footer>
+      <p>an MCL Studio project</p>
+      <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
+      <p class="footer-date">Last updated June 2026</p>
+    </footer>
+  </main>
+
+  <script src="/scripts/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kumon Class-Navi Automation — Case Study | Matthew C. Lau</title>
+  <meta name="description" content="Born as a bookmarklet, rebuilt as a Chrome extension — cuts a multi-day Kumon grading backlog down to a 25-minute unattended run.">
+  <meta property="og:title" content="Kumon Class-Navi Automation — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="Born as a bookmarklet, rebuilt as a Chrome extension — cuts a multi-day Kumon grading backlog down to a 25-minute unattended run.">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional"></noscript>
+
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <main class="case-study">
+    <a class="back-link" href="/#projects">← Back to projects</a>
+
+    <header class="case-study-header">
+      <p class="case-study-label">Case study</p>
+      <h1>Kumon Class-Navi Automation</h1>
+      <p class="case-study-deck">Born as a bookmarklet, rebuilt as a Chrome extension — cuts a multi-day Kumon grading backlog down to a 25-minute unattended run.</p>
+      <p class="case-study-meta-row">Role: Engineering · 2025 · Shipped</p>
+      <ul role="list" class="case-study-metrics">
+        <li>
+          <span class="metric-value">multi-day</span>
+          <span class="metric-label">→ 25 min backlog cleared</span>
+        </li>
+        <li>
+          <span class="metric-value">70+</span>
+          <span class="metric-label">students tracked weekly</span>
+        </li>
+        <li>
+          <span class="metric-value">1-click</span>
+          <span class="metric-label">single or bulk clear</span>
+        </li>
+      </ul>
+      <ul role="list" class="tags" aria-label="Tech stack">
+        <li>JavaScript</li>
+        <li>Chrome Extension MV3</li>
+        <li>HTML</li>
+        <li>CSS</li>
+      </ul>
+      <p class="case-study-links">
+        <a href="https://github.com/mattlau95/kumon-connect-automation-tool-extension" target="_blank" rel="noopener noreferrer">Repo</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Overview</h2>
+      <p>Kumon instructors must manually mark every student worksheet as reviewed in Class-Navi before students can progress. When worksheets pile up, clearing the backlog becomes a multi-day slog of repetitive clicks across dozens of pages. I built a Chrome extension that automates the entire sequence and runs through a full backlog in under 25 minutes while the instructor does something else.</p>
+    </section>
+
+    <section>
+      <h2>The problem</h2>
+      <p>Class-Navi is Kumon's internal grading portal, built as an Angular single-page app. For each worksheet, an instructor must open it, tab through every page, clear any eraser marks, and confirm completion — one deliberate click at a time, no batch operation, no shortcuts.</p>
+      <p>For a centre tracking 70+ active students, backlogs accumulate fast. A week of unchecked worksheets can take days to clear manually, and that delay blocks the platform's automatic progression tracking — students appear stuck even when they've moved on.</p>
+    </section>
+
+    <section>
+      <h2>Role &amp; constraints</h2>
+      <p>I built and shipped this solo. The hard constraint was that Class-Navi is a closed system: no public API, no webhook, no path that doesn't go through the browser UI. Every action had to be a real browser interaction the Angular app's own event handlers would recognise — nothing server-side, nothing injected at the network level.</p>
+    </section>
+
+    <section class="case-study-section--approach">
+      <h2>Approach</h2>
+
+      <h3>Design</h3>
+      <p>The popup needed to be context-aware without adding friction. Rather than asking the instructor to configure anything upfront, it detects which page they're on — worksheet or gradebook — and shows only the relevant control. A worksheet page shows one clear button. The gradebook shows bulk mode with a configurable day threshold (default: 14 days).</p>
+      <p>Progress feedback runs in a floating status bar injected into the page itself, so the instructor can close the popup and still see what's running. It steps through each stage and auto-dismisses when done.</p>
+
+      <h3>Engineering</h3>
+      <p>Class-Navi's Angular app doesn't respond reliably to bare <code>.click()</code> calls — the framework expects full <code>MouseEvent</code> sequences with real coordinates. I wrote a <code>syntheticClick</code> helper that dispatches <code>mousedown</code>, <code>mouseup</code>, and <code>click</code> with bounding-box coordinates, which the app treats the same as a real user interaction.</p>
+      <p>Bulk mode is a loop that re-scans the gradebook after each worksheet completes rather than collecting a list upfront. That way it always operates on the current DOM state, which matters because the gradebook re-renders after each completion.</p>
+      <p>The project started as a bookmarklet, which worked for a single worksheet but broke whenever the page navigated away mid-run. Moving to a Chrome extension (Manifest V3) fixed that: the content script survives Angular's client-side routing, <code>chrome.storage</code> persists the threshold between sessions, and the popup gives the tool a proper home outside the page itself.</p>
+    </section>
+
+    <section>
+      <h2>Key decisions &amp; tradeoffs</h2>
+      <dl class="key-decisions">
+        <dt>Synthetic events over .click()</dt>
+        <dd>Necessary for Angular's change detection to fire. The tradeoff: tight coupling to the current DOM structure. If Kumon redesigns Class-Navi, the selectors and event targets will need updating.</dd>
+
+        <dt>Re-scan per worksheet in bulk mode</dt>
+        <dd>Slower than collecting a list upfront, but resilient to the gradebook re-rendering or reordering between completions. Correctness mattered more than speed here since the whole point is to run unattended.</dd>
+
+        <dt>Bookmarklet → Chrome extension</dt>
+        <dd>The bookmarklet worked for the single-worksheet case but couldn't survive page navigation, making bulk mode impossible. The extension architecture was the only viable path for an unattended multi-worksheet run.</dd>
+
+        <dt>No framework</dt>
+        <dd>Vanilla JS throughout. The popup is small enough that adding React or similar would introduce more complexity than it removes.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Outcome</h2>
+      <p>Before the extension, clearing a week's backlog for a 70+ student roster took multiple days of manual work. After, the same backlog runs unattended in about 25 minutes — measured wall-clock time on a real backlog, not an estimate. The actual user time is one click.</p>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>The main limitation is brittleness to DOM changes. Selectors like <code>app-atd0020p</code> and <code>#EndScoringButton</code> are Angular component internals that Kumon could rename without notice. A more resilient version would use ARIA labels and visible text as fallback selectors, and surface a clear error state when something stops matching rather than silently hanging.</p>
+      <p>I'd also add a dry-run mode for bulk clear — a preview pass listing which worksheets will be processed before committing — to give instructors more confidence on large backlogs.</p>
+    </section>
+
+    <footer>
+      <p>an MCL Studio project</p>
+      <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
+      <p class="footer-date">Last updated June 2026</p>
+    </footer>
+  </main>
+
+  <script src="/scripts/main.js" defer></script>
+</body>
+</html>
