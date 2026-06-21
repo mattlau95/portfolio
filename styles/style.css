@@ -203,11 +203,9 @@ a[target="_blank"]::after {
   gap: var(--space-3);
 }
 
-.resume-link--pending {
+.resume-link {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  cursor: default;
 }
 
 .socials {
@@ -546,6 +544,7 @@ ul.badges + ul.tags {
   border-top: 1px solid var(--color-border);
 }
 
+.featured-card-footer .badges,
 .featured-card-footer .tags {
   margin-top: 0;
   margin-bottom: 0;
@@ -621,8 +620,110 @@ ul.badges + ul.tags {
   color: var(--color-text-muted);
 }
 
+.case-study-deck {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+  max-width: 55ch;
+}
+
+.case-study-meta-row {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.case-study-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0;
+}
+
+.metric-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+
+.metric-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.case-study-section--approach h3 {
+  border-left: 2px solid var(--color-accent);
+  padding-left: var(--space-4);
+  margin-top: var(--space-12);
+}
+
+.key-decisions dt {
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.key-decisions dd {
+  margin-left: 0;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.lighthouse-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-top: var(--space-6);
+  caption-side: bottom;
+}
+
+.lighthouse-table caption {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  text-align: left;
+}
+
+.lighthouse-table th,
+.lighthouse-table td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.lighthouse-table thead th {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.lighthouse-table tbody tr:last-child td {
+  color: var(--color-accent);
+}
+
 .case-study footer {
   margin-top: var(--space-24);
+}
+
+/* Accessibility utility */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Footer */
