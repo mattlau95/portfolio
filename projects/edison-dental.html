@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edison Dental 27 — Case Study | Matthew C. Lau</title>
-  <meta name="description" content="Case study: rebuilding a local dental practice's site for local SEO, performance, and self-service admin — built in 2 days, killed a $50/yr subscription.">
+  <meta name="description" content="Rebuilt a dental practice's web presence from scratch — replacing a slow WordPress site with a Next.js app that shows live open/closed status and lets staff edit hours without touching code.">
+  <meta property="og:title" content="Edison Dental 27 — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="Rebuilt a dental practice's web presence from scratch — replacing a slow WordPress site with a Next.js app that shows live open/closed status and lets staff edit hours without touching code.">
+  <meta property="og:type" content="article">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=optional"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css">
   <link rel="stylesheet" href="/styles/style.css">
@@ -23,14 +26,29 @@
 
     <header class="case-study-header">
       <p class="case-study-label">★ Featured case study</p>
-      <h1>Edison Dental 27 — client redesign + local SEO</h1>
-      <p class="case-study-meta">Built in 2 days</p>
+      <h1>Edison Dental 27</h1>
+      <p class="case-study-deck">Rebuilt a dental practice's web presence from scratch — replacing a slow WordPress site with a Next.js app that shows live open/closed status and lets staff edit hours without touching code.</p>
+      <p class="case-study-meta-row">Role: Design + Engineering (full stack) · 2026 · Shipped</p>
+      <ul role="list" class="case-study-metrics">
+        <li>
+          <span class="metric-value">94</span>
+          <span class="metric-label">Lighthouse score (mobile)</span>
+        </li>
+        <li>
+          <span class="metric-value">100</span>
+          <span class="metric-label">Accessibility — 0 axe violations</span>
+        </li>
+        <li>
+          <span class="metric-value">79%</span>
+          <span class="metric-label">hero image size reduction</span>
+        </li>
+      </ul>
       <ul role="list" class="tags" aria-label="Tech stack">
         <li>Next.js 16</li>
-        <li>TypeScript</li>
         <li>React 19</li>
+        <li>TypeScript</li>
         <li>Tailwind CSS v4</li>
-        <li>Shadcn/ui</li>
+        <li>shadcn/ui</li>
         <li>Upstash Redis</li>
         <li>Resend</li>
         <li>Schema.org / JSON-LD</li>
@@ -38,30 +56,66 @@
         <li>Vercel</li>
       </ul>
       <p class="case-study-links">
-        <a href="https://edison-dental-27.vercel.app" target="_blank" rel="noopener noreferrer">New site</a>
+        <a href="https://edison-dental-27.vercel.app" target="_blank" rel="noopener noreferrer">Live demo</a>
+        <a href="https://github.com/mattlau95/edison-dental-27" target="_blank" rel="noopener noreferrer">Repo</a>
         <a href="https://edisondental27.com" target="_blank" rel="noopener noreferrer">Old site (the "before")</a>
       </p>
     </header>
 
     <section>
+      <h2>Overview</h2>
+      <p>Edison Dental 27 is a full patient-facing website for a New Jersey dental practice. The old site ran on WordPress with a page-builder plugin — slow, hard to update, and invisible to Google's local search results. I rebuilt it from scratch: a statically-generated Next.js site with a live open/closed call-to-action, a password-protected admin panel the receptionist can use to update hours, and Schema.org structured data that had never existed on the old site.</p>
+    </section>
+
+    <section>
       <h2>The problem</h2>
-      <p>The old Elementor site was buggy and fragile, invisible to Google (it didn't even register as a dentist), and locked behind a ~$50/yr subscription.</p>
+      <p>The practice had two real problems. The first was the website itself: the WordPress/Elementor build loaded slowly and the client had no way to update their own hours without asking for help. Office hours change — holidays, staff schedules, seasonal adjustments — and every change meant a developer login or a stale listing.</p>
+      <p>The second was discoverability. Local search ranks dental practices partly on structured data: machine-readable markup that tells Google exactly when a business is open, where it is, and what it does. The old site had none. The practice was invisible in ways that didn't show up on any metric the client could see.</p>
     </section>
 
     <section>
-      <h2>What I built</h2>
-      <ul>
-        <li><strong>Local SEO foundation</strong> — Dentist/LocalBusiness structured data (JSON-LD) for name/address/phone + hours, so rich results populate; per-service landing pages to rank for local-intent searches ("dental implants Edison NJ"); live Google reviews pulled in + embedded Maps, since fresh reviews are a strong local signal.</li>
-        <li><strong>Self-service admin</strong> — a password-protected page where the front desk edits hours and saves; the site (and its structured data) updates instantly, no redeploy, no calling me.</li>
-        <li><strong>Time-aware lead capture</strong> — the homepage CTA switches on business hours: "We're Open — Call Now" when open, an appointment-request form when closed, so no overnight lead is lost.</li>
-        <li><strong>Proper Open Graph</strong> so links shared by text, Facebook, or email unfurl with the practice name and photo instead of a broken card.</li>
-        <li><strong>Killed a dependency</strong> — eliminated the ~$50/yr Elementor subscription.</li>
-      </ul>
+      <h2>Role &amp; constraints</h2>
+      <p>I owned everything end-to-end: information architecture, visual design, component engineering, data layer, and deployment. The client is not technical, so "non-technical staff must be able to change hours" was a hard requirement, not a nice-to-have.</p>
+      <p>Two constraints shaped the build significantly. First, real practice photos were unavailable at the start — the design had to work with placeholders and make adding the real images a one-line swap. Second, the appointment form sits in HIPAA territory: a patient sending their name, phone, and preferred appointment time is regulated data. I scoped an appointment <em>request</em> form that collects only non-PHI fields for now, and documented the intake form path (HIPAAtizer) for a future phase.</p>
+    </section>
+
+    <section class="case-study-section--approach">
+      <h2>Approach</h2>
+
+      <h3>Design</h3>
+      <p>The core UX decision was the call-to-action. A static "Call us" button is honest when the office is open and misleading when it isn't. I replaced it with a live open/closed indicator: a pulsing green dot labeled "We're Open · Call Now" when the office is reachable, and a quiet "Request an Appointment" link when it's closed. Patients calling at 11 PM now have a useful path instead of a phone that rings out.</p>
+      <p>For the appointment request form, I capped it at five fields — name, phone, email, reason, and preferred time. Research from Baymard Institute puts the completion cost of each additional field at 10–15%. Insurance number and date of birth belong on an intake form at the practice; the request form's only job is to get the patient's callback info.</p>
+      <p>The reviews section was placed above the practice's own value-proposition copy. Social proof from real patients earns more trust than self-description. Each review card shows the full text (truncated at 220 characters, expandable) and the owner's response inline — 88% of patients say they prefer practices that respond to reviews.</p>
+      <p>The admin hours panel uses native <code>&lt;input type="time"&gt;</code> controls with 15-minute steps. The alternative — a dropdown for every 15-minute increment — would have been 96 rows per day, 14 inputs. The native picker handles the UI entirely and works on mobile without any library.</p>
+
+      <h3>Engineering</h3>
+      <p>The live open/closed feature required a careful split. The hours data lives in Upstash Redis. Redis can't be imported in a client bundle — the SDK uses Node.js APIs. I extracted the open/closed logic into <code>computeIsOpen.ts</code>, a pure function with no server dependencies, callable by both server components and client-side hooks. The server pre-computes the initial state and passes it as a prop; the client hydrates with that value immediately (no flash) and then re-checks every 60 seconds via a lightweight hook.</p>
+      <p>The Schema.org JSON-LD block is a server component that fetches live hours from Redis at render time and builds <code>openingHoursSpecification</code> dynamically. The old site had a static JSON blob that reflected whatever someone had typed there years ago. The new one is always accurate.</p>
+      <p>For the appointment form I used React 19's <code>useActionState</code> rather than the older <code>useFormStatus</code> pattern. It's cleaner: <code>isPending</code> is in scope directly, and the success/error state returned from the server action drives the UI without extra <code>useState</code> calls. The server re-checks open/closed at submission time — if the office closed between when the patient loaded the page and when they submitted, the auto-reply says "first thing next business morning" instead of "within 1 business hour."</p>
     </section>
 
     <section>
-      <h2>Impact</h2>
-      <p>This is a recent rebuild, so the honest framing leads with capabilities delivered rather than traffic numbers I don't have yet: built in 2 days, ~$50/yr in cost removed, a full local-SEO foundation where there was none before, and non-technical staff unblocked from needing a developer for routine changes.</p>
+      <h2>Key decisions &amp; tradeoffs</h2>
+      <dl class="key-decisions">
+        <dt>Phone CTA instead of an online booking link</dt>
+        <dd>The practice books by phone. Shipping a "Book Appointment" button on day one that went nowhere would have been worse than nothing. The tel: link works on every device and reflects how the practice actually operates.</dd>
+
+        <dt>Upstash Redis directly, not Vercel KV</dt>
+        <dd>The hours CMS was originally built on Vercel KV. Vercel deprecated that product mid-project. I swapped to <code>@upstash/redis</code> directly — same REST API, no wrapper layer, and no longer tied to a platform product that might change again.</dd>
+
+        <dt>Service sub-pages instead of modals</dt>
+        <dd>The old site opened service details in modals. I built individual routes (<code>/services/general</code>, <code>/services/cosmetic</code>, etc.) instead. They're SEO-indexable, shareable, and give room for a real image gallery when the practice provides photos. The tradeoff is a slightly more complex routing setup; the gain is that every service page can be discovered independently in search.</dd>
+
+        <dt>Research before building the intake form</dt>
+        <dd>Building a fully HIPAA-compliant form stack — Vercel's HIPAA add-on, a transactional email provider with a BAA, correct data handling — would have taken 20–40 hours and introduced ongoing compliance responsibility. A purpose-built service (HIPAAtizer, $29/mo) includes a BAA on every plan and can be embedded in a few hours. I documented that decision in a spike and deferred the work rather than guessing.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Outcome</h2>
+      <p>Lighthouse on mobile in production: <strong>94 performance</strong>, <strong>100 accessibility</strong>, 0 axe violations across all pages. TBT dropped from 60ms to 30ms. The hero image shrank from 1.2 MB to 248 KB (79%) after replacing an oversized placeholder with a correctly-sized and compressed real photo.</p>
+      <p>LCP sits at 2.9s, still short of the 2.5s target. After optimizing the image and reducing the Playfair Display font from four weights to two, the LCP node on mobile is likely the h1 heading — not the image — which means image work won't move it further. A Chrome DevTools trace is the logical next step. I'm reporting that plainly: the gap is identified, the next action is defined, and the prior work was still worthwhile.</p>
+      <p>The Schema.org block now passes Google's Rich Results Test. The old site had no structured data at all.</p>
       <table class="lighthouse-table">
         <caption>Lighthouse scores (mobile) — old Elementor site vs. rebuild</caption>
         <thead>
@@ -69,10 +123,15 @@
         </thead>
         <tbody>
           <tr><th scope="row">Old (Elementor)</th><td>61</td><td>88</td><td>96</td><td>100</td></tr>
-          <tr><th scope="row">New (rebuilt)</th><td>95</td><td>100</td><td>100</td><td>100</td></tr>
+          <tr><th scope="row">New (rebuilt)</th><td>94</td><td>100</td><td>100</td><td>100</td></tr>
         </tbody>
       </table>
-      <p>Once it's the live domain, the follow-up metrics worth tracking are search impressions, ranking for "dentist Edison NJ," and form submissions over time.</p>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>The HIPAA research probably should have happened at the start of the project, not after the contact page was already designed. Knowing early that a compliant intake form required either a third-party service or significant custom infrastructure would have shaped the contact page layout from the beginning rather than requiring a scoped workaround.</p>
+      <p>On the LCP: I spent two sessions on image and font optimization before running a Chrome trace to confirm what the actual LCP element was. Fifteen minutes with DevTools earlier would have redirected that effort. Measure before optimizing.</p>
     </section>
 
     <footer>

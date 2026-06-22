@@ -4,6 +4,67 @@
 
 ---
 
+## 2026-06-22 — Sidebar layout polish + resume, icons, font loading
+
+**Résumé link (MAT-440)**
+Added `assets/resume.pdf` and swapped the pending placeholder span for a live `<a>`. Cleaned up orphaned `.resume-link--pending` CSS → `.resume-link`.
+
+**Profile header restructure**
+Wrapped `identity-name` + `profile-contacts` (Email / Résumé) in a `.profile-info` div. Profile photo set to 96px. Layout is flex row at ≥1366px (photo left, info right), flex column below that (info stacks under photo). Single `@media (max-width: 1365px)` breakpoint handles the switch. Removed the intermediate 1280px/1155px breakpoints added during iteration.
+
+**Social links**
+GitHub and LinkedIn replaced with inline SVG icons + `aria-label` + `.sr-only` text. Added `.sr-only` utility class to `style.css`. Icons live in `sidebar-bottom` so they anchor to the bottom of the sidebar; Email and Résumé sit in `.profile-info` under the name.
+
+**Font loading**
+Switched all pages from `display=optional` back to `display=swap`. `optional` was chosen during the June 20 audit to suppress Speed Index inflation, but the tradeoff (system fonts on every first load) is wrong for a portfolio where first impressions matter. Updated `index.html` and all 6 case study pages.
+
+**Email alias**
+Updated sidebar email from `contact@matthewclau.com` → `hello@matthewclau.com`.
+
+**"Matthew C Lau" — no period**
+Removed the period after C across title, OG tags, h1, and alt text.
+
+---
+
+## 2026-06-21 — Case study pages, card updates, and site polish (MAT-440 through MAT-449)
+
+Major content push across the whole site.
+
+**Case study pages**
+Created 5 new case study pages (`projects/ollae.html`, `projects/pocalab.html`, `projects/worship-slides.html`, `projects/kumon-automation.html`, `projects/vbs-scheduler.html`) and rewrote `projects/edison-dental.html` from scratch. All 6 follow the full template structure: Overview → Problem → Role & Constraints → Approach (Design + Engineering) → Key Decisions → Outcome → Reflection. All include OG meta tags for shareable unfurls.
+
+**CSS additions for case study layout**
+Added `.case-study-deck`, `.case-study-meta-row`, `.case-study-metrics` (impact strip with big numbers), `.case-study-section--approach h3` (cyan left-border accent for Design/Engineering subsections), `.key-decisions` (dl layout), and `.lighthouse-table` (bordered mono table, last-row accent).
+
+**Homepage card updates (MAT-443, MAT-444, MAT-445)**
+- All 6 cards now link to their case study pages with consistent "Case study" text.
+- Edison Dental featured card: description rewritten to lead with capability (live open/closed CTA, receptionist-editable CMS, Schema.org structured data); metrics badges added to footer.
+- Pocalab: card metrics backed by real measurements (45 min → 12 min, ~70% faster); case study Outcome section rewritten with the full sourced breakdown including the gluing-eliminated and mirroring-handled details.
+- Worship Slides: metrics updated to ~45 min → <1 min.
+- VBS Scheduler: metrics updated to "Replaces Doodle / 3 hrs → 10 min per audit cycle".
+- Kumon: description fixed from "bookmarklet" to Chrome Extension MV3 throughout card, experience entry, and case study.
+
+**Consistency fixes (MAT-442, MAT-446)**
+- Kumon experience bullet updated to "Chrome extension (Manifest V3)".
+- Freelance experience Edison Dental entry clarified to "original site build (WordPress/Elementor) — later rebuilt from scratch in Next.js".
+
+**Contact + OG (MAT-441, MAT-447)**
+- Set up Cloudflare Email Routing: `contact@matthewclau.com` forwards to personal Gmail.
+- Added `mailto:contact@matthewclau.com` as "Email" link in sidebar socials.
+- Added OG meta tags (`og:title`, `og:description`, `og:type`) to homepage.
+
+**Page structure + How I Build (MAT-449)**
+- Swapped section order: Projects → How I Build → Experience (was Projects → Experience → How I Build). Process is now visible before a reader drops off.
+- Nav updated: "How I Work" → "How I Build", order matches new page order.
+- Intro sentence updated to name all three tools: Claude Code, Linear, Figma.
+- Added fifth workflow row: "Design when the UI demands it" (Figma + MCP).
+- All three inline-token logos updated to brand colors: Claude Code `#D97757`, Linear `#5E6AD2`, Figma multicolor (5-shape logo with correct per-path fills).
+
+**Copy (MAT-448)**
+- Projects section intro rewritten: "Six projects across community tools, client work, and internal automation — built to replace what was paywalled, clunky, or missing entirely." Differentiates from bio copy.
+
+---
+
 ## 2026-06-20 — Audit sweep: all 8 findings from 2026-06-19
 
 Closed every open item from the 2026-06-19 audit (1 P0, 3 P1, 4 P2). Six were quick wins done first; two were deep-work items done in a follow-up pass.
