@@ -69,7 +69,8 @@ a {
   text-decoration-color: var(--color-accent);
 }
 
-a[target="_blank"]::after {
+a[target="_blank"]::after,
+a[href^="mailto"]::after {
   content: " ↗";
   font-size: 0.75em;
 }
@@ -163,10 +164,17 @@ a[target="_blank"]::after {
   line-height: var(--leading-tight);
 }
 
+.profile-role {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+}
+
 .profile-header {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-6);
 }
 
 .profile-info {
@@ -768,6 +776,11 @@ footer p {
 
 footer p:last-child {
   margin-bottom: 0;
+}
+
+.identity-bio {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
 }
 
 .build-credit,
