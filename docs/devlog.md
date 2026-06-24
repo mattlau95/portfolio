@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-06-24 — Sidebar identity polish + Email Me button (MAT-484–488)
+
+Five quick-wins to sharpen the sidebar identity and footer.
+
+**"DESIGN ENGINEER" label (MAT-486)**
+Added `<p class="profile-role">DESIGN ENGINEER</p>` between the name and the Email Me / Résumé buttons. New `.profile-role` rule: `font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); letter-spacing: 0.12em`.
+
+**Email Me button (MAT-484)**
+Replaced the plain `Email` anchor with `<a class="resume-link" href="mailto:…">Email Me</a>` so it's visually identical to the Résumé button. Arrow added via `a[href^="mailto"]::after { content: " ↗"; }` — piggybacking the existing `a[target="_blank"]::after` rule (combined selector) so both link types get consistent treatment.
+
+**Profile header gap**
+Increased `.profile-header` gap from `--space-3` to `--space-6` for more breathing room between the photo and the name/label/buttons column.
+
+**Identity copy (MAT-487, MAT-488)**
+- Hook (`identity-tagline`): "I build free tools that replace the paywalled and the broken."
+- Bio (`identity-bio`): "A designer with a CS degree, shipping them end to end — accessible by default." — new `.identity-bio` rule applies `color: var(--color-text-muted)` and `font-size: var(--text-sm)` to visually subordinate it to the hook.
+
+**Footer CTA (MAT-485)**
+Added `<p class="footer-cta">Want something built? Contact me at <a href="mailto:hello@matthewclau.com">hello@matthewclau.com</a>.</p>` as the second line in the footer.
+
+---
+
 ## 2026-06-22 — Sidebar layout polish + resume, icons, font loading
 
 **Résumé link (MAT-440)**
