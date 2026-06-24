@@ -510,6 +510,14 @@ ul.badges + ul.tags {
   margin-bottom: var(--space-2);
 }
 
+.project-card > a,
+.project-card-body > a {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+}
+
 .project-links {
   display: flex;
   align-items: center;
