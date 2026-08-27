@@ -71,7 +71,7 @@ a {
 
 a[target="_blank"]::after,
 a[href^="mailto"]::after,
-.project-card > a::after,
+.project-card > a:not(.project-card-media)::after,
 .project-card-body > a::after,
 .project-links a[href^="/projects"]::after {
   content: " ↗";
@@ -511,6 +511,17 @@ ul.badges + ul.tags {
 .project-card h3 {
   font-size: var(--text-lg);
   margin-bottom: var(--space-2);
+}
+
+.project-card-media {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-card-media:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
 }
 
 .project-card > a,
