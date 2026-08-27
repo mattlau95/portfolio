@@ -3,15 +3,17 @@ Some of the most exciting moments of my career so far has taken place while work
 # Fullscreen Monitors #
 
 [img/news12nj_1.png here]
-I happened to work a shift during the morning after LeBron decided he was going to the Lakers, so I got to Photoshop this jersey on him.
-
-# Bullet Points #
-I was requested by a producer to create a package of graphics that showed the official FBI document (scanned) in the background. I took inspiration from how John Oliver’s graphic team shows quotes over his shoulder during his comedy show, “Last Week Tonight” on HBO.
+I happened to work a shift during the morning after LeBron decided he was going to the Lakers, so I got to Photoshop this jersey on him.
 
 [img/news12nj_2.png here]
 
 [img/news12nj_3.png here]
 
 [img/news12nj_4.png here]
+
+# Bullet Points #
+I was requested by a producer to create a package of graphics that showed the official FBI document (scanned) in the background. I took inspiration from how John Oliver’s graphic team shows quotes over his shoulder during his comedy show, “Last Week Tonight” on HBO.
+
+[img/johnoliver.jpeg here]
 
 [img/news12nj_5.png here]
