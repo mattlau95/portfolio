@@ -8,7 +8,7 @@ Sky Blue FC, now known as Gotham FC, played their first 2 official home games a
 
 ## Starting Lineup Animation ##
 
-I used Photoshop to crop out player portraits and After Effects to animate these screens to introduce the home team's starting lineup.
+I used Photoshop to crop out player portraits and After Effects to animate these screens to introduce the home team's starting lineup. The animation itself was built as a template — team colors, crest, and motion locked in — so each home game just meant swapping in that match's portraits and names rather than re-animating from zero.
 
 [embed youtube video: https://youtu.be/l0OYhXcLbcc]
 

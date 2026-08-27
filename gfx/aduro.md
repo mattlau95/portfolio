@@ -28,6 +28,9 @@ Can you catch the difference? On the left, the woman is wearing headphones, and
 
 [img/aduro_4.png here]
 
+## The template system ##
+
+None of this got rebuilt from scratch each time. Each product category runs on a master composite file — background, lighting, shadow, and callout layers stay fixed, while the product art and color variant swap in. That structure is what made it possible to style 100+ products across Aduro Products, Aduro Sport, Olivia Rose, and Hearth & Haven without every listing turning into its own from-scratch shoot: a new SKU is an afternoon inside an existing template, not a new design.
 
 # Amazon Videos #
 I also make some videos that show up in the listing as well. Some are promotional to give users a more detailed look at the product, some are tutorials on how to set up the product at home, and lastly, some are simply unboxing videos. 
