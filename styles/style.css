@@ -79,8 +79,8 @@ a[href^="mailto"]::after,
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
 }
 
 /* Skip link */
@@ -102,7 +102,7 @@ a[href^="mailto"]::after,
 
 @media (prefers-reduced-motion: no-preference) {
   .skip-link {
-    transition: transform 0.15s ease;
+    transition: transform var(--duration-fast) var(--ease);
   }
 }
 
@@ -117,7 +117,7 @@ a[href^="mailto"]::after,
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(600px circle at var(--x) var(--y), rgb(96 200 240 / 0.15), transparent 80%);
+  background: radial-gradient(600px circle at var(--x) var(--y), var(--color-accent-wash), transparent 80%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -163,7 +163,7 @@ a[href^="mailto"]::after,
 .identity-name {
   font-family: var(--font-display);
   font-size: var(--text-xl);
-  font-weight: 400;
+  font-weight: var(--weight-normal);
   line-height: var(--leading-tight);
 }
 
@@ -171,7 +171,7 @@ a[href^="mailto"]::after,
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-eyebrow);
 }
 
 .profile-header {
@@ -222,7 +222,7 @@ a[href^="mailto"]::after,
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .profile-photo-img {
-    transition: opacity 0.2s ease;
+    transition: opacity var(--duration-base) var(--ease);
   }
 }
 
@@ -264,7 +264,7 @@ nav a {
   text-decoration: none;
   padding-block: var(--space-2);
   padding-inline: var(--space-3);
-  transition: color 0.2s ease;
+  transition: color var(--duration-base) var(--ease);
 }
 
 .nav-indicator {
@@ -272,7 +272,7 @@ nav a {
   width: 2rem;
   height: 1px;
   background-color: var(--color-text-muted);
-  transition: width 0.2s ease, background-color 0.2s ease;
+  transition: width var(--duration-base) var(--ease), background-color var(--duration-base) var(--ease);
 }
 
 nav a.is-active {
@@ -400,7 +400,7 @@ main section code {
 
 .workflow-body h3 {
   font-size: var(--text-base);
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   margin-bottom: var(--space-2);
 }
 
@@ -595,7 +595,7 @@ ul.badges + ul.tags {
   font-size: var(--text-xs);
   color: var(--color-accent);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-wide);
   margin-bottom: var(--space-2);
 }
 
@@ -649,7 +649,7 @@ ul.badges + ul.tags {
   font-size: var(--text-xs);
   color: var(--color-accent);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-wide);
   margin-bottom: var(--space-2);
 }
 
@@ -726,7 +726,7 @@ ul.badges + ul.tags {
 }
 
 .key-decisions dt {
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   margin-bottom: var(--space-1);
 }
 
@@ -761,7 +761,7 @@ ul.badges + ul.tags {
 
 .lighthouse-table thead th {
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: var(--weight-medium);
 }
 
 .lighthouse-table tbody tr:last-child td {
@@ -835,6 +835,6 @@ footer p:last-child {
   .timeline > .experience-entry,
   .project-cards > .project-card,
   .workflow-list > .workflow-row {
-    transition: opacity 0.2s ease;
+    transition: opacity var(--duration-base) var(--ease);
   }
 }
