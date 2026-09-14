@@ -6,6 +6,8 @@
   --color-text: #e8e8e2;
   --color-text-muted: #a8a8a2;
   --color-accent: #60c8f0;
+  --color-accent-rgb: 96 200 240;   /* keep in sync with --color-accent */
+  --color-accent-wash: rgb(var(--color-accent-rgb) / 0.15);
   --color-border: #2a2a28;
 
   /* Type families */
@@ -22,6 +24,13 @@
   --text-2xl: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
   --text-3xl: clamp(2.75rem, 2.1rem + 2.8vw, 4rem);
 
+  /* Weight & tracking */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --tracking-wide: 0.05em;
+  --tracking-eyebrow: 0.12em;
+
   /* Line height */
   --leading-tight: 1.15;
   --leading-normal: 1.5;
@@ -37,6 +46,16 @@
   --space-12: 3rem;
   --space-16: 4rem;
   --space-24: 6rem;
+
+  /* Motion — --ease is literal `ease` to keep this a no-op refactor;
+     swap in a custom curve as a deliberate change, not a rename */
+  --duration-fast: 0.15s;
+  --duration-base: 0.2s;
+  --ease: ease;
+
+  /* Focus */
+  --focus-ring: 2px solid var(--color-accent);
+  --focus-offset: 2px;
 
   /* Layout */
   --max-width: 1400px;
