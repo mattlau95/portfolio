@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collette Vacations — Case Study | Matthew C. Lau</title>
+  <meta name="description" content="Two and a half years as a UX/UI designer at Collette Vacations: the design system built after launch, 200+ usability sessions, and the token layer it never had.">
+  <meta property="og:title" content="Collette Vacations — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="Two and a half years as a UX/UI designer at Collette Vacations: the design system built after launch, 200+ usability sessions, and the token layer it never had.">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
+
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/style.css?v=3">
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <main class="case-study">
+    <a class="back-link" href="/#experience">← Back to experience</a>
+
+    <header class="case-study-header">
+      <p class="case-study-label">Case study</p>
+      <h1>Collette Vacations</h1>
+      <p class="case-study-deck">Two and a half years, one design system, and the layer it never had.</p>
+      <p class="case-study-meta-row">UX/UI Designer · 2022–2024 · Figma, Dev Mode, UserTesting.com</p>
+    </header>
+
+    <figure class="hero-figure">
+      <a href="/assets/collette/collette-hero-board-2x.webp">
+        <img src="/assets/collette/collette-hero-board-1x.webp"
+             srcset="/assets/collette/collette-hero-board-1x.webp 1600w, /assets/collette/collette-hero-board-2x.webp 3200w"
+             sizes="(min-width: 1400px) 1336px, calc(100vw - 4rem)"
+             width="1600" height="900"
+             fetchpriority="high"
+             alt="Reconstructed Collette component library: color, type, and spacing primitives above thirteen component tiles — buttons, tour date rows, tour cards, and the price panel — each labeled with the values it uses.">
+      </a>
+      <figcaption>Reconstructed 2026 from 2023–24 specs, screenshots, and the site's public theme.</figcaption>
+    </figure>
+
+    <section class="case-study-body">
+      <p>I spent two and a half years as a UX/UI designer at Collette Vacations, a guided-tour operator selling mostly to travelers over 55, on a design team of two to three. I arrived just after an agency rebrand, as a full site redesign was being built from high-fidelity Adobe XD prototypes — the entire site, produced in about two weeks, a few months before I was hired. There had been no time for a system, so there wasn't one on the design side: no shared components, no spacing or type scale, no design tokens. The site launched that way, and much of the following year went to fixing it after the fact.</p>
+
+      <figure class="media-figure">
+        <div class="media-pair">
+          <img src="/assets/collette/collette-2023-03-design.webp" alt="Adobe XD design of the mobile tour itinerary page: Day by Day, Map, and Extension tabs above a coastal photo, a Return to Main Tour button, a day-by-day timeline, and Stay, Meals, and Enhance Tour cards." width="486" height="1054" loading="lazy">
+          <img src="/assets/collette/collette-2023-03-build.webp" alt="The built mobile tour page for Maritimes Coastal Wonders: the same Day by Day, Map, and Extension tabs and Return to Main Tour button over a photo of travelers reading a map, with different spacing, type sizes, and tab styling from the design." width="634" height="1178" loading="lazy">
+        </div>
+        <figcaption>Design and build of the same view, March 2023.</figcaption>
+      </figure>
+
+      <p>Over the next two years we built the system that launch never had. The palette and typefaces were set — the brand design consultant had delivered the colors as a numbered ramp, and the site's Material UI theme carried those numbers into code — and everything else was ours: the spacing scale, type sizes, buttons, and a component library. It also had to hold under three partner loyalty programs whose members redeem rewards for a Collette trip: their logo and colors, not ours, and in one case a points-plus-cash price model. Handoff was the hard part. Before Dev Mode it meant hand-made diagrams over Zeplin exports — spacing, scroll windows, max heights — for six to eight developers, then design QA alongside the QA team after every round of development, because the build often didn't match the file. We moved the workflow onto Figma, and in 2024 ran Collette's first Dev Mode rollout: developers inspecting the live file instead of a diagram of it.</p>
+
+      <figure class="media-figure">
+        <img src="/assets/collette/collette-2024-02-handoff.webp" alt="Handoff diagram of the tablet Build Your Tour panel expanded to its maximum height: a magenta bar labeled 'becomes scroll window' marks the long Other Expenses list that scrolls while the Grand Total stays fixed below it." width="768" height="1024" loading="lazy">
+        <figcaption>A handoff diagram: how the expense panel scrolls at max height, February 2024.</figcaption>
+      </figure>
+
+      <p>Research was ours too. Across the two and a half years we ran more than 200 UserTesting.com sessions, moderated and unmoderated, screened to the same 55+ buyer. Comparisons were balanced — half the participants saw one site first, half the other — so order couldn't skew the result. In my last four months I ran nine competitive studies, ten participants each, one page apiece against Trafalgar, EF Go Ahead, Tauck and others, and presented a findings deck for every one. The pages below draw on them.</p>
+
+      <p>Compare Tours shipped: stakeholders wanted a way to weigh tours side by side, and it went from research to production in 2023. Reviews was approved, then never built: a leadership change reset priorities before development started. The flight-booking redesign didn't ship either — the final year's work was overhauled before it reached production.</p>
+
+      <p><strong>NEO</strong> — Internal tool for the loyalty department: thirteen dashboards, a separate stakeholder group and IT team, its own standups. Approved and shipped.</p>
+
+      <p><strong>Wyng quiz</strong> — Built with the customer-experience team to collect feedback from site visitors. Approved and shipped.</p>
+
+      <p><strong>Testimonials</strong> — A component family for the site's testimonial slots — text, small video, large video — in seven layout combinations, built into the Figma library. The video variants never went live.</p>
+
+      <p>The gaps between what we specced and what got built trace to one thing. Both sides had primitives — the consultant's numbered ramp, greys, accents — and the code had Material UI's generic roles: text, background, action. What neither side had was the layer between them: component tokens a designer could spec and a developer could reference, under one name. So the QA list says "match the Primary Blue #132F3B" while the code calls that value <code>primary-900</code>, and the section header was built from neither. Ninety items on that list; two absolute values. Each page below ends with what that layer would have prevented.</p>
+
+      <figure class="media-figure">
+        <img src="/assets/collette/collette-2024-08-qa.webp" alt="Crop of an annotated QA screenshot of the Rooming and Travelers step, with red callouts D, E, and F pointing at the section header bars, the Rooms dropdown, and the header alignment." width="730" height="310" loading="lazy">
+        <figcaption>Design QA, August 2024. Callout F: the header should be Primary Blue #132F3B.</figcaption>
+      </figure>
+
+      <div class="table-wrap">
+        <table class="token-table">
+          <caption>Five values: what the spec called them, and what the code called them.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Value</th>
+              <th scope="col">What the spec called it</th>
+              <th scope="col">What the code called it</th>
+              <th scope="col">Component token</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>#132F3B</code></td>
+              <td>Primary Blue</td>
+              <td><code>primary-900</code>, <code>primary-main</code>, <code>text-primary</code>, <code>background-brand</code></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>#2E844B</code></td>
+              <td>CTA green</td>
+              <td><code>secondary-main</code>, <code>success-main</code></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>#E2F2F7</code></td>
+              <td>light blue</td>
+              <td><code>info-main</code>, <code>background-cool_strong</code></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>#FFD369</code></td>
+              <td>gold</td>
+              <td><code>accent-gold</code>, <code>warning-700</code></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>#718289</code></td>
+              <td>primary hover</td>
+              <td><code>primary-500</code></td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="spokes">
+      <!-- link: /projects/collette-air-booking.html (not built yet) -->
+      <h2>Air booking</h2>
+      <p>In a 2023 usability test, 2 of 10 participants got any flight results at all. What I changed, and why it had to hold under three partner brands.</p>
+
+      <!-- link: /projects/collette-reviews.html (not built yet) -->
+      <h2>Reviews</h2>
+      <p>The site redesign dropped four things the old reviews section did. A regression recovery, not a redesign, and where the one-star review belongs.</p>
+
+      <!-- link: /projects/collette-compare-tours.html (not built yet) -->
+      <h2>Compare Tours</h2>
+      <p>The one that shipped: the desktop/mobile restructure and the scroll-and-accordion logic.</p>
+    </section>
+
+    <footer>
+      <p>an MCL Studio project</p>
+      <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
+      <p class="footer-date">Last updated September 2026</p>
+    </footer>
+  </main>
+
+  <script src="/scripts/main.js" defer></script>
+</body>
+</html>

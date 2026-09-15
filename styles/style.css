@@ -736,7 +736,8 @@ ul.badges + ul.tags {
   color: var(--color-text-muted);
 }
 
-.lighthouse-table {
+.lighthouse-table,
+.token-table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-mono);
@@ -745,7 +746,8 @@ ul.badges + ul.tags {
   caption-side: bottom;
 }
 
-.lighthouse-table caption {
+.lighthouse-table caption,
+.token-table caption {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   margin-top: var(--space-2);
@@ -753,19 +755,96 @@ ul.badges + ul.tags {
 }
 
 .lighthouse-table th,
-.lighthouse-table td {
+.lighthouse-table td,
+.token-table th,
+.token-table td {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border);
   text-align: left;
 }
 
-.lighthouse-table thead th {
+.lighthouse-table thead th,
+.token-table thead th {
   color: var(--color-text-muted);
   font-weight: var(--weight-medium);
 }
 
 .lighthouse-table tbody tr:last-child td {
   color: var(--color-accent);
+}
+
+.token-table td {
+  vertical-align: top;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+/* Collette case study — breakout hero, media figures, spokes */
+
+.hero-figure {
+  position: relative;
+  left: 50%;
+  width: min(calc(var(--max-width) - 2 * var(--space-8)), calc(100vw - 2 * var(--space-8)));
+  margin: 0 0 var(--space-16);
+  transform: translateX(-50%);
+}
+
+.hero-figure a {
+  display: block;
+}
+
+.hero-figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  background-color: var(--color-border);
+}
+
+.hero-figure figcaption,
+.media-figure figcaption {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.media-figure {
+  margin: var(--space-8) 0;
+}
+
+.media-figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  background-color: var(--color-border);
+}
+
+.media-pair {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 480px) {
+  .media-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.spokes h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+.spokes p + h2 {
+  margin-top: var(--space-8);
+}
+
+/* Experience entry with a linked thumbnail */
+
+.experience-entry .project-thumb {
+  max-width: 360px;
+  margin-top: var(--space-2);
 }
 
 .case-study footer {
