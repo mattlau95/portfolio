@@ -777,8 +777,28 @@ ul.badges + ul.tags {
   vertical-align: top;
 }
 
+.token-table code {
+  font-size: inherit;
+}
+
 .table-wrap {
   overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+  .token-table {
+    font-size: var(--text-xs);
+  }
+
+  .token-table th,
+  .token-table td {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  /* Only the code-names column may break inside a token; hex values and headers stay whole */
+  .token-table td:nth-child(3) {
+    overflow-wrap: anywhere;
+  }
 }
 
 /* Collette case study — breakout hero, media figures, spokes */
