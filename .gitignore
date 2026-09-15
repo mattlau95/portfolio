@@ -4,3 +4,6 @@ Thumbs.db
 .vscode/
 .idea/
 .vercel
+
+# Local working docs — sources appendix names partner brands the page leaves unnamed
+docs/collette-hub-v6.md
