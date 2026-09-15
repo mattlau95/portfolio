@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-09-15 — Collette Vacations hub page
+
+**New page: `projects/collette.html`**
+Case-study page for the Collette Vacations role, copy verbatim from `docs/collette-hub-v6.md` ("Page copy" section). Follows the existing case-study head/header/footer pattern. No metrics strip, no tags, no JSON-LD, no `og:image` — consistent with the other case studies. Three spoke entries (Air booking, Reviews, Compare Tours) render as headed paragraphs with an HTML comment marking each future link; those pages don't exist yet.
+
+**Hero as a breakout figure**
+The 1600×900 component-library board would render ~700px inside the 65ch column and its 11px labels would be unreadable, so `.hero-figure` breaks out to the site's `--max-width` (1400px minus the page's 2rem inline padding = 1336px), centered with `left: 50%; transform: translateX(-50%)`. `sizes="(min-width: 1400px) 1336px, calc(100vw - 4rem)"` matches the real rendered widths. The `<img>` is wrapped in a link to the 2x file so it can be opened full size. First `srcset` on the site.
+
+**Body figures**
+Four Confluence artifacts converted to WebP (Pillow, q82) into `assets/collette/`, native dimensions except the Aug 2024 QA screenshot which is cropped to callouts D–F. Each is a `<figure class="media-figure">` with `<figcaption>` from the v6 Images table, placed directly after the paragraph containing the sentence it proves. The March 2023 design/build pair sits side by side in `.media-pair` (stacks under 480px). `.media-figure` rules are now in `style.css`; `gfx/styles/gfx.css` still carries its identical copy, untouched.
+
+**Close table**
+Real `<table class="token-table">` with `<caption>`, `<th scope="col">`, `<code>` on hex values and code names, inside `.table-wrap` (`overflow-x: auto`). Shares the `.lighthouse-table` rules without the last-row accent.
+
+**Homepage**
+Collette experience entry gets a linked 800×600 thumbnail (crop of the hero board, `assets/thumbnails/collette.webp`, capped at 360px in the timeline) and a "Read Case Study" link using the `.project-card-media` / `.project-links` pattern. Badges: dropped "handoff time −30%" and "task completion +20%" (v6 decision 4), kept "200+ usability tests", added "first Dev Mode rollout" and "4 brands". No seventh project card.
+
+**Cache + docs**
+`style.css?v=2` → `?v=3` on all 13 HTML pages in one commit (`/styles` is immutable-cached). `docs/CONTENT.md` "two years" → "two and a half years".
+
+---
+
 ## 2026-06-24 — Sidebar identity polish + Email Me button (MAT-484–488)
 
 Five quick-wins to sharpen the sidebar identity and footer.

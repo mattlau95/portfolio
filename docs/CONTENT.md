@@ -37,7 +37,7 @@
 > studio." 2–3 short paragraphs max.
 
 I'm a designer with a computer science degree who builds the things I design.
-I spent two years as a UX/UI designer shaping design systems and shipping
+I spent two and a half years as a UX/UI designer shaping design systems and shipping
 features for enterprise products, and these days I work end to end — research and
 interface through to the code that ships.
 
