@@ -24,12 +24,12 @@ Replace the current text block entirely with the following structured layout and
 
 ### Metrics Badge Row
 Maintain the existing layout styling for data/metric badges:
-- **Badge 1 Text:** `~96% Latency Reduction`
+- **Badge 1 Text:** `~96% time reduction`
 - **Badge 2 Text:** `10–13 hrs → ~25 min`
 
 ### Bullet Points
 - Engineered a custom JavaScript bookmarklet to automate the grading-correction backlog on the Kumon Connect platform, converting a highly manual, multi-day administrative process into an unattended ~25-minute automated run.
-- Eliminated operational bottlenecks to ensure real-time progression tracking for over 70+ active students weekly.
+- Eliminated operational bottlenecks to ensure real-time progression tracking for 70+ active students weekly.
 - Audited and troubleshooted platform workflows while maintaining brand-aligned digital production assets.
 
 ### Tech Stack Tags

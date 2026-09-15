@@ -91,12 +91,14 @@ the friction, build the system, ship faster.
 ### 2022–2024 · UX/UI Designer · Collette Vacations
 Designed and shipped marketing and booking-flow features, and built the
 foundation other designers and engineers worked from.
-- **Badges:** handoff time −30% · task completion +20% · 200+ usability tests
-- Architected an atomic Figma design system and led the company's first Dev Mode
-  rollout, standardizing UI across 4+ product lines.
-- Drove a data-informed redesign from 200+ usability tests; presented findings to
-  executive stakeholders.
+- **Badges:** 200+ usability tests · first Dev Mode rollout · 4 brands
+- Built Collette's first design system in Figma and introduced Dev Mode to a 6–8
+  person development team, replacing Zeplin exports and hand-made diagrams.
+- Designed tour, pricing, and booking flows across 4 brands; shipped Compare Tours
+  (2023); ran 200+ UserTesting sessions and nine competitive studies.
 - Tags: `Figma` `Design Systems` `Dev Mode` `Usability Testing` `Atomic Design`
+- Links to the case study at `/projects/collette.html` (thumbnail: crop of the
+  hero board, `assets/thumbnails/collette.webp`).
 
 ### 2025–Present · Administrative Assistant · Kumon Learning Center
 Run daily operations for 70+ students weekly — and automated the part that didn't

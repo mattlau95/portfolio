@@ -24,6 +24,9 @@ Collette experience entry gets a linked 800×600 thumbnail (crop of the hero boa
 **Cache + docs**
 `style.css?v=2` → `?v=3` on all 13 HTML pages in one commit (`/styles` is immutable-cached). `docs/CONTENT.md` "two years" → "two and a half years". `docs/collette-hub-v6.md` stays local (gitignored) — its sources appendix names the partner brands the page leaves unnamed.
 
+**Experience copy (same day, follow-up)**
+Collette entry bullets rewritten to the countable claims: first Figma design system + Dev Mode for a 6–8 person dev team (replacing Zeplin exports and hand-made diagrams); tour/pricing/booking flows across 4 brands, Compare Tours shipped 2023, 200+ UserTesting sessions, nine competitive studies. Kumon entry: badge "~96% Latency Reduction" → "~96% time reduction", "over 70+" → "70+". Footer "Last updated" → September 2026 (Lighthouse badge and its June label left as measured). Collette page gains an italic "Three deeper pages are in progress." above the first spoke heading. `docs/CONTENT.md` and `docs/update_kumon_experience.md` synced to match.
+
 **Audit + close-out (same day)** — see `audit-2026-09-15.md`
 0 blockers, 1 important, 4 polish. Fixed: mobile LCP 3.0s → 1.7s by adding a 1000w hero candidate (`collette-hero-board-1000.webp`, 41 KB) to the `srcset`; token table fits a 360px column with the caption visible (`--text-xs`, tighter padding, `overflow-wrap: anywhere` on the code-names column only, `code { font-size: inherit }`); hero link gets an sr-only "Open the full-size board". Deferred: desktop CLS 0.063 from font swap (site-wide font-metrics work). Left as is: the homepage double tab stop (existing card pattern).
 
