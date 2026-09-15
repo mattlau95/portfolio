@@ -22,7 +22,10 @@ Real `<table class="token-table">` with `<caption>`, `<th scope="col">`, `<code>
 Collette experience entry gets a linked 800×600 thumbnail (crop of the hero board, `assets/thumbnails/collette.webp`, capped at 360px in the timeline) and a "Read Case Study" link using the `.project-card-media` / `.project-links` pattern. Badges: dropped "handoff time −30%" and "task completion +20%" (v6 decision 4), kept "200+ usability tests", added "first Dev Mode rollout" and "4 brands". No seventh project card.
 
 **Cache + docs**
-`style.css?v=2` → `?v=3` on all 13 HTML pages in one commit (`/styles` is immutable-cached). `docs/CONTENT.md` "two years" → "two and a half years".
+`style.css?v=2` → `?v=3` on all 13 HTML pages in one commit (`/styles` is immutable-cached). `docs/CONTENT.md` "two years" → "two and a half years". `docs/collette-hub-v6.md` stays local (gitignored) — its sources appendix names the partner brands the page leaves unnamed.
+
+**Audit + close-out (same day)** — see `audit-2026-09-15.md`
+0 blockers, 1 important, 4 polish. Fixed: mobile LCP 3.0s → 1.7s by adding a 1000w hero candidate (`collette-hero-board-1000.webp`, 41 KB) to the `srcset`; token table fits a 360px column with the caption visible (`--text-xs`, tighter padding, `overflow-wrap: anywhere` on the code-names column only, `code { font-size: inherit }`); hero link gets an sr-only "Open the full-size board". Deferred: desktop CLS 0.063 from font swap (site-wide font-metrics work). Left as is: the homepage double tab stop (existing card pattern).
 
 ---
 
