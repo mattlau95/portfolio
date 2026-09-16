@@ -3,23 +3,44 @@
 Verification scripts for the figure system and the page audits. Node + Puppeteer,
 run by hand — **not** part of the site, not loaded by any page, no build step.
 
-## Setup
+## Two kinds of check
 
-These need three dev-only packages. The repo deliberately has no `package.json`
-(see `docs/PROJECT.md` §2 — plain HTML/CSS/JS, no build step), so install them
-outside it and point Node at them:
+| Kind | Tools | How it runs |
+|---|---|---|
+| **Quick checks** — any URL, no setup | Lighthouse, axe, pa11y | `npx`, as in Part A of `~/ux-audit-kit/AUDIT.md` |
+| **Site checks** — this repo's figure system | `sweep.js`, `figures.js`, `lightbox.js`, `perf.js` | `npm ci` in this folder, then `npm run` |
+
+Nothing is installed globally or in the home directory. The site checks'
+dependencies live in `scripts/checks/node_modules/`, pinned by `package.json`
+and `package-lock.json` in this folder, and Puppeteer's Chrome downloads to
+`scripts/checks/.cache/puppeteer/` (set in `.puppeteerrc.cjs`). Both folders are
+gitignored. The repo root still has no `package.json` (`docs/PROJECT.md` §2), so
+Cloudflare Pages' build detection is unaffected.
+
+## Quick checks (npx)
 
 ```bash
-mkdir -p ~/.portfolio-checks && cd ~/.portfolio-checks
-npm install puppeteer axe-core lighthouse
-export NODE_PATH=~/.portfolio-checks/node_modules    # PowerShell: $env:NODE_PATH="$HOME\.portfolio-checks\node_modules"
+npx lighthouse https://www.matthewclau.com/projects/ollae --only-categories=performance,accessibility,best-practices --output=json --output-path=./lighthouse-report.json
+npx @axe-core/cli https://www.matthewclau.com/projects/ollae
+npx pa11y https://www.matthewclau.com/projects/ollae
 ```
 
-If you would rather install in-repo, `node_modules/` is gitignored — but check
-your Cloudflare Pages build settings first, since adding a `package.json` to the
-root can change what Pages auto-detects.
+`@axe-core/cli` and `pa11y` are npx-only: they aren't in this folder's
+`package.json`, so npx fetches the latest into npm's cache wherever you run
+them. `lighthouse` is also a pinned dependency here (for `perf.js`), so
+`npx lighthouse` run from `scripts/checks/` after `npm ci` uses that pinned
+version; run anywhere else, it fetches the latest.
 
-Then serve the site and run against it:
+## Site checks (npm ci)
+
+One-time setup, and again whenever `package-lock.json` changes:
+
+```bash
+cd scripts/checks
+npm ci
+```
+
+Then serve the site from the repo root in another terminal:
 
 ```bash
 npx serve -l 4321 .
@@ -34,23 +55,30 @@ npx serve -l 4321 .
 | `lightbox.js` | Does the `[data-zoom]` lightbox honour its keyboard contract? |
 | `perf.js` | Lighthouse LCP/CLS/Performance medians, mobile and desktop. |
 
+Run them through `npm run` from `scripts/checks/`, so Puppeteer finds
+`.puppeteerrc.cjs` and its Chrome. A bare `node sweep.js` from the repo root
+looks in `~/.cache/puppeteer` instead and fails to launch.
+
 ```bash
-node scripts/checks/sweep.js
-node scripts/checks/figures.js  /projects/collette.html
-node scripts/checks/lightbox.js /projects/collette.html
-node scripts/checks/perf.js     /projects/kumon-automation.html 3
+npm run sweep
+npm run figures  -- /projects/collette.html
+npm run lightbox -- /projects/collette.html
+npm run perf     -- /projects/kumon-automation.html 3
 ```
 
+From the repo root, add `--prefix scripts/checks`:
+`npm --prefix scripts/checks run figures -- /projects/collette.html`.
+
 All four take an optional trailing base URL (default `http://localhost:4321`).
-`sweep.js`, `figures.js` and `lightbox.js` exit non-zero on failure, so they can
-gate a commit if you ever want that.
+`sweep`, `figures` and `lightbox` exit non-zero on failure, so they can gate a
+commit if you ever want that.
 
 **On Git Bash (Windows), pass the full URL instead of a path.** MSYS rewrites a
 leading `/projects/...` argument into `C:/Program Files/Git/projects/...` before
 Node ever sees it:
 
 ```bash
-node scripts/checks/figures.js http://localhost:4321/projects/collette.html
+npm run figures -- http://localhost:4321/projects/collette.html
 ```
 
 `resolveUrl()` strips the mangled prefix as a fallback, but the full-URL form
@@ -73,7 +101,7 @@ absolute number, measure production.
 To get a baseline for a before/after, stash and re-run:
 
 ```bash
-git stash push -u && node scripts/checks/perf.js /projects/collette.html 5; git stash pop
+git stash push -u && npm --prefix scripts/checks run perf -- /projects/collette.html 5; git stash pop
 ```
 
 ## Known standing results

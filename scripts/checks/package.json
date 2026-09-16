@@ -1,0 +1,16 @@
+{
+  "name": "portfolio-checks",
+  "private": true,
+  "description": "Dev-only verification tooling for matthewclau.com. Not part of the site; not loaded by any page.",
+  "scripts": {
+    "sweep": "node sweep.js",
+    "figures": "node figures.js",
+    "lightbox": "node lightbox.js",
+    "perf": "node perf.js"
+  },
+  "devDependencies": {
+    "axe-core": "4.13.0",
+    "lighthouse": "13.4.1",
+    "puppeteer": "25.11.0"
+  }
+}

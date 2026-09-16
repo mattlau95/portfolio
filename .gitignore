@@ -10,3 +10,4 @@ docs/collette-hub-v6.md
 
 # Dev-only check tooling (scripts/checks) — never committed, never deployed
 node_modules/
+scripts/checks/.cache/
