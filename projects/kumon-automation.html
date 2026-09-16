@@ -35,10 +35,6 @@
           <span class="metric-label">→ 25 min backlog cleared</span>
         </li>
         <li>
-          <span class="metric-value">70+</span>
-          <span class="metric-label">students tracked weekly</span>
-        </li>
-        <li>
           <span class="metric-value">1-click</span>
           <span class="metric-label">single or bulk clear</span>
         </li>
@@ -54,6 +50,23 @@
       </p>
     </header>
 
+    <figure class="media-figure figure--wide">
+      <div class="cs-video">
+        <video class="js-cs-video" muted loop playsinline preload="none"
+               width="1424" height="648"
+               poster="/assets/kumon-automation/race-side-poster.webp"
+               aria-label="Split-screen timing of one 10-page reading set. By hand: 50.7 seconds. With the extension: 9.6 seconds.">
+          <source src="/assets/kumon-automation/race-stacked.mp4" type="video/mp4" media="(max-width: 700px)"
+                  data-poster="/assets/kumon-automation/race-stacked-poster.webp" data-width="720" data-height="1312">
+          <source src="/assets/kumon-automation/race-side.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="cs-video__toggle" hidden>Pause</button>
+      </div>
+      <figcaption>
+        The same 10-page reading set, cleared by hand and with the extension. By hand it took 50.7 seconds of clicking. The extension finished in 9.6 seconds, counting the time to open the popup.
+      </figcaption>
+    </figure>
+
     <section>
       <h2>Overview</h2>
       <p>Kumon instructors must manually mark every student worksheet as reviewed in Class-Navi before students can progress. When worksheets pile up, clearing the backlog becomes a multi-day slog of repetitive clicks across dozens of pages. I built a Chrome extension that automates the entire sequence and runs through a full backlog in under 25 minutes while the instructor does something else.</p>
@@ -63,6 +76,25 @@
       <h2>The problem</h2>
       <p>Class-Navi is Kumon's internal grading portal, built as an Angular single-page app. For each worksheet, an instructor must open it, tab through every page, clear any eraser marks, and confirm completion — one deliberate click at a time, no batch operation, no shortcuts.</p>
       <p>For a centre tracking 70+ active students, backlogs accumulate fast. A week of unchecked worksheets can take days to clear manually, and that delay blocks the platform's automatic progression tracking — students appear stuck even when they've moved on.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/kumon-automation/worksheet-annotated@2x.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <img src="/assets/kumon-automation/worksheet-annotated.webp"
+               srcset="/assets/kumon-automation/worksheet-annotated.webp 1411w, /assets/kumon-automation/worksheet-annotated@2x.webp 2822w"
+               sizes="(max-width: 960px) 100vw, 960px"
+               width="1411" height="790" loading="lazy"
+               alt="A graded Class-Navi worksheet. Nine orange X marks are outlined across two pages, the page list in the sidebar is outlined, and the Complete Marking button is outlined. Numbered badges match the steps in the caption.">
+        </a>
+        <figcaption>
+          What one set takes by hand:
+          <ol>
+            <li>Clear every mark on the page, one at a time.</li>
+            <li>Move to the next page and repeat. This set has 10.</li>
+            <li>Press Complete Marking and confirm.</li>
+          </ol>
+        </figcaption>
+      </figure>
     </section>
 
     <section>
@@ -75,7 +107,39 @@
 
       <h3>Design</h3>
       <p>The popup needed to be context-aware without adding friction. Rather than asking the instructor to configure anything upfront, it detects which page they're on — worksheet or gradebook — and shows only the relevant control. A worksheet page shows one clear button. The gradebook shows bulk mode with a configurable day threshold (default: 14 days).</p>
+
+      <figure class="media-figure">
+        <div class="cs-states">
+          <figure>
+            <img src="/assets/kumon-automation/popup-no-classnavi.webp" width="260" height="152" loading="lazy"
+                 alt="Extension popup reading: Open Class-Navi to use this extension.">
+            <figcaption>Any other tab</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/kumon-automation/popup-worksheet-detected.webp" width="260" height="224" loading="lazy"
+                 alt="Extension popup showing Worksheet detected and a Clear Current Worksheet button.">
+            <figcaption>Worksheet open</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/kumon-automation/popup-gradebook.webp" width="260" height="266" loading="lazy"
+                 alt="Extension popup on the gradebook: Gradebook detected, a setting to clear worksheets older than 10 days, and a Run Bulk Clear button.">
+            <figcaption>Gradebook open</figcaption>
+          </figure>
+        </div>
+        <figcaption>The popup checks which Class-Navi page is open and shows only the action that works there.</figcaption>
+      </figure>
+
       <p>Progress feedback runs in a floating status bar injected into the page itself, so the instructor can close the popup and still see what's running. It steps through each stage and auto-dismisses when done.</p>
+
+      <figure class="media-figure">
+        <ol class="cs-status">
+          <li><img src="/assets/kumon-automation/status-visiting.webp" width="274" height="86" loading="lazy" alt="Status: Visiting all pages"></li>
+          <li><img src="/assets/kumon-automation/status-completing.webp" width="274" height="87" loading="lazy" alt="Status: Completing marking"></li>
+          <li><img src="/assets/kumon-automation/status-waiting.webp" width="274" height="86" loading="lazy" alt="Status: Waiting for gradebook"></li>
+          <li><img src="/assets/kumon-automation/status-done.webp" width="398" height="108" loading="lazy" alt="Status: Done, all marks cleared and marking completed"></li>
+        </ol>
+        <figcaption>Progress shows on the page itself, so the popup can close while a run continues.</figcaption>
+      </figure>
 
       <h3>Engineering</h3>
       <p>Class-Navi's Angular app doesn't respond reliably to bare <code>.click()</code> calls — the framework expects full <code>MouseEvent</code> sequences with real coordinates. I wrote a <code>syntheticClick</code> helper that dispatches <code>mousedown</code>, <code>mouseup</code>, and <code>click</code> with bounding-box coordinates, which the app treats the same as a real user interaction.</p>
@@ -102,6 +166,27 @@
 
     <section>
       <h2>Outcome</h2>
+
+      <!-- Bulk run figure. Uncomment once the clip exists — left commented so the
+           missing poster does not 404. Build it with tools/kumon-media/make_bulk_timelapse.py,
+           copy the output to /assets/kumon-automation/, fill in the [brackets], and set
+           height from `ffprobe -v error -show_entries stream=width,height`.
+      <figure class="media-figure">
+        <div class="cs-video">
+          <video class="js-cs-video" muted loop playsinline preload="none"
+                 width="1280" height="[set from the ffprobe output]"
+                 poster="/assets/kumon-automation/bulk-run-poster.webp"
+                 aria-label="Sped-up excerpt of a bulk run: the extension opens, clears, and completes worksheets one after another from the gradebook.">
+            <source src="/assets/kumon-automation/bulk-run.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="cs-video__toggle" hidden>Pause</button>
+        </div>
+        <figcaption>
+          [N] minutes from a real backlog run, shown at [S]× speed. The clock in the corner is real elapsed time. The full backlog took about 25 minutes, with no one at the keyboard.
+        </figcaption>
+      </figure>
+      -->
+
       <p>Before the extension, clearing a week's backlog for a 70+ student roster took multiple days of manual work. After, the same backlog runs unattended in about 25 minutes — measured wall-clock time on a real backlog, not an estimate. The actual user time is one click.</p>
     </section>
 
@@ -114,10 +199,11 @@
     <footer>
       <p>an MCL Studio project</p>
       <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
-      <p class="footer-date">Last updated June 2026</p>
+      <p class="footer-date">Last updated September 2026</p>
     </footer>
   </main>
 
   <script src="/scripts/main.js?v=1" defer></script>
+  <script src="/scripts/case-study-video.js?v=1" defer></script>
 </body>
 </html>
