@@ -1152,3 +1152,355 @@ footer p:last-child {
     transition: opacity var(--duration-base) var(--ease);
   }
 }
+
+/* Race comparison — Kumon hero. One side-by-side clip cropped into two
+   panels on a shared clock (scripts/race-comparison.js). The clip is
+   1424x648 with a 64px label bar on top: each <video> is drawn at 200%
+   width and 110.959% height, then shifted up past the bar and left by
+   half for the right-hand panel. 712/584 is one half, bar removed. */
+
+.race {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Several parts below set display:flex, which beats the UA [hidden] rule. */
+.race [hidden] {
+  display: none !important;
+}
+
+.race__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+}
+
+.race__eyebrow,
+.race__foot,
+.race__clock-head,
+.race__lane-label,
+.race__saved {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.race__eyebrow {
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.race__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.race__btn {
+  min-height: 44px;                /* WCAG 2.5.8 target size */
+  min-width: 88px;
+  padding-inline: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: rgb(15 15 14 / 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.race__btn--quiet {
+  min-width: 0;
+  color: var(--color-text-muted);
+  background-color: transparent;
+}
+
+.race__btn:hover {
+  color: var(--color-accent);
+  background-color: var(--color-bg);
+}
+
+.race__panels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  align-items: flex-start;
+}
+
+.race__panel {
+  flex: 1 1 280px;
+  min-width: min(100%, 260px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.race__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.race__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.race__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+}
+
+.race__dot--accent {
+  background: var(--color-accent);
+}
+
+.race__time {
+  flex: none;
+  padding: var(--space-1) 0.625rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.race__time--accent {
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.race__screen {
+  position: relative;
+  aspect-ratio: 712 / 584;
+  max-width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-border);
+}
+
+.race__video {
+  position: absolute;
+  top: -10.959%;
+  left: 0;
+  width: 200%;
+  height: 110.959%;
+  max-width: none;
+  object-fit: fill;
+}
+
+.race__video--right {
+  left: -100%;
+}
+
+.race__play,
+.race__done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.race__play {
+  background: rgb(15 15 14 / 0.5);
+  cursor: pointer;
+}
+
+.race__play span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding-left: 3px;
+  font-size: 18px;
+  color: var(--color-accent);
+  background: rgb(15 15 14 / 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+}
+
+.race__done {
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  text-align: center;
+  background: rgb(15 15 14 / 0.66);
+}
+
+.race__done-badge {
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: clamp(15px, 1.9vw, 22px);
+  color: #fff;
+  background: #1f7a4a;
+  border-radius: var(--radius);
+}
+
+.race__done-idle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.race__done-count {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1;
+  color: var(--color-accent);
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.race__foot {
+  margin: 0;
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+}
+
+.race__clock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.race__clock-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) 1.25rem;
+  color: var(--color-text-muted);
+}
+
+.race__clock-label {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.race__clock-t {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.race__track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.race__track[tabindex="0"] {
+  cursor: pointer;
+}
+
+.race__lane {
+  position: relative;
+  height: 32px;
+  overflow: hidden;
+  background: #171716;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.race__fill,
+.race__hatch {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background: #3b3b38;
+}
+
+.race__fill--accent {
+  background: var(--color-accent);
+}
+
+.race__hatch {
+  right: 0;
+  width: auto;
+  background: repeating-linear-gradient(135deg, rgb(var(--color-accent-rgb) / 0.14) 0 5px, transparent 5px 10px);
+}
+
+.race__tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgb(var(--color-accent-rgb) / 0.45);
+}
+
+.race__tick span {
+  display: block;
+  padding: 2px 0 0 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgb(var(--color-accent-rgb) / 0.8);
+  white-space: nowrap;
+}
+
+.race__lane-label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--space-3);
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.race__lane-label--dark {
+  color: var(--color-bg);
+}
+
+.race__saved {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 0.625rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stats reuse the header metrics; only the spacing is local. */
+
+.race__stats {
+  margin: 0;
+  gap: var(--space-6) var(--space-8);
+}
+
+.race > figcaption {
+  margin-top: 0;
+}

@@ -7,8 +7,8 @@ Open `kumon-media-embed.html` locally to preview it all in place.
 
 | File | Goes in section | Notes |
 |---|---|---|
-| `video/race-side.mp4` + poster | Under the intro | 1424×648, 52.8 s loop, 0.9 MB, no audio |
-| `video/race-stacked.mp4` + poster | Same figure, phones | 720×1312, picked by JS under 700px |
+| `video/race-side.mp4` + poster | Under the intro | 1424×648, 52.8 s loop, 0.9 MB, no audio. Live as `race-side-2.mp4`; the page crops it into two synced panels (`scripts/race-comparison.js`) |
+| `video/race-stacked.mp4` + poster | Unused since the race-comparison hero | 720×1312; the two-panel hero stacks the side clip on phones instead |
 | `img/worksheet-annotated(.webp, @2x)` | The problem | Badges 1–3 match the caption's list |
 | `img/popup-*.webp` | Approach → Design | All three states (other tab, worksheet, gradebook), 1× captures |
 | `img/status-*.webp` | Approach → Design | Transparent corners, pulled from the extension clip |
@@ -56,8 +56,9 @@ The header shows the speed and the real elapsed time, so the clip never looks fa
 ## Rebuilding the race clip
 
 ```bash
-bash scripts/make-race.sh manual.mp4 extension.mp4 video/race-side side 50.7 9.6
-bash scripts/make-race.sh manual.mp4 extension.mp4 video/race-stacked stacked 50.7 9.6
+bash scripts/make-race.sh manual.mp4 extension.mp4 video/race-side-3 side 50.7 9.6
 ```
+
+**Bump the number on every rebuild** (`-3`, `-4`, …) and update the two `<source>` tags in `projects/kumon-automation.html`. `/assets/*` is served `immutable`, so a changed clip under an old name keeps serving the old cut for up to a year (MAT-715). The page crop assumes the side layout's 1424×648 frame with a 64px label bar; if that changes, update the percentages in `.race__video`.
 
 The last two arguments are the moments each side is actually done. Each clip is trimmed shortly after that time, then holds on its final frame until the other side catches up.
