@@ -885,6 +885,7 @@ ul.badges + ul.tags {
 
 .hero-figure > figcaption,
 .media-figure > figcaption,
+.shots > figcaption,
 .video-caption {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -1150,6 +1151,43 @@ footer p:last-child {
   .project-cards > .project-card,
   .workflow-list > .workflow-row {
     transition: opacity var(--duration-base) var(--ease);
+  }
+}
+
+/* Three-screen strip — Ollae hero. Three separate images, not one baked
+   composite, so each keeps its own alt text and the strip can stack.
+   The width/height attributes reserve space; height:auto keeps the ratio.
+   Caption typography comes from the shared figcaption rule above. */
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 40px 0 48px;
+}
+
+.shots picture {
+  display: block;
+}
+
+.shots img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #0f172a;          /* the app's own background, so the corners never flash */
+}
+
+.shots > figcaption {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .shots {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin-inline: auto;
   }
 }
 
