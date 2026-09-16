@@ -16,7 +16,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css">
-  <link rel="stylesheet" href="/styles/style.css?v=3">
+  <link rel="stylesheet" href="/styles/style.css?v=4">
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
@@ -31,15 +31,15 @@
       <p class="case-study-meta-row">UX/UI Designer · 2022–2024 · Figma, Dev Mode, UserTesting.com</p>
     </header>
 
-    <figure class="hero-figure">
-      <a href="/assets/collette/collette-hero-board-2x.webp">
+    <figure class="hero-figure figure--wide">
+      <a class="figure-zoom" href="/assets/collette/collette-hero-board-2x.webp" data-zoom>
+        <span class="sr-only">View full-size: </span>
         <img src="/assets/collette/collette-hero-board-1x.webp"
              srcset="/assets/collette/collette-hero-board-1000.webp 1000w, /assets/collette/collette-hero-board-1x.webp 1600w, /assets/collette/collette-hero-board-2x.webp 3200w"
-             sizes="(min-width: 1400px) 1336px, calc(100vw - 4rem)"
+             sizes="(min-width: 1033px) 969px, calc(100vw - 4rem)"
              width="1600" height="900"
              fetchpriority="high"
              alt="Reconstructed Collette component library: color, type, and spacing primitives above thirteen component tiles — buttons, tour date rows, tour cards, and the price panel — each labeled with the values it uses.">
-        <span class="sr-only">Open the full-size board</span>
       </a>
       <figcaption>Reconstructed 2026 from 2023–24 specs, screenshots, and the site's public theme.</figcaption>
     </figure>
@@ -49,8 +49,14 @@
 
       <figure class="media-figure">
         <div class="media-pair">
-          <img src="/assets/collette/collette-2023-03-design.webp" alt="Adobe XD design of the mobile tour itinerary page: Day by Day, Map, and Extension tabs above a coastal photo, a Return to Main Tour button, a day-by-day timeline, and Stay, Meals, and Enhance Tour cards." width="486" height="1054" loading="lazy">
-          <img src="/assets/collette/collette-2023-03-build.webp" alt="The built mobile tour page for Maritimes Coastal Wonders: the same Day by Day, Map, and Extension tabs and Return to Main Tour button over a photo of travelers reading a map, with different spacing, type sizes, and tab styling from the design." width="634" height="1178" loading="lazy">
+          <figure>
+            <img src="/assets/collette/collette-2023-03-design.webp" alt="Adobe XD design of the mobile tour itinerary page: Day by Day, Map, and Extension tabs above a coastal photo, a Return to Main Tour button, a day-by-day timeline, and Stay, Meals, and Enhance Tour cards." width="486" height="1054" loading="lazy">
+            <figcaption>Design · Adobe XD</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/collette/collette-2023-03-build.webp" alt="The built mobile tour page for Maritimes Coastal Wonders: the same Day by Day, Map, and Extension tabs and Return to Main Tour button over a photo of travelers reading a map, with different spacing, type sizes, and tab styling from the design." width="634" height="1178" loading="lazy">
+            <figcaption>Build · live site</figcaption>
+          </figure>
         </div>
         <figcaption>Design and build of the same view, March 2023.</figcaption>
       </figure>
@@ -58,7 +64,10 @@
       <p>Over the next two years we built the system that launch never had. The palette and typefaces were set — the brand design consultant had delivered the colors as a numbered ramp, and the site's Material UI theme carried those numbers into code — and everything else was ours: the spacing scale, type sizes, buttons, and a component library. It also had to hold under three partner loyalty programs whose members redeem rewards for a Collette trip: their logo and colors, not ours, and in one case a points-plus-cash price model. Handoff was the hard part. Before Dev Mode it meant hand-made diagrams over Zeplin exports — spacing, scroll windows, max heights — for six to eight developers, then design QA alongside the QA team after every round of development, because the build often didn't match the file. We moved the workflow onto Figma, and in 2024 ran Collette's first Dev Mode rollout: developers inspecting the live file instead of a diagram of it.</p>
 
       <figure class="media-figure">
-        <img src="/assets/collette/collette-2024-02-handoff.webp" alt="Handoff diagram of the tablet Build Your Tour panel expanded to its maximum height: a magenta bar labeled 'becomes scroll window' marks the long Other Expenses list that scrolls while the Grand Total stays fixed below it." width="768" height="1024" loading="lazy">
+        <a class="figure-zoom" href="/assets/collette/collette-2024-02-handoff.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <img src="/assets/collette/collette-2024-02-handoff.webp" alt="Handoff diagram of the tablet Build Your Tour panel expanded to its maximum height: a magenta bar labeled 'becomes scroll window' marks the long Other Expenses list that scrolls while the Grand Total stays fixed below it." width="768" height="1024" loading="lazy">
+        </a>
         <figcaption>A handoff diagram: how the expense panel scrolls at max height, February 2024.</figcaption>
       </figure>
 
@@ -81,7 +90,7 @@
 
       <div class="table-wrap">
         <table class="token-table">
-          <caption>Five values: what the spec called them, and what the code called them.</caption>
+          <caption>Five values, named on both sides, and the column nothing ever filled.</caption>
           <thead>
             <tr>
               <th scope="col">Value</th>
@@ -95,31 +104,31 @@
               <td><code>#132F3B</code></td>
               <td>Primary Blue</td>
               <td><code>primary-900</code>, <code>primary-main</code>, <code>text-primary</code>, <code>background-brand</code></td>
-              <td>—</td>
+              <td><span class="token-none">none</span></td>
             </tr>
             <tr>
               <td><code>#2E844B</code></td>
               <td>CTA green</td>
               <td><code>secondary-main</code>, <code>success-main</code></td>
-              <td>—</td>
+              <td><span class="token-none">none</span></td>
             </tr>
             <tr>
               <td><code>#E2F2F7</code></td>
               <td>light blue</td>
               <td><code>info-main</code>, <code>background-cool_strong</code></td>
-              <td>—</td>
+              <td><span class="token-none">none</span></td>
             </tr>
             <tr>
               <td><code>#FFD369</code></td>
               <td>gold</td>
               <td><code>accent-gold</code>, <code>warning-700</code></td>
-              <td>—</td>
+              <td><span class="token-none">none</span></td>
             </tr>
             <tr>
               <td><code>#718289</code></td>
               <td>primary hover</td>
               <td><code>primary-500</code></td>
-              <td>—</td>
+              <td><span class="token-none">none</span></td>
             </tr>
           </tbody>
         </table>

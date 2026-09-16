@@ -61,6 +61,17 @@
   --max-width: 1400px;
   --radius: 0.5rem;
 
+  /* Media — height cap for in-body figures. A portrait image (phone
+     screenshot, tall handoff diagram) is sized by its height, not its
+     width, so it can never run past one screen. The clamp floor keeps
+     the image usable at 400% browser zoom, where 70vh collapses. */
+  --figure-max-h: clamp(18rem, 70vh, 32rem);
+  --figure-gap: var(--space-12);
+
+  /* How far a "wide" figure outdents past the text column, as a multiple
+     of it. Used by .figure--wide; see docs/image-conventions.md §2. */
+  --figure-wide-scale: 1.4;
+
   /* Spotlight cursor position — updated by main.js on mousemove */
   --x: 50vw;
   --y: 50vh;

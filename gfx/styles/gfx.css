@@ -12,29 +12,14 @@
   max-width: 55ch;
 }
 
-/* Media figures inside case studies */
-
-.media-figure {
-  margin: var(--space-8) 0;
-}
-
-.media-figure img {
-  width: 100%;
-  border-radius: var(--radius);
-  background-color: var(--color-border);
-}
-
-.media-figure figcaption {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-top: var(--space-2);
-}
+/* Media figures — .media-figure, its img, and figcaption now live in
+   style.css as the site-wide figure system. Only the grid is local. */
 
 .media-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
-  margin: var(--space-8) 0;
+  margin: var(--figure-gap) 0;
 }
 
 .media-grid .media-figure {
@@ -66,10 +51,13 @@
   border: 0;
 }
 
+/* .video-caption takes its type from the shared caption rule in
+   style.css; it only needs to sit tight under the embed above it,
+   which carries its own bottom margin. (This was a `margin-top` with
+   three values — invalid, so the whole declaration was dropped.) */
+
 .video-caption {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-top: calc(-1 * var(--space-6)) 0 var(--space-8);
+  margin: calc(var(--space-4) - var(--space-8)) 0 var(--figure-gap);
 }
 
 /* Social embeds (Twitter/Instagram) */

@@ -4,6 +4,157 @@
 
 ---
 
+## 2026-09-16 — Figure widths, caption alignment, lightbox
+
+Follow-up to the figure system earlier the same day. That change fixed how big
+images are; this one fixes where they sit and what sits under them.
+
+**Captions align to their image, not the text column**
+Figures come in three widths relative to the 692px column — narrower and
+centred (handoff diagram 385px, phone pair 537px), equal (QA crop), and wider
+(hero) — so a caption pinned to the column only looked right in the middle
+case. Measured before: hero caption **322px** left of its image, handoff
+**154px**, pair **39px**. Now `.media-figure` is `width: fit-content` and the
+caption is `contain: inline-size; max-width: 60ch`, which stops the caption's
+longest line from driving the figure's max-content width. All 16 image/caption
+pairs align at 1440 / 1024 / 390 / 360.
+
+Two things fell out of it. The hero's outdent moved from `.hero-figure > a`
+onto the figure itself, so the caption sits inside the wide box instead of on
+the text column. And `.media-pair` went `justify-content: center` →
+`flex-start`: at desktop the figure is `fit-content` so the line has no slack
+and it reads as centred anyway, but once it wraps on a phone the slack pushed
+each image 44px off the caption's left edge.
+
+**Hero 1.93× → 1.4× the column, as a reusable track**
+`--figure-wide-scale: 1.4` plus a `.figure--wide` class; 1336px → **969px**.
+The width rule is wrapped in `max(100%, …)` so a page with a gutter narrower
+than `--space-8` can never resolve the "wide" track below the column — it
+doesn't bind today (hero is exactly 1.0× the column at 390 and 360) but the
+failure would be silent.
+
+`sizes` re-derived from the new rule to `(min-width: 1033px) 969px,
+calc(100vw - 4rem)` — 1033px is where the viewport clamp takes over from the
+1.4× term. Desktop @1× now picks the 1000w candidate (41KB) instead of 1600w
+(85KB); mobile is unchanged at 1000w.
+
+**Lightbox** — `scripts/main.js`, fourth IIFE, no library
+Native `<dialog>` built lazily on first open. The trigger stays a real
+`<a href>` so it still works with JS off. Deliberately **no Space handler** —
+links activate on Enter and Space should keep scrolling. Modified clicks
+(meta/ctrl/shift/alt, non-primary button) pass through untouched so
+open-in-new-tab still works. Accessible name is `"View full-size: " + alt`;
+the dialog has its own `aria-label`. `src` is assigned at open and removed on
+close, so the 199KB 2× board is never fetched on page load — verified.
+
+One real bug caught in review: `.lightbox` had no `position: relative`, so the
+close button's `position: absolute` resolved against the initial containing
+block and rendered off-screen above a viewport-height image.
+
+**Consistency**
+One treatment for every image — same `--radius`, same 1px `--color-border`, no
+padding — folded into a single selector covering both `.media-figure img` and
+`.hero-figure img`. Worth recording that the rule was *already* identical; what
+looked inconsistent was content. The hero's white surround is the asset's own
+background and the handoff's hairline disappears against its dark chrome.
+Neither is CSS; both need new assets.
+
+Phone pair gets a nested `<figure>` per image with its own label ("Design ·
+Adobe XD", "Build · live site" — placeholder copy, flagged), so the label binds
+to one image instead of leaving the reader to infer left-from-right. Inner
+figure margins zeroed explicitly against both the UA default and `--figure-gap`.
+
+Token table left alone: it uses `<caption>` inside `<table>`, which is the
+correct element, and `caption-side: bottom` already matches the figures.
+
+**Verification**
+13 pages × 4 viewports: no distortion, nothing over the height cap, no
+horizontal overflow. axe-core 0 violations on all 13. Caption contrast measured
+at **8.03:1** (`#a8a8a2` on `#0f0f0e`) against a 4.5:1 bar — no token change.
+Lightbox keyboard walkthrough: Tab → Enter opens, Esc closes and returns focus,
+Space scrolls without opening, ✕ and backdrop both close, ctrl+click not
+intercepted. All pass.
+
+**LCP: measured, and the honest version is complicated.** Localhost medians
+over 5 runs went **1.81s → 1.96s**. But the harness is bimodal — *both* states
+produce a ~3.15s cluster (2 of 5 before, 2 of 5 after) alongside the fast one,
+so the medians sit inside a ±1.35s band. The real signal is the fast cluster
+shifting 1.76–1.81 → 1.96, which traces to style.css growing 18.0KB → 22.4KB of
+render-blocking CSS. Gzipped that delta is only **+1.6KB**, and `npx serve`
+sends CSS uncompressed where Cloudflare Pages applies Brotli — so localhost
+overstates the production cost roughly 3×. The audit's 1.7s is a production
+number and is not comparable to either figure here.
+
+**Deferred**
+Hero white ground and a tighter board crop (new assets, not MAT-713, which is
+the mobile crop); three untitled Instagram-injected iframes on
+`gfx/projects/skybluefc.html`; the pair label copy pending confirmation.
+
+---
+
+
+## 2026-09-16 — Site-wide figure system
+
+The Collette page shipped with images that had no shared rules: every figure
+was `width: 100%`, which is right for a 16:9 board and wrong for everything
+taller than it is wide. Measured at 1440px, the March 2023 phone screenshot
+rendered **334×724** (near life-size, taller than the hero) and the February
+2024 handoff diagram rendered **692×922** — taller than the viewport. Replaced
+with one rule that covers every orientation. Written up in
+`docs/image-conventions.md`.
+
+**Height cap instead of width fill**
+`--figure-max-h: clamp(18rem, 70vh, 32rem)` and `--figure-gap` added to
+`tokens.css`. `.media-figure img` is now `width: auto; max-width: 100%;
+max-height: var(--figure-max-h)`, so CSS derives the width from the intrinsic
+ratio and a portrait image gets narrower rather than taller. Handoff diagram
+692×922 → **385×512**; the pair 334×724 / 334×620 → **237×512 / 276×512**,
+which also lines their tops and bottoms up for free. The `clamp` floor keeps
+the image at 288 CSS px under 400% zoom, where a bare `70vh` would collapse.
+
+`width` has to stay `auto`: with a definite `width: 100%`, `max-height` clamps
+the height alone and squashes the image — the handoff diagram rendered
+692×512 from a 768×1024 source (80% distortion) on the first attempt. Caught
+by a ratio check across all 13 pages, not by eye. Side effect of `auto`:
+images are no longer upscaled past their natural size, so the 400×400
+Doughmain GIFs and 600×363 Aduro GIFs render sharp at source size instead of
+being stretched to 692.
+
+**Hero caption moved onto the body measure**
+The breakout now applies to `.hero-figure > a`, not to the figure, so the
+caption starts at the same left edge as the prose instead of 322px to its
+left. That was most of why it read as a stray opening line.
+
+**Captions take the metadata voice**
+`--font-mono` / `--text-xs` / `--color-text-muted`, `max-width: 68ch`,
+`margin-top` 8px → 16px; figure margins 32px → 48px against 16px paragraph
+gaps. Was DM Sans 15px against DM Sans 17px body — same typeface, one step
+down, so it parsed as body copy. Changing the family does what size and colour
+could not.
+
+**`.media-pair` grid → flex**
+Once the height cap sets each image's width, two equal `1fr` columns leave
+uneven gutters. Flex with `justify-content: center` and `flex-wrap` keeps the
+gutter even and drops the explicit 480px stacking breakpoint.
+
+**One system, not two**
+`gfx/styles/gfx.css` carried a duplicate copy of `.media-figure`, its `img`,
+and `figcaption`; deleted, so the archive inherits `style.css`. Its
+`.video-caption` had `margin-top: calc(…) 0 var(--space-8)` — three values on
+a longhand, so the whole declaration was being dropped. Fixed (rule is not yet
+used in any page). `style.css?v=3` → `?v=4` on all 13 pages.
+
+**Verification**
+All 13 pages at 1440 / 390 / 360: no distorted images, none over the cap, no
+horizontal overflow. axe-core 0 violations on the Collette page, both gfx
+pages checked, and the homepage. Collette CLS 0.056 (was 0.063; still the
+deferred font-swap shift). Pre-existing and untouched:
+`projects/edison-dental.html` overflows horizontally on mobile (553px in a
+390px viewport) — no images on that page.
+
+---
+
+
 ## 2026-09-15 — Collette Vacations hub page
 
 **New page: `projects/collette.html`**

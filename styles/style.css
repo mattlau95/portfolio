@@ -754,6 +754,14 @@ ul.badges + ul.tags {
   text-align: left;
 }
 
+/* "none" in the Component token column — the absence is the point, so it
+   sits back from the values it sits beside. Scoped to .token-table so it
+   cannot reach .lighthouse-table, which shares the rules above. */
+
+.token-table .token-none {
+  color: var(--color-text-muted);
+}
+
 .lighthouse-table th,
 .lighthouse-table td,
 .token-table th,
@@ -801,54 +809,124 @@ ul.badges + ul.tags {
   }
 }
 
-/* Collette case study — breakout hero, media figures, spokes */
+/* Figures — one system for every image on the site.
 
-.hero-figure {
-  position: relative;
-  left: 50%;
-  width: min(calc(var(--max-width) - 2 * var(--space-8)), calc(100vw - 2 * var(--space-8)));
-  margin: 0 0 var(--space-16);
-  transform: translateX(-50%);
+   An image renders at its natural size, shrunk to fit two bounds and
+   never upscaled past them: the column width, and a height cap. The
+   cap is what makes portrait work — a phone screenshot or a 3:4
+   diagram is bounded by its height, so CSS derives a narrower width
+   from the intrinsic ratio and it can never run past one screen. No
+   orientation-specific classes, no per-image bookkeeping.
+
+   `width` must stay `auto`. A definite `width: 100%` makes max-height
+   clamp the height alone, which squashes the image (the handoff
+   diagram rendered 692x512 for a 768x1024 source before this). */
+
+/* The figure shrinks to its image so the caption can match that width.
+   `contain: inline-size` on the caption below is what makes fit-content
+   size to the image alone instead of to the caption's longest line. */
+
+.media-figure {
+  width: fit-content;
+  max-width: 100%;
+  margin: var(--figure-gap) auto;
 }
 
-.hero-figure a {
-  display: block;
+.media-figure img {
+  width: auto;
+  max-width: 100%;
+  max-height: var(--figure-max-h);
+  margin-inline: auto;          /* portrait images centre in the column */
+}
+
+/* Hero — the figure itself carries the wide track, so its caption sits
+   inside the wide box and lines up with the image for free. */
+
+.hero-figure {
+  margin: 0 0 var(--space-16);
 }
 
 .hero-figure img {
   width: 100%;
+}
+
+/* Wide track — one reusable outdent, not a per-image one-off. The outer
+   max() guards against a page whose gutter is narrower than --space-8,
+   where the viewport clamp could otherwise land under the column. */
+
+.figure--wide {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(
+    100%,
+    min(calc(100% * var(--figure-wide-scale)), calc(100vw - 2 * var(--space-8)))
+  );
+}
+
+/* One treatment for every image on the page: same radius, same hairline,
+   no padding. background-color is the pre-load placeholder. */
+
+.media-figure img,
+.hero-figure img {
+  padding: 0;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background-color: var(--color-border);
 }
 
-.hero-figure figcaption,
-.media-figure figcaption {
-  font-size: var(--text-sm);
+/* Captions carry the site's metadata voice (mono, xs, muted) so they
+   never read as body copy, and a caption measure of their own. Every
+   caption's left edge matches its image's left edge — no exceptions. */
+
+.hero-figure > figcaption,
+.media-figure > figcaption,
+.video-caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
   color: var(--color-text-muted);
-  margin-top: var(--space-2);
+  max-width: 60ch;
+  margin-top: var(--space-4);
 }
 
-.media-figure {
-  margin: var(--space-8) 0;
+.media-figure > figcaption {
+  contain: inline-size;
 }
 
-.media-figure img {
-  width: 100%;
-  border-radius: var(--radius);
-  background-color: var(--color-border);
-}
+/* Side-by-side comparison. Flex, not a 1fr grid: once the height cap
+   sets each image's width, equal columns would leave uneven gutters.
+   Two capped portraits also come out the same height, so their tops
+   and bottoms line up without any per-image tuning. */
+
+/* flex-start, not center: at desktop the figure is fit-content so the line
+   has no slack and the two read as centred anyway. Once they wrap, slack
+   appears — centring it would push the images off the caption's left edge. */
 
 .media-pair {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: var(--space-6);
-  align-items: start;
 }
 
-@media (max-width: 480px) {
-  .media-pair {
-    grid-template-columns: 1fr;
-  }
+/* Each half is its own <figure> so its label belongs to its own image.
+   Margin is zeroed explicitly: these must not pick up the UA default
+   (1em 40px) or .media-figure's vertical gap. */
+
+.media-pair figure {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+}
+
+.media-pair figure > figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
 }
 
 .spokes h2 {
