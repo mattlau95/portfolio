@@ -268,9 +268,12 @@ you change it:
   WCAG 1.4.4 / 1.4.10.
 - **Caption contrast: 8.03:1** (`#a8a8a2` on `#0f0f0e`), against a 4.5:1
   requirement. No token change needed.
-- **Verify, don't assume.** The scratchpad sweep checks all 13 pages at
-  1440/1024/390/360 for distortion, over-cap images and horizontal overflow;
-  axe-core reports 0 violations on all 13 as of 2026-09-16.
+- **Verify, don't assume.** `node scripts/checks/sweep.js` checks all 13 pages at
+  1440/1024/390/360 for distortion, over-cap images and horizontal overflow, and
+  runs axe-core on each; `figures.js` checks the caption-alignment rule in §3 and
+  `lightbox.js` the keyboard contract in §6. See `scripts/checks/README.md` for
+  setup and the standing known results. As of 2026-09-16: 0 axe violations on all
+  13 pages, all captions aligned, 14/14 lightbox checks passing.
 
 ---
 

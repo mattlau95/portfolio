@@ -7,3 +7,6 @@ Thumbs.db
 
 # Local working docs — sources appendix names partner brands the page leaves unnamed
 docs/collette-hub-v6.md
+
+# Dev-only check tooling (scripts/checks) — never committed, never deployed
+node_modules/
