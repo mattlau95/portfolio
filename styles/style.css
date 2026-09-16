@@ -862,6 +862,10 @@ ul.badges + ul.tags {
     100%,
     min(calc(100% * var(--figure-wide-scale)), calc(100vw - 2 * var(--space-8)))
   );
+  /* Required when combined with .media-figure, which caps at max-width:100%
+     and would otherwise clamp the track straight back to the column. The
+     viewport term above already stops this overflowing. */
+  max-width: none;
 }
 
 /* One treatment for every image on the page: same radius, same hairline,
