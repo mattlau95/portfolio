@@ -25,6 +25,7 @@
   const doneEl = $('.js-race-done');
   const ticksEl = $('.js-race-ticks');
   const rightLabel = $('.js-race-right-label');
+  const byHandLabel = $('.race__lane .race__lane-label');
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const fmt = (v) => v.toFixed(1);
@@ -86,12 +87,15 @@
     $('.js-race-left-fill').style.width = lPct + '%';
     $('.js-race-right-fill').style.width = rPct + '%';
     $('.js-race-hatch').style.left = rPct + '%';
+    // The idle note starts after whichever ends later: the fill or the label.
     const saved = $('.js-race-saved');
-    saved.style.left = rPct + '%';
+    const fillPx = (rPct / 100) * track.clientWidth;
+    const labelEnd = rightLabel.offsetLeft + rightLabel.offsetWidth;
+    saved.style.left = Math.max(fillPx, labelEnd) + 'px';
     saved.textContent = rightIsDone ? 'idle +' + fmt(idle) + ' s' : '';
-    rightLabel.classList.toggle('race__lane-label--dark', rt / leftDone > 0.14);
 
     // One tick per extra run the extension would have finished so far.
+    const byHandEnd = byHandLabel.offsetLeft + byHandLabel.offsetWidth;
     let n = 0;
     for (let k = 1; k * rightDone < leftDone && k * rightDone <= lt; k++) n = k;
     if (n !== tickCount) {
@@ -99,10 +103,14 @@
       ticksEl.replaceChildren(...Array.from({ length: n }, (_, i) => {
         const tick = document.createElement('span');
         tick.className = 'race__tick';
-        tick.style.left = (((i + 1) * rightDone) / leftDone) * 100 + '%';
-        const label = document.createElement('span');
-        label.textContent = '×' + (i + 2);
-        tick.append(label);
+        const frac = ((i + 1) * rightDone) / leftDone;
+        tick.style.left = frac * 100 + '%';
+        // Unlabelled where the mark would sit on the lane's own label.
+        if (frac * track.clientWidth > byHandEnd + 4) {
+          const label = document.createElement('span');
+          label.textContent = '×' + (i + 2);
+          tick.append(label);
+        }
         return tick;
       }));
     }

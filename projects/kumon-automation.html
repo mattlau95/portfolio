@@ -16,7 +16,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css">
-  <link rel="stylesheet" href="/styles/style.css?v=5">
+  <link rel="stylesheet" href="/styles/style.css?v=6">
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
@@ -54,9 +54,9 @@
          on top) shown as two cropped panels driven by one shared clock —
          scripts/race-comparison.js. The filename is versioned: /assets/* is
          cached immutable, so changed content needs a new name (MAT-715). -->
-    <figure class="media-figure figure--wide race js-race" data-left-finish="50.7" data-right-finish="9.6">
+    <figure class="media-figure figure--wide race js-race" data-left-finish="50.7" data-right-finish="5.4">
       <div class="race__bar">
-        <p class="race__eyebrow">One 10-page reading set · real time</p>
+        <p class="race__eyebrow">One 10-page reading set · idle time trimmed</p>
         <div class="race__controls" hidden>
           <button type="button" class="race__btn js-race-toggle" aria-label="Play video">Play</button>
           <button type="button" class="race__btn race__btn--quiet js-race-restart">Restart</button>
@@ -73,8 +73,8 @@
             <video class="race__video js-race-left" muted loop playsinline preload="none"
                    width="1424" height="648"
                    poster="/assets/kumon-automation/race-side-poster.webp"
-                   aria-label="Split-screen timing of one 10-page reading set. By hand: 50.7 seconds. With the extension: 9.6 seconds.">
-              <source src="/assets/kumon-automation/race-side-2.mp4" type="video/mp4">
+                   aria-label="Split-screen timing of one 10-page reading set. By hand: 50.7 seconds. With the extension: 5.4 seconds, with its idle lead-in trimmed.">
+              <source src="/assets/kumon-automation/race-side-3.mp4" type="video/mp4">
             </video>
             <div class="race__play js-race-overlay" aria-hidden="true" hidden><span>&#9654;</span></div>
           </div>
@@ -90,10 +90,10 @@
             <video class="race__video race__video--right js-race-right" muted loop playsinline preload="none"
                    width="1424" height="648" tabindex="-1"
                    poster="/assets/kumon-automation/race-side-poster.webp">
-              <source src="/assets/kumon-automation/race-side-2.mp4" type="video/mp4">
+              <source src="/assets/kumon-automation/race-side-3.mp4" type="video/mp4">
             </video>
             <div class="race__done js-race-done" hidden>
-              <span class="race__done-badge">Done 9.6 s</span>
+              <span class="race__done-badge js-race-done-badge">Done 5.4 s</span>
               <span class="race__done-idle">idle, waiting on the manual run
                 <span class="race__done-count js-race-waited">+0.0 s</span>
               </span>
@@ -117,9 +117,13 @@
             <span class="race__lane-label">By hand</span>
           </div>
           <div class="race__lane">
-            <div class="race__fill race__fill--accent js-race-right-fill"></div>
-            <div class="race__hatch js-race-hatch"></div>
             <span class="race__lane-label js-race-right-label">Extension</span>
+            <div class="race__hatch js-race-hatch"></div>
+            <!-- Dark copy of the label inside the fill, clipped to it, so the
+                 text stays readable however little of it the fill covers. -->
+            <div class="race__fill race__fill--accent js-race-right-fill">
+              <span class="race__lane-label race__lane-label--dark" aria-hidden="true">Extension</span>
+            </div>
             <span class="race__saved js-race-saved"></span>
           </div>
         </div>
@@ -127,21 +131,21 @@
 
       <ul role="list" class="case-study-metrics race__stats">
         <li>
-          <span class="metric-value">5.3</span>
-          <span class="metric-label">× faster, end to end</span>
+          <span class="metric-value">9.4</span>
+          <span class="metric-label">× faster in this clip</span>
         </li>
         <li>
-          <span class="metric-value">41.1 s</span>
-          <span class="metric-label">saved on this one set</span>
+          <span class="metric-value">45.3 s</span>
+          <span class="metric-label">saved in this clip</span>
         </li>
         <li>
-          <span class="metric-value">5</span>
+          <span class="metric-value">9</span>
           <span class="metric-label">sets the extension clears in one manual set</span>
         </li>
       </ul>
 
       <figcaption>
-        The same 10-page reading set, cleared by hand and with the extension. By hand it took 50.7 seconds of clicking. The extension finished in 9.6 seconds, counting the time to open the popup.
+        The same 10-page reading set, cleared by hand and with the extension. By hand it took 50.7 seconds of clicking. The extension side is edited: the 2.2 seconds before the popup opens are cut, and moving to its button plays at 4× speed, so it finishes at 5.4 seconds. Unedited, the same run took 9.6 seconds.
       </figcaption>
     </figure>
 
@@ -283,6 +287,6 @@
 
   <script src="/scripts/main.js?v=1" defer></script>
   <script src="/scripts/case-study-video.js?v=1" defer></script>
-  <script src="/scripts/race-comparison.js?v=1" defer></script>
+  <script src="/scripts/race-comparison.js?v=2" defer></script>
 </body>
 </html>

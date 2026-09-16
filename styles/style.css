@@ -1439,6 +1439,10 @@ footer p:last-child {
   background: #3b3b38;
 }
 
+.race__fill {
+  overflow: hidden;
+}
+
 .race__fill--accent {
   background: var(--color-accent);
 }
@@ -1476,6 +1480,7 @@ footer p:last-child {
   color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
 }
 
 .race__lane-label--dark {
