@@ -4,6 +4,227 @@
 
 ---
 
+## 2026-09-16/17 — Kumon race comparison hero
+
+Replaced the single race clip on `projects/kumon-automation.html` with the
+Race Comparison design from Claude Design, ported to plain HTML/CSS/JS in
+`scripts/race-comparison.js` (the design tool's `support.js` runtime is not
+shipped). Three commits: `d12c315`, `5f12903`, `020a5bd`.
+
+**One clip, two panels, one clock**
+The 1424×648 side-by-side clip is loaded twice and cropped into two panels.
+The left `<video>` leads; the right follows and is re-synced whenever it
+drifts more than 0.12 s. Timers, lane fills, the Done overlay, the idle count
+and the "×N" ticks are all derived from the left video's `currentTime`, so
+the seekable track (click, arrows, Home/End) drives everything. Same contract
+as `case-study-video.js`: loads and plays only on screen, starts paused under
+`prefers-reduced-motion`, Pause/Play button for WCAG 2.2.2.
+
+**Extension side edited, and the copy says so**
+- **5.4 s** (`5f12903`): the 2.2 s before the icon click are cut and
+  2.2–4.9 s (popup open, moving to the button) plays at 4×:
+  9.6 − 2.2 − 2.7 × ¾ = 5.375. The eyebrow and caption stopped claiming
+  "real time" / "end to end".
+- **2.3 s** (`020a5bd`): frame-checked at 1.9 / 2.1 / 2.2 / 2.3 / 2.4 / 2.6 s.
+  The "C II 181–185 has been marked" bar is up by 1.9 s and the page is
+  blank with a spinner by ~2.1 s; everything after is the extension
+  reloading the home page, which isn't part of the task. No re-encode — only
+  `data-right-finish` moved. The timer stops and Done shows at 2.3 s while
+  the video plays on under the idle count. Unedited equivalent is 6.5 s
+  (4.9 + 2.3 − 0.675); the measured 9.6 s includes the reload.
+
+Stats are clip numbers and labelled that way: **9.4× / 45.3 s / 9 sets** →
+**22× / 48.4 s / 22 sets**.
+
+**Tick labels thin out**
+At 2.3 s there are 21 ticks instead of 8, spaced ~13px apart at 360px.
+Labels now go on every 1st, 2nd, 5th or 10th run, whichever keeps them ≥32px
+apart, and still skip anything under the "BY HAND" label. Result: ×3–×22 all
+labelled at 1280, ×10 / ×15 / ×20 at 360.
+
+**Cache naming (MAT-715)**
+`/assets/*` is served `immutable` and the old URL had a poisoned edge entry,
+so every rebuild gets a new filename: `race-side.mp4` → `-2` → `-3`.
+`style.css` went `?v=4` → `?v=6` on every page and `race-comparison.js` is
+at `?v=3`. `tools/kumon-media/README.md` has the ffmpeg edit recipe and the
+current numbers. `race-stacked.mp4` and its poster are unreferenced but left
+in place.
+
+**Verification**
+Puppeteer via `scripts/checks` at 1280 and 360, seeking to 2.0 / 12 / 50 s:
+the timer runs before 2.3 s; after it the badge reads "Done 2.3 s", the foot
+reads "Finished at 2.3 s · idle for the remaining 48.4 s", and the idle count
+tracks the clock. No label overlap at either width.
+
+---
+
+## 2026-09-16 — Verification scripts committed and pinned
+
+Commits `8d65357`, `e31fa96`. The checks used for the figure system lived in a
+session scratchpad, so they couldn't be re-run on another machine and
+`docs/image-conventions.md` §7 pointed at nothing. Cut ~30 ad-hoc files down
+to four in `scripts/checks/`:
+
+| Script | Checks |
+|---|---|
+| `sweep.js` | 13 pages × 4 viewports: distortion, over-cap images, horizontal overflow, axe |
+| `figures.js` | caption alignment (§3) and each figure's width track |
+| `lightbox.js` | the `[data-zoom]` keyboard contract (§6), 14 assertions |
+| `perf.js` | Lighthouse LCP/CLS/Performance medians, mobile + desktop |
+
+**Two bugs found by running the committed versions** rather than assuming the
+scratchpad copies ported cleanly: `baseUrl()` fell back to `argv[2]`, which in
+the path-taking scripts *is* the page path, so the URL came out doubled; and
+Git Bash (MSYS) rewrites a leading `/projects/...` argument into
+`C:/Program Files/Git/projects/...` before Node sees it. `resolveUrl()` now
+takes a full URL and strips the mangled prefix as a fallback.
+
+**Pinned, but still no root `package.json`** — adding one can change what
+Cloudflare Pages auto-detects as a build, and the repo has no build step by
+design. `scripts/checks/` has its own `package.json` + lockfile (axe-core
+4.13.0, lighthouse 13.4.1, puppeteer 25.11.0, exact versions) and a
+`.puppeteerrc.cjs` that downloads Chrome into `scripts/checks/.cache/`
+instead of `~/.cache/puppeteer`. `node_modules/` and `.cache/` are gitignored.
+The README splits quick checks (`npx`, any URL) from site checks
+(`npm ci` + `npm run`), and lists the standing known results (Edison Dental
+mobile overflow, skybluefc's Instagram iframes, site-wide color-contrast
+"incomplete", font-swap CLS) so they aren't re-investigated every run.
+
+---
+
+## 2026-09-16 — Ollae: three-screen hero strip
+
+Commit `b570a3b`, stage 1 of the Ollae media. Three separate phone screenshots
+under the header — Create Event, the RSVP page, the success screen — as a
+`.shots` figure, with the caption "Describe the event, share the link, tap to
+answer. The whole product is these three screens."
+
+Three images rather than one baked composite, so each keeps its own alt text
+(written out in full: prompt copy, event details, button states) and the strip
+can stack. WebP in `<picture>` with a PNG fallback, 393×852 attributes to
+reserve space, `fetchpriority="high"` since they're above the fold. CSS is a
+3-column grid (`minmax(0, 1fr)`, 16px gap) that goes to one column at a max
+of 320px under 600px; images take the shared 1px border and radius, with the
+app's own `#0f172a` behind them so the corners never flash. The caption joins
+the shared `figcaption` rule instead of getting its own.
+
+Also in the same commit: deck, meta description and `og:description`
+rewritten around "the right tool for a pickup game or team lunch is a link";
+footer date → September 2026; `style.css?v=6` → `?v=7` on all 14 pages.
+
+---
+
+## 2026-09-16 — Edge caching: 404 page, versioned filenames (MAT-715)
+
+Commits `2efd034`, `16aee77`, `a5dd82b`. One root cause surfaced three ways:
+`/assets/*`, `/styles/*` and `/scripts/*` are served `max-age=31536000, immutable`, so
+whatever the edge caches under a URL is what that URL serves for a year.
+
+**Missing paths returned 200.** With no `404.html`, Cloudflare Pages served
+`index.html` for every unmatched path — combined with the immutable rule, a
+missing asset was cached as a success:
+
+```
+GET /assets/kumon-automation/does-not-exist-xyz.mp4
+200 · Content-Type: text/html · Cache-Control: max-age=31536000, immutable
+```
+
+Hit for real: a request for `race-side.mp4` made before the file shipped
+cached the HTML fallback at the edge, and the edge kept serving HTML after
+the real file (video/mp4, 880,417 bytes) was live at origin. Added
+`404.html` on the existing shell and tokens, `noindex`, 0 axe violations, no
+horizontal scroll at 1440/390. Pages serves it with a real 404, which isn't
+cached as success, so later deploys can't be poisoned the same way. It also
+means "does the URL return 200?" had proved nothing on this site until now.
+The entry that already existed needed a manual purge.
+
+**Replacing a file in place doesn't work either.** The Kumon audit's P2.4
+said the Done-toast re-capture could keep its filename with no markup change.
+Under immutable caching, warm caches keep the old bytes; corrected to ship
+under a new name. Rule since then: new content → new filename (`-2`, `-3`)
+or a new `?v=`.
+
+**Stale `tokens.css` live.** Cloudflare was still serving a `tokens.css` from
+before `35c825e` (`Age` ~2 days, `cf-cache-status: HIT`), so
+`--figure-gap`, `--figure-max-h` and `--figure-wide-scale` were undefined on
+the live site and every figure had lost its vertical margin. `tokens.css` had
+never been versioned; now `?v=2` on all 14 pages.
+
+---
+
+## 2026-09-16 — Kumon page audit (Part A)
+
+Commit `0009644`, `audit-2026-09-16.md`. Lighthouse 13.4.1 (3-run medians),
+axe-core 4.13.0, pa11y, Puppeteer viewport and keyboard checks from 360 to
+1440px, against the page with its new media.
+**0 blockers, 1 important, 5 polish.**
+
+0 axe violations, 0 pa11y issues, Accessibility and Best Practices 100 on
+both presets. Three of four Core Web Vitals pass:
+
+| Metric | Before media | Final |
+|---|---|---|
+| LCP mobile | 2.8s | **1.96s** ✓ |
+| CLS mobile | 0.24 | **0.171** ✗ |
+| LCP desktop | 0.7s | **0.48s** ✓ |
+| CLS desktop | 0.144 | **0.051** ✓ |
+
+The gain came from removing a metric tile, not the media (see the next
+entry). Mobile CLS is the one miss — noisy on this harness (0.152 / 0.171 /
+0.253) and the same font-swap cause deferred since `audit-2026-09-15`.
+
+P2s: both race posters download on mobile; the worksheet's `sizes` was
+inherited from the embed's 960px preview page; popup states wrap 2+1; the
+Done toast screenshot breaks mid-word; desktop pulls the 860KB clip on first
+view. Content flagged but not changed: "multi-day" against the 50.7 s the clip
+shows, "default: 14 days" against the screenshot's 10, and 70+ students still
+in body copy.
+
+---
+
+## 2026-09-16 — Kumon case study media
+
+Commits `dc10e5f`, `9b1191e`. Five figures on `projects/kumon-automation.html`
+from the kumon-media drop: the race clip, the annotated worksheet, three popup
+states, four status bars, and a commented-out bulk-run figure at the top of
+Outcome (the clip doesn't exist yet). Superseded as the hero by the race
+comparison above.
+
+**Race clip on the wide track** (`.figure--wide`, 969px), swapping to a
+stacked 720×1312 portrait cut at 700px, with poster and intrinsic size
+swapped before load so the box never shifts. The worksheet uses the lightbox
+to reach its @2x file. Popup states and status bars are flex rows that wrap.
+
+**`.figure--wide` was silently a no-op on `.media-figure`** (`9b1191e`). It set
+`width` but not `max-width`, and `.media-figure` caps at `max-width: 100%`, so
+the wide track clamped straight back to the column with no error anywhere.
+Collette never hit it because `.hero-figure` has no max-width. Added
+`max-width: none`; the viewport term in the width expression already prevents
+overflow. Collette hero re-verified at 969px at 1440 and 1024.
+
+**No `.cs-fig` class.** `.media-figure` already supplies margin, caption voice,
+image treatment and height cap, so only arrangement classes are new
+(`.cs-video`, `.cs-video__toggle`, `.cs-states`, `.cs-status`). Embed colours
+mapped to tokens; focus ring is the site's `:focus-visible`.
+
+**Video script is per page** (`scripts/case-study-video.js`), not `main.js`, so
+the twelve pages without video don't carry it: plays only on screen, starts
+paused under `prefers-reduced-motion`, 44×44 Pause/Play button.
+
+**Removed the "70+ students tracked weekly" tile.** The shorter header cut the
+font-swap reflow enough to move three Core Web Vitals across the line: mobile
+LCP 2.8s → 1.96s, desktop CLS 0.144 → 0.051, desktop LCP 0.7s → 0.48s.
+
+**Build tooling in `tools/kumon-media/`** so it travels between machines, with
+`X-Robots-Tag: noindex` in `_headers`. Pages serves whatever is committed and
+there's no build step, so the files are reachable by direct URL — a header is
+the lever available.
+
+Verified 360–1440px: no horizontal scroll, captions aligned, 0 axe violations,
+0 pa11y issues.
+
+---
+
 ## 2026-09-16 — Figure widths, caption alignment, lightbox
 
 Follow-up to the figure system earlier the same day. That change fixed how big
