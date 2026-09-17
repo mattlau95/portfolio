@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-09-17 — Ollae create demo: the example carries a date (MAT-720)
+
+Follow-up to the embeds entry below. The example button read "Board game
+night @ Alexander Library at 12:30pm" — no date — so the parse it showed off
+was the one case the parser has to guess at. Claude picks tomorrow and says
+so in a warning. Correct behaviour, wrong thing to lead with.
+
+**Change**
+- The button is now "Board game night @ Alexander Library Saturday at
+  12:30pm", with a fourth `.embed-part` (`--date`, `data-part="Saturday"`)
+  between place and time. A weekday rather than a calendar date: it never
+  goes stale, and it is how people type it in the chat the parser is
+  imitating.
+- `.embed-part--date` shares the mono rule with `--time`. Date and time are
+  the same kind of token, so they read the same; title stays bold, place
+  stays dotted-underline.
+- No JS. `ollae-embeds.js` collects every `.embed-part` and `allMatched()`
+  counts whatever is in the list, so the fourth part wired itself.
+- `style.css` → `?v=9` on all 14 pages.
+
+**Kept: the no-date warning.** With the example carrying a date, the guess
+only fires on freehand input that genuinely omits one, which is what it was
+written for. It is real shipped behaviour — guessing tomorrow and saying so
+out loud is the right call for a one-box parser — and removing it would make
+the demo show something the app does not do.
+
+**Side effect:** four parts is a higher bar than three, so freehand input
+lands on "That works too. Your event is live." more often than the
+all-matched line. The prefill button still hits all four exactly.
+
+**Not re-verified:** no Puppeteer run, no sweep, no Lighthouse on this one.
+The new span is structurally identical to the three beside it and the matcher
+is generic, but the `ollae:input` → four-matched path has not been exercised
+against the stub, and nothing has been checked in production since the push.
+
+---
+
 ## 2026-09-17 — Ollae: live guestbook and create demo embeds (MAT-720)
 
 Two live ollae.app frames on `projects/ollae.html`, commit `3ff367e`. The Ollae
