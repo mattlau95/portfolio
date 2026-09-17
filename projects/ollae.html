@@ -16,7 +16,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css?v=2">
-  <link rel="stylesheet" href="/styles/style.css?v=7">
+  <link rel="stylesheet" href="/styles/style.css?v=8">
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
@@ -45,6 +45,7 @@
       <p class="case-study-links">
         <a href="https://ollae.app" target="_blank" rel="noopener noreferrer">Live demo</a>
         <a href="https://github.com/mattlau95/ollae" target="_blank" rel="noopener noreferrer">Repo</a>
+        <a href="#try-it">Try it here ↓</a>
       </p>
     </header>
 
@@ -93,6 +94,21 @@
       <h3>Design</h3>
       <p>The RSVP flow has three states: default, selected, and success, and all three were designed in Figma before any frontend code. Every control sits in the lower half of the screen, where a thumb reaches one-handed. The UI was designed dark from the start.</p>
       <p>The decision I'd defend hardest is "Remind me." The first design had three equal buttons: In, Out, Maybe. Three equal choices invite hedging, and "maybe" gives people permission to never decide. The shipped version has two buttons, I'm in and Can't make it, with "Not sure yet, remind me closer to the date" as a small text link underneath. That's a different question: are you coming, with an honest option for people who need a day. In the data, remind_me is its own RSVP status, and it sends a reminder email 24 hours before the event.</p>
+
+      <div class="embed" id="try-it">
+        <p class="embed__lead">This event is pretend. The list is real. Add your name.</p>
+        <div class="embed__stage" data-src="https://ollae.app/events/wssrfd7v?_src=app&amp;embed=1" data-title="Ollae guestbook (live)">
+          <picture>
+            <source srcset="/assets/ollae/ollae-embed-guestbook.webp" type="image/webp">
+            <img src="/assets/ollae/ollae-embed-guestbook.png" width="780" height="1662" loading="lazy" decoding="async"
+                 alt="Ollae's RSVP page for 'Ollae 1-Year Anniversary Volleyball Game': who's attending, a name field, I'm in and Can't make it buttons, a 'remind me closer to the date' link, and a Submit button.">
+          </picture>
+          <button type="button" class="embed__load" hidden>Try it live</button>
+        </div>
+        <p class="embed__note">Names on this list are public.</p>
+        <p class="embed__open"><a href="https://ollae.app/events/wssrfd7v" target="_blank" rel="noopener">Open in a new tab</a></p>
+      </div>
+
       <p>Figma and the Tailwind config share one set of token names. <code>status/in</code> in Figma is <code>status-in</code> in code, so nothing gets translated at handoff.</p>
 
       <h3>Engineering</h3>
@@ -100,6 +116,21 @@
       <p>Link previews were the first edge case. The handler serves preview tags to crawlers and the React app to real browsers.</p>
       <p>Each event gets its own preview card, a 1200×630 image rendered in Go. The emoji on it comes from Claude in the same call that parses the description, so it costs nothing extra: "volleyball at Johnson Park" gets a volleyball, "Valorant with the boys" gets a game controller.</p>
       <p>Creating an event is one text box. The organizer types the plan the way they'd type it in the chat, Claude Haiku turns it into a title, date, time, and place, and an editable preview shows what it understood, with a plain form as the fallback.</p>
+
+      <div class="embed" data-embed="create">
+        <p class="embed__lead">Try <button type="button" class="embed-example" data-prefill="Board game night @ Alexander Library at 12:30pm"><span class="embed-part embed-part--title" data-part="Board game night">Board game night<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span> @ <span class="embed-part embed-part--place" data-part="Alexander Library">Alexander Library<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span> at <span class="embed-part embed-part--time" data-part="12:30pm">12:30pm<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span></button>, or describe your own event. It's the same parser the app uses, so whatever you type becomes a real event page, deleted after three days.</p>
+        <div class="embed__stage" data-src="https://ollae.app/create?embed=1" data-title="Ollae create demo (live)">
+          <picture>
+            <source srcset="/assets/ollae/ollae-embed-create.webp" type="image/webp">
+            <img src="/assets/ollae/ollae-embed-create.png" width="780" height="954" loading="lazy" decoding="async"
+                 alt="Ollae's Create Event screen: a description box with the placeholder 'Board game night @ Alexander Library at 12:30pm', a Create Event button, and a 'Fill in manually instead' link.">
+          </picture>
+          <button type="button" class="embed__load" hidden>Try it live</button>
+        </div>
+        <p class="embed__status" aria-live="polite"></p>
+        <p class="embed__open"><a href="https://ollae.app/create" target="_blank" rel="noopener">Open in a new tab</a></p>
+      </div>
+
       <p>The full write-up, including the crawler detection and the query behind the organizer token, is in the repo.</p>
     </section>
 
@@ -120,6 +151,7 @@
     <section>
       <h2>Outcome</h2>
       <p>It went into the volleyball group's chats on May 19, 2026, and the group used it that day. The first day surfaced a use case I hadn't planned for: groups RSVPing as a unit. Guest counts shipped a week later. Preview cards work reliably in iMessage, WhatsApp, Telegram, and WeChat.</p>
+      <p>The list under Design is live. The names on it are people who read this page.</p>
     </section>
 
     <section>
@@ -136,5 +168,6 @@
   </main>
 
   <script src="/scripts/main.js?v=1" defer></script>
+  <script src="/scripts/ollae-embeds.js?v=1" defer></script>
 </body>
 </html>

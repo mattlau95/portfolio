@@ -1191,6 +1191,150 @@ footer p:last-child {
   }
 }
 
+/* Live Ollae embeds — /projects/ollae (scripts/ollae-embeds.js). Each stage
+   is a screenshot until tapped, then an iframe at the same height; Ollae
+   posts its content height back. Frame chrome matches .shots img. */
+
+.embed {
+  margin: var(--space-8) 0 var(--space-12);
+}
+
+.embed__stage {
+  position: relative;
+  max-width: 390px;
+  margin: var(--space-6) auto 0;
+}
+
+.embed__stage img,
+.embed__frame {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #0f172a;          /* the app's own background, so the corners never flash */
+}
+
+.embed__stage img {
+  height: auto;
+}
+
+/* Content-box, so the height Ollae posts is the height inside the border. */
+.embed__frame {
+  box-sizing: content-box;
+  width: calc(100% - 2px);
+}
+
+/* Dim the screenshot so the button reads as ours, not part of the app. */
+.embed__stage:not(.is-live)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: rgb(15 15 14 / 0.45);
+  pointer-events: none;
+}
+
+.embed__load {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  min-height: 44px;                /* WCAG 2.5.8 target size */
+  padding-inline: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-bg);
+  background-color: var(--color-accent);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 0 0 6px rgb(15 15 14 / 0.6);
+  cursor: pointer;
+}
+
+.embed__load:hover {
+  background-color: var(--color-text);
+}
+
+main section .embed__note,
+main section .embed__open,
+main section .embed__status {
+  max-width: 390px;
+  margin: var(--space-3) auto 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+main section .embed__status {
+  color: #4ade80;
+}
+
+main section .embed__status:empty {
+  margin: 0;
+}
+
+.embed-example {
+  display: inline;
+  padding: 0.1em 0.5em;
+  font: inherit;
+  text-align: start;               /* buttons centre by default; it wraps as a block on phones */
+  color: var(--color-text);
+  background-color: var(--color-accent-wash);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.4);
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.embed-example:hover {
+  border-color: var(--color-accent);
+}
+
+.embed-part {
+  white-space: nowrap;
+}
+
+.embed-part--title {
+  font-weight: var(--weight-bold);
+}
+
+/* Not italic: nothing else on the page is, and the extra font file cost ~150ms of mobile LCP. */
+.embed-part--place {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+.embed-part--time {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.embed-part.is-matched {
+  color: #4ade80;
+}
+
+.embed-part__check {
+  display: none;
+  margin-left: 0.2em;
+  vertical-align: -0.05em;
+}
+
+.embed-part.is-matched .embed-part__check {
+  display: inline;
+}
+
+.embed-part:not(.is-matched) .embed-part__state {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .embed-part {
+    transition: color var(--duration-base) var(--ease);
+  }
+}
+
 /* Race comparison — Kumon hero. One side-by-side clip cropped into two
    panels on a shared clock (scripts/race-comparison.js). The clip is
    1424x648 with a 64px label bar on top: each <video> is drawn at 200%
