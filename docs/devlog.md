@@ -4,6 +4,81 @@
 
 ---
 
+## 2026-09-17 — Ollae: live guestbook and create demo embeds (MAT-720)
+
+Two live ollae.app frames on `projects/ollae.html`, commit `3ff367e`. The Ollae
+side (framing allowlist, `embed=1`, message protocol) shipped separately; see
+`ollae/backend/docs/session-24-portfolio-embeds.md`.
+
+**What's on the page**
+- **Guestbook** (`id="try-it"`) under Approach > Design, after "Remind me":
+  `ollae.app/events/wssrfd7v?_src=app&embed=1`. "This event is pretend. The
+  list is real." A "Try it here ↓" link in the header row jumps to it.
+- **Create demo** under Approach > Engineering, after "one text box":
+  `ollae.app/create?embed=1`. The example button "Board game night @ Alexander
+  Library at 12:30pm" prefills the box; its three parts turn green with a check
+  and hidden "(matched)" text as the typed text contains them (case and
+  whitespace ignored). An `aria-live` line reports "Your event is live." or
+  "That works too. Your event is live." on `ollae:created`.
+- Outcome gains "The list under Design is live. The names on it are people who
+  read this page."
+
+**How it loads**
+- Each spot is a 2x screenshot (390px wide, WebP + PNG in `assets/ollae/`) with
+  a dimmed overlay and a "Try it live" button that starts `hidden` and is
+  revealed by `scripts/ollae-embeds.js`. Nothing requests ollae.app until a
+  tap. Without JS: screenshot plus the always-visible "Open in a new tab" link
+  (the " ↗" comes from the site's `target="_blank"` rule).
+- On tap the iframe replaces the screenshot at the same height, then takes
+  focus with `preventScroll`. The iframe is `content-box`, so the height Ollae
+  posts is the height inside the 1px border; border-box ate 2px and scrolled.
+- Messages are accepted only from origin `https://ollae.app` *and* that
+  iframe's `contentWindow`; heights must be numbers, clamped 200–4000; posts go
+  only to `https://ollae.app`. One pending prefill at most, sent on
+  `ollae:ready`.
+
+**Decisions and findings**
+- No `_headers` or meta change: there is no CSP or Permissions-Policy, and
+  Cloudflare's default `Referrer-Policy: strict-origin-when-cross-origin` still
+  gives Firefox the origin.
+- The place part was italic first. That pulled a fifth font file (DM Sans
+  italic) and cost ~150ms of mobile LCP on every run, so it's a dotted
+  underline instead. Mobile LCP is back to the before numbers.
+- The example button wraps as a block on phones (buttons can't be truly
+  inline), so it's `text-align: start`.
+- At 390 the column is 326px, so the live guestbook is ~244px taller than its
+  390px-wide screenshot. The frame top stays put; the page below grows.
+- `style.css` → `?v=8` on all 14 pages.
+
+**Verification**
+- Puppeteer at 1280 and 390, 98 checks: no requests before a tap, keyboard
+  Tab/Enter into each frame, no scroll jump, no inner scroll, page-posted and
+  wrong-source messages ignored, axe clean with both frames loaded. Prefill and
+  matching ran against a stub served at `https://ollae.app/create` (request
+  interception), including `ollae:input` "board game night @ alexander library
+  at 12:30 PM" → all three matched.
+- One real create call off-script ("That works too."); one more parse was
+  spent on a preview step the first script didn't click through. No guestbook
+  RSVP. "Show all" untested: the list has one name, so the button isn't shown.
+- Firefox 155 (Puppeteer's, in `scripts/checks/.cache`): load, heights,
+  prefill, matching.
+- Sweep: the same 3 known problems. Lighthouse before/after on the page: no
+  regression.
+- Production after push: both frames render and size on
+  `www.matthewclau.com/projects/ollae` at 1280 and 390; the create frame shows
+  the Board game night placeholder. iPhone checklist still to do.
+
+**Local gotcha:** another session's test bench also listened on
+`[::1]:4321`, and Chrome resolves `localhost` there first. Sweep and Lighthouse
+ran against `127.0.0.1:4321`; frame tests mapped `localhost` to 127.0.0.1.
+
+**Filed:** MAT-727. Desktop CLS 0.177 and mobile LCP 2.76s on this page predate
+the embeds; both trace to Google Fonts (`.case-study { max-width: 65ch }`
+resizes when DM Sans loads, and Lighthouse's simulated first paint counts the
+two fonts origins).
+
+---
+
 ## 2026-09-17 — Kumon: copy follows the race clip (MAT-714 §1)
 
 Resolved the three content calls flagged in MAT-714 and `audit-2026-09-16`,
