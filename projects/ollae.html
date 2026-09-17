@@ -29,20 +29,6 @@
       <h1>Ollae</h1>
       <p class="case-study-deck">The right tool for a pickup game or team lunch is a link. Ollae gives the organizer one URL to post in the group chat, and anyone who opens it can enter a name and RSVP without setting anything up.</p>
       <p class="case-study-meta-row">Role: Design + Engineering (solo, full-stack) · May–June 2026 · Shipped</p>
-      <ul role="list" class="case-study-metrics">
-        <li>
-          <span class="metric-value">8</span>
-          <span class="metric-label">RSVPs on launch day</span>
-        </li>
-        <li>
-          <span class="metric-value">21</span>
-          <span class="metric-label">dev sessions, zero to live</span>
-        </li>
-        <li>
-          <span class="metric-value">5</span>
-          <span class="metric-label">messaging platforms with OG previews</span>
-        </li>
-      </ul>
       <ul role="list" class="tags" aria-label="Tech stack">
         <li>Go</li>
         <li>PostgreSQL</li>
@@ -86,63 +72,60 @@
 
     <section>
       <h2>Overview</h2>
-      <p>Ollae is a group RSVP tool built for informal events — pickup games, team lunches, karaoke nights. The organizer creates an event and shares a single URL; participants tap it, enter their name, and RSVP. No accounts, no app to download. It went from zero to live with real users in one week, with eight RSVPs on the day it first hit a group chat.</p>
+      <p>I run a weekly pickup volleyball game. Getting a headcount meant posting the same message in three group chats and a few DMs, counting thumbs-up reactions, and trying to remember who was in. Ollae is what I built to stop doing that. The organizer describes the event in a sentence and gets a link; everyone who opens it sees who's already coming and adds their name, or a plus-one.</p>
     </section>
 
     <section>
       <h2>The problem</h2>
-      <p>Every recurring group event has the same coordination problem: someone floats the idea, replies scatter across a thread, and the organizer is left manually counting heads. Existing tools either require everyone to create an account — a real barrier in a casual group context — or are buried inside another platform that not everyone uses.</p>
-      <p>The right tool for this problem is a link. Share it the way you'd share a YouTube video. The person on the other end shouldn't need to do anything before they can interact with it.</p>
+      <p>Every recurring group event has this problem. Someone floats the idea, replies scatter across threads, and whoever is organizing counts heads by hand. The tools that exist don't fit a casual group: most need an account, which is a real barrier when half the players are friends of friends, and the rest live inside one platform when the group is spread across three.</p>
+      <p>So the whole product follows one rule: it has to be a link. You share it the way you'd share a video, and the person on the other end can answer before the page has asked them for anything except a name.</p>
     </section>
 
     <section>
       <h2>Role &amp; constraints</h2>
-      <p>I owned the whole thing: product decisions, Figma designs, backend, frontend, deployment, and the naming when a trademark search forced a rebrand mid-project. The original name — Showup.gg — had a pending trademark registration in Class 042 (SaaS) from another company, discovered the day before launch.</p>
-      <p>The no-accounts constraint was a product decision, not a technical limitation. It shaped every other decision that followed: how identity works, how editing works, how organizer access works. The entire system had to be link-based or it wasn't worth building.</p>
+      <p>I owned all of it: product decisions, the Figma designs, the Go backend, the React frontend, deployment, and the naming, which had to happen twice. The original name, Showup.gg, turned out to have a pending trademark from another company, found the day before launch.</p>
+      <p>The no-accounts rule was a product decision, and it decided everything downstream: how identity works, how editing works, how the organizer gets back in. If any part of it needed an account, the product wasn't worth building.</p>
     </section>
 
     <section class="case-study-section--approach">
       <h2>Approach</h2>
 
       <h3>Design</h3>
-      <p>The RSVP flow has three states — default, selected, and success — all designed in Figma before a line of frontend code was written. Every interactive element sits in the lower half of the screen, matching the thumb zone for single-handed phone use. The dark-first UI was designed that way from the start, not adapted from light.</p>
-      <p>The most considered UX decision was "Remind Me." The original design had three equal buttons: In, Out, Maybe. Three equal choices invite hedging — "maybe" gives people permission not to decide. I reframed it: two clear primary buttons (I'm in / Can't make it), with "Remind me closer to the date" as a small text link below. Forcing a real binary first, with an escape hatch for genuine indecision, is a different product surface. The data model reflects this — <code>remind_me</code> is a distinct RSVP status that triggers a 24-hour email reminder via Resend, not a soft maybe.</p>
-      <p>The design system uses Figma Variables (colors, spacing, radius) with the same token names as the Tailwind config. <code>status/in</code> in Figma is <code>status-in</code> in CSS — zero translation cost between design and code.</p>
+      <p>The RSVP flow has three states: default, selected, and success, and all three were designed in Figma before any frontend code. Every control sits in the lower half of the screen, where a thumb reaches one-handed. The UI was designed dark from the start.</p>
+      <p>The decision I'd defend hardest is "Remind me." The first design had three equal buttons: In, Out, Maybe. Three equal choices invite hedging, and "maybe" gives people permission to never decide. The shipped version has two buttons, I'm in and Can't make it, with "Not sure yet, remind me closer to the date" as a small text link underneath. That's a different question: are you coming, with an honest option for people who need a day. In the data, remind_me is its own RSVP status, and it sends a reminder email 24 hours before the event.</p>
+      <p>Figma and the Tailwind config share one set of token names. <code>status/in</code> in Figma is <code>status-in</code> in code, so nothing gets translated at handoff.</p>
 
       <h3>Engineering</h3>
-      <p>The backend is Go (chi router) on Fly.io; the frontend is React 19 + TypeScript on Vercel. The interesting problems weren't in the stack — they were in the edge cases.</p>
-      <p>iMessage fetches link previews from the device using a regular browser User-Agent, not a bot UA, so the usual "detect crawler, serve different HTML" pattern doesn't trigger. The fix: every <code>/events/:slug</code> URL routes through a Go handler that returns a server-rendered HTML page with full OG meta tags, then immediately redirects real users to the React SPA via a JavaScript <code>location.replace()</code>. iMessage reads the tags and stops; users get the app. Facebook's crawler (<code>facebookexternalhit</code>) and WeChat's (<code>MicroMessenger</code>) both execute JavaScript, so they followed the redirect and landed on the bare SPA with no tags. A <code>isCrawlerUA()</code> check in the handler conditionally omits the redirect script for known JS-executing scrapers.</p>
-      <p>The OG image itself is a 1200×630 PNG rendered server-side in Go using <code>fogleman/gg</code>. Each event gets a Claude-generated emoji that appears faded in the card background and as a small badge in the corner — personality at zero extra cost, because the emoji is picked in the same API call that parses the event description.</p>
-      <p>The event creation flow uses Claude Haiku to parse a freeform description ("Volleyball Saturday 2pm · Venice Beach Court 4") into structured fields shown in an editable preview. The API call fires on submit, not on keystroke — streaming autocomplete would have the same payoff at ten times the complexity.</p>
-      <p>Organizer edit access works without accounts: a 24-char token is generated at creation and returned alongside the share link. <code>PATCH /events/:slug</code> validates it with a single <code>WHERE slug = $1 AND admin_token = $2</code> query — wrong or missing token returns 403.</p>
+      <p>Go and Postgres on Fly.io for the API, React 19 and TypeScript on Vercel for the app. The stack was the easy part; the work was in the edge cases.</p>
+      <p>Link previews were the first edge case. The handler serves preview tags to crawlers and the React app to real browsers.</p>
+      <p>Each event gets its own preview card, a 1200×630 image rendered in Go. The emoji on it comes from Claude in the same call that parses the description, so it costs nothing extra: "volleyball at Johnson Park" gets a volleyball, "Valorant with the boys" gets a game controller.</p>
+      <p>Creating an event is one text box. The organizer types the plan the way they'd type it in the chat, Claude Haiku turns it into a title, date, time, and place, and an editable preview shows what it understood, with a plain form as the fallback.</p>
+      <p>The full write-up, including the crawler detection and the query behind the organizer token, is in the repo.</p>
     </section>
 
     <section>
       <h2>Key decisions &amp; tradeoffs</h2>
       <dl class="key-decisions">
-        <dt>Submit-and-parse over streaming</dt>
-        <dd>Streaming the Claude response on every keystroke would have felt more alive, but required continuous API calls for a 10–15 word input. One call on submit is fast enough to feel instant and costs a fraction. The tradeoff is that there's no real-time feedback as you type — acceptable here.</dd>
+        <dt>One parse call, on submit</dt>
+        <dd>One Claude call when the organizer hits Create is fast enough to feel instant. Streaming on every keystroke would feel more alive and cost about ten times as much for a 15-word input, and nobody needs live feedback while typing "volleyball Saturday 2pm."</dd>
 
-        <dt>Wall-clock time, not UTC conversion</dt>
-        <dd>Ollae events are in-person and local. Storing the time as entered (without timezone conversion) and displaying it as entered is what organizers expect. A user who types "7pm" wants to see "7pm" on the RSVP page — not the UTC-converted equivalent for other time zones. This required actively stripping the <code>Z</code> suffix before constructing Date objects in the display layer.</dd>
+        <dt>Store the time as typed</dt>
+        <dd>Events are in person and local. A 7pm event should read 7pm to everyone, so the time is stored and displayed exactly as entered, with no timezone conversion anywhere in the pipeline.</dd>
 
-        <dt>Admin token in the URL, no accounts</dt>
-        <dd>The organizer's edit link contains their token as a query parameter (<code>?admin=TOKEN</code>). This exposes the token in browser history. The tradeoff was accepted: for a casual group event tool, the convenience of a tappable link outweighs the risk, and it's consistent with the no-accounts model everywhere else.</dd>
-
-        <dt>fogleman/gg over Satori for OG images</dt>
-        <dd>Satori is a popular choice for dynamic OG cards but runs in Node. The backend is Go — adding a separate Node service for one endpoint would have doubled the infrastructure. <code>fogleman/gg</code> is a Go 2D graphics library with enough capability for this layout. The tradeoff: no CSS, so layout math had to be explicit (computing Y positions with space-between logic rather than flexbox).</dd>
+        <dt>Organizer access is a link, too</dt>
+        <dd>Creating an event returns an edit link with a random token in it, and the API accepts changes only when the token matches. The token sits in a URL, so it shows up in browser history; for a pickup-game tool the tappable link is worth that, and it keeps the no-accounts rule intact.</dd>
       </dl>
     </section>
 
     <section>
       <h2>Outcome</h2>
-      <p>Launched May 19, 2026. Eight RSVPs came in on the first day — including one participant who RSVPed on behalf of eight players from another group, which surfaced group RSVP as an edge case within hours and directly shaped the guest count feature shipped a week later. OG preview cards work across iMessage, Facebook Messenger, WeChat, WhatsApp, and Telegram.</p>
+      <p>It went into the volleyball group's chats on May 19, 2026, and the group used it that day. The first day surfaced a use case I hadn't planned for: groups RSVPing as a unit. Guest counts shipped a week later. Preview cards work reliably in iMessage, WhatsApp, Telegram, and WeChat.</p>
     </section>
 
     <section>
       <h2>Reflection</h2>
-      <p>The timezone bug appeared twice, in different forms. Both times the root cause was the same: treating a naive datetime string as UTC somewhere in the pipeline. The lesson — decide your time semantics once, at the schema level, and enforce them everywhere — is easy to state and apparently hard to remember.</p>
-      <p>The naming process cost most of a session. In hindsight, the trademark search should have been the first step, not something discovered the day before launch. "Ollae" turned out to be a better name anyway.</p>
+      <p>The timezone bug showed up twice, in different forms, and both times the cause was the same: somewhere in the pipeline a naive datetime string was being treated as UTC. The lesson is easy to state and apparently hard to remember. Decide your time semantics once, at the schema, and enforce them everywhere.</p>
+      <p>The naming cost most of a session. The trademark search should have been step one; instead it happened the day before launch. Ollae turned out to be the better name anyway.</p>
     </section>
 
     <footer>

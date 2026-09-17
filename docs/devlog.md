@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-09-17 — Ollae: case study copy rewrite, stats block removed
+
+Copy-only pass on `projects/ollae.html` from
+`docs/ollae-case-study-copy-final.md` (everything below its `---`). All eight
+body sections replaced, keeping the existing headings, markup and classes.
+Header, deck, meta tags and hero strip untouched.
+
+**What the copy changed**
+- Overview opens on the real origin (the weekly volleyball game) instead of a
+  product description.
+- Engineering drops the implementation detail (iMessage UA, `location.replace()`,
+  `isCrawlerUA()`, `fogleman/gg`, the admin-token SQL) and points to the repo
+  write-up. Inline `<code>` now only wraps `status/in` / `status-in`.
+- Key decisions go from four to three: the fogleman/gg-over-Satori entry is
+  gone. The file's bold lead-ins became the `<dt>` terms, without trailing
+  periods, to match the terms they replaced.
+- Outcome drops the RSVP count and Facebook Messenger. Guest-counts sentence
+  rewritten as "The first day surfaced a use case I hadn't planned for: groups
+  RSVPing as a unit. Guest counts shipped a week later."
+- The two optional lines (weekly use, Claude Code implementation) were not
+  filled in, so neither was added.
+
+**Stats block removed**
+The `case-study-metrics` list (8 RSVPs / 21 sessions / 5 platforms) is gone
+from the header. Its CSS stays: six other pages still use it (edison-dental,
+kumon-automation, pocalab, vbs-scheduler, worship-slides, gfx/aduro), so
+`style.css` is unchanged and stays at `?v=7`. The meta row's own
+`margin-bottom` now sets the gap to the tech tags: 24px at 1280 and 390, the
+same as the gap above the role line, with nothing left over.
+
+**Verification**
+`npm run sweep` before and after: the same 3 known problems both times
+(skybluefc `frame-title` at 1440, Edison Dental overflow at 390/360). Ollae
+clean at all four viewports.
+
+---
+
 ## 2026-09-16/17 — Kumon race comparison hero
 
 Replaced the single race clip on `projects/kumon-automation.html` with the
