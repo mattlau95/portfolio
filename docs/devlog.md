@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-09-17 — Kumon: copy follows the race clip (MAT-714 §1)
+
+Resolved the three content calls flagged in MAT-714 and `audit-2026-09-16`,
+on `projects/kumon-automation.html` and the spec doc.
+
+- **"multi-day" → "hours".** The clip shows 50.7 s per set by hand, so the
+  meta and og descriptions, deck, metric value, Overview and Outcome now say
+  hours of clicking at about 50 seconds a set. The 25-minute unattended figure
+  is unchanged.
+- **Default threshold 14 → 10 days**, matching `popup-gradebook.webp` and its
+  alt text.
+- **Student count split:** 70+ students at the centre overall, 10+ on the
+  online program whose worksheets go through Class-Navi. The Problem states
+  both; Outcome scopes the backlog to the 10+.
+
+Deferred to a later pass: the homepage card and experience bullets
+(`index.html:177–180, 312–313`) still say "multi-day" and "70+ students
+tracked weekly", so the homepage and case study disagree until then.
+
+---
+
 ## 2026-09-17 — Ollae: case study copy rewrite, stats block removed
 
 Copy-only pass on `projects/ollae.html` from

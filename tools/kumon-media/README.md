@@ -27,7 +27,7 @@ The embed JS plays each video only while it's on screen, starts paused under `pr
 - About 5× faster on one set. The bigger difference is that the extension needs one click and no attention.
 - **Live clip (`race-side-3.mp4`): extension edited, page times it to 2.3 s.** The first 2.2 s (idle, before the icon click) are cut and 2.2–4.9 s (popup open, moving to the button) plays at 4×: 9.6 − 2.2 − 2.7 × ¾ = 5.375 s to the end of the reload. The page stops the timer at 2.3 s instead (original 6.5 s): the "has been marked" bar is up by 1.9 s and the page clears at ~2.1 s, and the rest is the home page loading, which is not part of the task. The video keeps playing under the Done overlay. The page stats (22×, 48.4 s, 22 sets) are clip numbers, and the caption says so.
 
-The page copy still says "multi-day." At about 51 s per set, 200 sets is under 3 hours of clicking, and a reader can do that math after watching the race clip. Either time a few heavier sets by hand, or describe the cost as attention split across a workday.
+The page copy now follows the clip: "hours" of clicking at about 50 s a set, not "multi-day" (2026-09-17). At about 51 s per set, 200 sets is under 3 hours.
 
 ## Before you record
 

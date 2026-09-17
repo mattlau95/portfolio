@@ -2,15 +2,13 @@
 slug: kumon-class-navi-automation
 title: Kumon Class-Navi Automation
 blurb: >
-  Born as a bookmarklet, rebuilt as a Chrome extension — cuts a multi-day
-  Kumon grading backlog down to a 25-minute unattended run.
+  Born as a bookmarklet, rebuilt as a Chrome extension — turns hours of
+  clicking through a Kumon grading backlog into a 25-minute unattended run.
 thumbnail: /assets/cases/kumon-automation.webp
 
 metrics:
-  - value: "multi-day → 25 min"
+  - value: "hours → 25 min"
     label: "backlog cleared"
-  - value: "70+"
-    label: "students tracked weekly"
   - value: "1-click"
     label: "single or bulk clear"
 
@@ -29,8 +27,8 @@ featured: false
 
 Kumon instructors must manually mark every student worksheet as reviewed in
 Class-Navi before students can progress. When worksheets pile up, clearing
-the backlog becomes a multi-day slog of repetitive clicks across dozens of
-pages. I built a Chrome extension that automates the entire sequence and
+the backlog means hours of repetitive clicks: about 50 seconds a set, page by
+page. I built a Chrome extension that automates the entire sequence and
 runs through a full backlog in under 25 minutes while the instructor does
 something else.
 
@@ -41,9 +39,9 @@ single-page app. For each worksheet, an instructor must open it, tab through
 every page, clear any eraser marks, and confirm completion — one deliberate
 click at a time, no batch operation, no shortcuts.
 
-For a centre tracking 70+ active students, backlogs accumulate fast. A week
-of unchecked worksheets can take days to clear manually, and that delay
-blocks the platform's automatic progression tracking — students appear stuck
+The centre has 70+ students, and 10+ of them are on the online program, whose
+worksheets are marked in Class-Navi. A week of unchecked worksheets adds up to
+hours of clicking, and until it's cleared the backlog blocks the platform's automatic progression tracking — students appear stuck
 even when they've moved on.
 
 ## Role & Constraints
@@ -62,7 +60,7 @@ The popup needed to be context-aware without adding friction. Rather than
 asking the instructor to configure anything upfront, it detects which page
 they're on — worksheet or gradebook — and shows only the relevant control.
 A worksheet page shows one clear button. The gradebook shows bulk mode with
-a configurable day threshold (default: 14 days).
+a configurable day threshold (default: 10 days).
 
 Progress feedback runs in a floating status bar injected into the page itself,
 so the instructor can close the popup and still see what's running. It steps
@@ -109,8 +107,8 @@ adding React or similar would introduce more complexity than it removes.
 
 ## Outcome
 
-Before the extension, clearing a week's backlog for a 70+ student roster
-took multiple days of manual work. After, the same backlog runs unattended
+Before the extension, clearing a week's backlog for the 10+ online-program
+students took hours of clicking, at roughly 50 seconds a set. After, the same backlog runs unattended
 in about 25 minutes — measured wall-clock time on a real backlog, not an
 estimate. The actual user time is one click.
 
