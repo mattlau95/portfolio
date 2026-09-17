@@ -100,13 +100,16 @@
     for (let k = 1; k * rightDone < leftDone && k * rightDone <= lt; k++) n = k;
     if (n !== tickCount) {
       tickCount = n;
+      // Label every 1st, 2nd, 5th or 10th run, whichever keeps labels ~32px apart.
+      const gapPx = (rightDone / leftDone) * track.clientWidth;
+      const every = [1, 2, 5, 10].find((s) => s * gapPx >= 32) || 10;
       ticksEl.replaceChildren(...Array.from({ length: n }, (_, i) => {
         const tick = document.createElement('span');
         tick.className = 'race__tick';
         const frac = ((i + 1) * rightDone) / leftDone;
         tick.style.left = frac * 100 + '%';
         // Unlabelled where the mark would sit on the lane's own label.
-        if (frac * track.clientWidth > byHandEnd + 4) {
+        if ((i + 2) % every === 0 && frac * track.clientWidth > byHandEnd + 4) {
           const label = document.createElement('span');
           label.textContent = '×' + (i + 2);
           tick.append(label);

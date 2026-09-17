@@ -25,7 +25,7 @@ The embed JS plays each video only while it's on screen, starts paused under `pr
 - **By hand: 50.7 s.** That's the end of the clip. The "C II 181–185 has been marked" confirm bar appears at 43.3 s. If you were already finished at that point, rebuild with `43.3` as the manual time.
 - **Extension: 9.6 s** from the start of the clip, including opening the popup. The status bar appears at 5.2 s, so the run itself is about 4.4 s.
 - About 5× faster on one set. The bigger difference is that the extension needs one click and no attention.
-- **Live clip (`race-side-3.mp4`): extension edited to 5.4 s.** The first 2.2 s (idle, before the icon click) are cut and 2.2–4.9 s (popup open, moving to the button) plays at 4×: 9.6 − 2.2 − 2.7 × ¾ = 5.375. The page stats (9.4×, 45.3 s, 9 sets) are clip numbers, and the caption says so. The unedited 9.6 s stays the measured figure.
+- **Live clip (`race-side-3.mp4`): extension edited, page times it to 2.3 s.** The first 2.2 s (idle, before the icon click) are cut and 2.2–4.9 s (popup open, moving to the button) plays at 4×: 9.6 − 2.2 − 2.7 × ¾ = 5.375 s to the end of the reload. The page stops the timer at 2.3 s instead (original 6.5 s): the "has been marked" bar is up by 1.9 s and the page clears at ~2.1 s, and the rest is the home page loading, which is not part of the task. The video keeps playing under the Done overlay. The page stats (22×, 48.4 s, 22 sets) are clip numbers, and the caption says so.
 
 The page copy still says "multi-day." At about 51 s per set, 200 sets is under 3 hours of clicking, and a reader can do that math after watching the race clip. Either time a few heavier sets by hand, or describe the cost as attention split across a workday.
 
