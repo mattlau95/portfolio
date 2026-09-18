@@ -6,9 +6,3 @@
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-
-# Build tooling, not part of the site. Kept in the repo so it travels between
-# machines, but kept out of search results. Cloudflare Pages serves whatever is
-# committed and this repo has no build step, so a header is the lever available.
-/tools/*
-  X-Robots-Tag: noindex, nofollow

@@ -9,6 +9,7 @@ run by hand — **not** part of the site, not loaded by any page, no build step.
 |---|---|---|
 | **Quick checks** — any URL, no setup | Lighthouse, axe, pa11y | `npx`, as in Part A of `~/ux-audit-kit/AUDIT.md` |
 | **Site checks** — this repo's figure system | `sweep.js`, `figures.js`, `lightbox.js`, `perf.js` | `npm ci` in this folder, then `npm run` |
+| **Link check** — no browser, no install | `check-links.js` | `node scripts/checks/check-links.js`, any time |
 
 Nothing is installed globally or in the home directory. The site checks'
 dependencies live in `scripts/checks/node_modules/`, pinned by `package.json`
@@ -16,6 +17,28 @@ and `package-lock.json` in this folder, and Puppeteer's Chrome downloads to
 `scripts/checks/.cache/puppeteer/` (set in `.puppeteerrc.cjs`). Both folders are
 gitignored. The repo root still has no `package.json` (`docs/PROJECT.md` §2), so
 Cloudflare Pages' build detection is unaffected.
+
+## Link check (no setup)
+
+`check-links.js` reads files off disk — no browser, no server, no dependencies,
+so it runs before `npm ci` and in a clean clone:
+
+```bash
+node scripts/checks/check-links.js          # defaults to site/
+node scripts/checks/check-links.js site
+```
+
+It reports local `href`/`src`/`srcset`/`poster`/`url()` references that resolve
+to nothing, and in-site `#fragment` links pointing at an id no page declares.
+Exits non-zero when something is broken.
+
+It strips HTML comments before scanning, on purpose: `kumon-automation.html`
+keeps a whole `<figure>` commented out so its unbuilt poster does not 404, and
+scanning commented markup would report a break that is not there.
+
+A clean run on `site/` today is 14 pages, 3 stylesheets, 159 references, zero
+broken — the same numbers the pre-`site/` tree gave before MAT-716, which is how
+that restructure was shown to change nothing.
 
 ## Quick checks (npx)
 
@@ -40,10 +63,11 @@ cd scripts/checks
 npm ci
 ```
 
-Then serve the site from the repo root in another terminal:
+Then serve the site in another terminal. Serve `site/`, not the repo root —
+that is what Cloudflare Pages deploys:
 
 ```bash
-npx serve -l 4321 .
+npx serve -l 4321 site
 ```
 
 ## The checks
