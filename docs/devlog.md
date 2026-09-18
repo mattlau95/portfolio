@@ -4,6 +4,70 @@
 
 ---
 
+## 2026-09-18 — Tier 3 becomes thumbnail rows (Claude Design import)
+
+Imported the **Project Tier 3** design from the Claude Design project "Design
+table for matthewclau.com". It offered four directions for the third-tier list
+— 1a hairline ledger, 1b numbered index, 1c thumbnail rows, 1d indented prose.
+Took **1c**. Its sample data was placeholder church content, not the real list.
+
+The "Also built" sentence becomes a list of three rows: thumbnail, title, one
+line of description, whole row is the link.
+
+**Contents changed too.** Edison Dental 27 joins the list — it had been in the
+Projects section as the featured card until MAT-732 moved it into Experience.
+It now appears in **both** places: the MCL Studio entry describes the client
+relationship, this row points at the artifact. That partially softens MAT-732's
+reasoning ("as a project it reads as web work; as client experience it reads as
+a paying client who came back"), which is worth knowing if it ever gets
+revisited. Removing it from Experience was not an option — both bullets in that
+entry are about Edison, so the entry would have been empty.
+
+**VBS Scheduler came off the list**, leaving Edison, ghosted, Worship Slides.
+
+> **`projects/vbs-scheduler.html` is now linked from nowhere on the site.** The
+> "Also built" line was added in MAT-732 for exactly this reason — to keep it
+> and Worship Slides reachable after their cards were removed. The page is
+> still live and still resolves by direct URL, and there is no sitemap for it
+> to fall out of, but nothing on the site points at it any more. Putting it
+> back is one `<li>`.
+
+**ghosted is marked In progress**, as a small mono chip next to the title in
+the site accent. Neither the chip nor its wording came from the design — the
+design has no status affordance — so it is a draft.
+
+**All three descriptions are drafts.** The design's were placeholder, and no
+copy was supplied for the real items:
+- Edison Dental 27 — "Patient-facing rebuild for a returning client, WordPress
+  to Next.js."
+- ghosted — "Job-discovery pipeline: pulls Greenhouse, Lever, and Ashby
+  postings, scores them with Claude Haiku, and emails a Monday digest."
+  Condensed from the sentence it replaced, which was too long for a row.
+- Worship Slides Generator — "Turns PDF setlists into PowerPoint decks.", kept
+  from the old sentence.
+
+**Ported by hand, as always.** `support.js` is a 70 KB generated runtime whose
+own header says "GENERATED from dc-runtime/src/*.ts — do not edit", and it
+throws unless `window.React` and `window.ReactDOM` exist. A React dependency
+cannot go into a site whose premise is no framework and no build step. The
+design's Source Serif 4 titles map to DM Sans, matching `.project-card h3`
+(only `.identity-name` and section `h2` use the display face), and its rose
+accent maps to the site accent.
+
+**One bug the port surfaced.** The global `a[target="_blank"]::after { content:
+" ↗" }` rule hangs the external-link arrow off the `<a>` — which here is a grid
+container, so the arrow became a third grid item and opened a second row. The
+ghosted row measured 119px against 77px for its neighbours. The arrow now
+attaches to the title instead, where it reads as part of the link text.
+
+**Checks** — no page overflow and no multi-row rows at any width from 320 to
+1440; the thumbnail steps 64×44 → 48×36 at the 480px breakpoint and the row
+never wraps, which is the behaviour the design specified. axe 0 violations, 40
+passes (up from 39 — the new list adds a passing check). 171 local references
+resolve. Thumbnails are `alt=""`: the title sits immediately beside them.
+
+---
+
 ## 2026-09-18 — Homepage copy pass: Experience, cards, How I Build
 
 Copy and order only. No classes, components, links, badge styles or layout
