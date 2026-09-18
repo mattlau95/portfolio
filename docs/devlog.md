@@ -4,6 +4,95 @@
 
 ---
 
+## 2026-09-18 — Homepage restructure (MAT-732)
+
+Reordered Projects around what a hiring manager actually checks first. Final
+lineup is **ollae (featured) → Collette → Kumon → pocalab**. Worship Slides
+Generator and VBS Scheduler come off the homepage; Edison Dental leaves Projects
+entirely and reappears under Experience in a new MCL Studio entry.
+
+**Badge rule for the whole page:** no stat badges on cards or timeline entries.
+One metric per item, folded into the description as a real `<strong>`. Stack
+badges stay.
+
+**Changes**
+- ollae takes the featured slot, which also moves from the bottom of the strip
+  to the top. Claude API joins its stack badges. No bold metric, per the ticket.
+- Collette gets a strip card in second position, labelled
+  "Collette Vacations · 2022–2024" so it reads as client work rather than a side
+  project. Its thumbnail moved here from the Experience entry.
+- New Experience entry: Freelance Design Engineer · MCL Studio, 2025–Present.
+  Edison's rebuild lives here with its case study link, trimmed from ten stack
+  badges to five. It also closes the gap after Collette, where Kumon had been
+  the only Present-dated entry.
+- Kumon's Experience badges are gone. They said "10–13 hrs → ~25 min" where the
+  project card says multi-day; the bullets already carry the numbers, so
+  deleting the badges removed the contradiction rather than papering over it.
+- Projects intro loses its count. A sentence with no number in it never falls
+  out of date when the lineup changes again.
+
+**Three things the ticket assumed that turned out not to be true**
+
+1. **There is no content data layer.** The instruction was to edit the data, not
+   the rendered markup. There is no data to edit — every card, entry, badge and
+   tag is a literal `<li>` in `site/index.html`, and there is no build step
+   (`wrangler.toml` points Pages at `site/` and serves it as-is). `docs/CONTENT.md`
+   and `docs/portfolio-cards-content.md` look like the source but nothing reads
+   them; they had drifted far enough to still call Worship Slides "Praise Slides".
+   Worth knowing before someone goes looking for the JSON again.
+2. **There is no `sitemap.xml`,** and no `robots.txt` either. The ticket's
+   "remove both from sitemap.xml" was a no-op. Nothing to remove, nothing to keep.
+   What actually keeps the two dropped pages reachable is the new one-line
+   "Also built" under the strip, which links both.
+3. **The class is `.badges`, not `.stat-badge`,** and it could not be deleted.
+   It is shared with the footer Lighthouse strip on this page *and* on
+   `projects/edison-dental.html`, where `.cwv-badge` is a naming hook with no
+   rules of its own. So the markup came off the cards and the two rules that
+   only ever served card badges were deleted, but `ul.badges` and `.badges li`
+   stay for the footers. Commented in `style.css` so the next person doesn't
+   assume it's dead code.
+
+**pocalab's 45 → 12 metric was cut, not bolded.** The case study says "about 45
+minutes to about 12 ... that's my own measurement of my own workflow, so read it
+as what it is" — self-measured and hedged twice, so not a timed run. Per the
+ticket's own conditional the sentence comes out entirely and the card ships with
+no bold metric. The number still lives in the case study with its caveat
+attached, which is the right place for it.
+
+**The featured card kept the existing Create Event thumbnail**, not the
+three-screen strip the ticket asked for. No composite asset exists, and the
+three case study shots are 393×852 portrait — they do not fit the featured
+card's ⅓-width cover slot without new CSS and a new mobile rule. Deferred rather
+than bodged.
+
+**The pocalab live-demo "bug" was already fixed on the site.** `index.html` and
+the case study page both pointed at pocalab.app. The stale `.com` was in the two
+content docs, which is where it got fixed.
+
+**Audit** — `audit-2026-09-18.md`. Zero axe violations, accessibility and
+best-practices held at 100, all 169 local references resolve, page weight down
+73 KiB. CLS was the specific worry, since bolding inside body copy can shift
+layout: it went **down**, 0.0036 → 0.0024 (medians of three runs), about 40×
+clear of the 0.1 threshold. It doesn't shift because every `<strong>` sits inside
+an existing `<p>` with unchanged metrics, and DM Sans 700 is already in the
+preloaded font request — no second fetch, no synthesized-bold reflow.
+
+Performance was measured on a bare local server with no compression and none of
+the `_headers` cache rules, so **it is not comparable to the footer's 99 / LCP
+1.8s**. Measuring the pre-change commit on the same harness gave the same
+numbers (89 vs 90 median), so there's no regression — but the footer badge still
+needs a re-run against the deployed URL, and it's now dated June 2026 against a
+page that has changed. Filed as P1 in the audit.
+
+Also filed as P1: `projects/edison-dental.html` still calls itself
+"★ Featured case study" when ollae holds that slot now. Out of scope for
+MAT-732 and it's a copy decision, so it's flagged rather than silently changed.
+
+**Next:** decide Edison's case study label, re-run Lighthouse against production
+and reconcile the footer badge, and build the ollae three-screen composite.
+
+---
+
 ## 2026-09-18 — Only site/ ships (MAT-716)
 
 Cloudflare Pages deploys this repo from the root with no build step, which
