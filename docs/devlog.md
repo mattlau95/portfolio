@@ -43,8 +43,13 @@ copy was supplied for the real items:
 - ghosted — "Job-discovery pipeline: pulls Greenhouse, Lever, and Ashby
   postings, scores them with Claude Haiku, and emails a Monday digest."
   Condensed from the sentence it replaced, which was too long for a row.
-- Worship Slides Generator — "Turns PDF setlists into PowerPoint decks.", kept
-  from the old sentence.
+- Worship Slides Generator — "Turns PDF setlists into PowerPoint decks, with
+  drag-and-drop reordering so a last-minute set change does not mean rebuilding
+  the deck." The first half is kept from the old sentence; the reordering half
+  was added because the drag-and-drop editor is the thing the tool is actually
+  used for week to week, and the one-clause version undersold it. Verified
+  against the case study, which frames the whole workflow as upload, review,
+  reorder, generate.
 
 **Ported by hand, as always.** `support.js` is a 70 KB generated runtime whose
 own header says "GENERATED from dc-runtime/src/*.ts — do not edit", and it
