@@ -31,7 +31,13 @@
       if (loaded) return;
       const pick = matching();
       if (pick) {
-        video.src = pick.src;
+        // Only override native source selection when the clip is responsive,
+        // i.e. the <source> carries a media query. Setting video.src pins one
+        // file and discards the <source> children, so for plain codec
+        // alternates — webm first, mp4 fallback — leave the choice to the
+        // browser; otherwise a decoder that can't read the first one gets
+        // nothing at all.
+        if (pick.media) video.src = pick.src;
         const d = pick.dataset;
         if (d.poster) video.poster = d.poster;
         if (d.width) { video.width = +d.width; video.height = +d.height; }

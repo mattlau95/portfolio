@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pocalab — Case Study | Matthew C. Lau</title>
-  <meta name="description" content="A browser tool for printing K-pop photocards exactly right — crop to spec, set copy counts, and export a print-ready duplex PDF. No account, no backend.">
+  <meta name="description" content="Making photocards by hand meant separate sheets and glue. Pocalab lays out the sheet and exports one PDF that prints both sides in register.">
   <meta property="og:title" content="pocalab — Case Study | Matthew C. Lau">
-  <meta property="og:description" content="A browser tool for printing K-pop photocards exactly right — crop to spec, set copy counts, and export a print-ready duplex PDF. No account, no backend.">
+  <meta property="og:description" content="Making photocards by hand meant separate sheets and glue. Pocalab lays out the sheet and exports one PDF that prints both sides in register.">
   <meta property="og:type" content="article">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
 
@@ -27,28 +27,14 @@
     <header class="case-study-header">
       <p class="case-study-label">Case study</p>
       <h1>pocalab</h1>
-      <p class="case-study-deck">A browser tool for printing K-pop photocards exactly right — crop to spec, set copy counts, and export a print-ready duplex PDF. No account, no backend.</p>
-      <p class="case-study-meta-row">Role: Design + Engineering (solo) · June 2026 · Shipped</p>
-      <ul role="list" class="case-study-metrics">
-        <li>
-          <span class="metric-value">~70%</span>
-          <span class="metric-label">faster — 45 min → 12 min per sheet</span>
-        </li>
-        <li>
-          <span class="metric-value">~30 min</span>
-          <span class="metric-label">saved per sheet</span>
-        </li>
-        <li>
-          <span class="metric-value">0</span>
-          <span class="metric-label">backend or login required</span>
-        </li>
-      </ul>
+      <p class="case-study-deck">Making a photocard by hand meant re-cropping the same image in Canva, printing the fronts and backs on separate sheets, and gluing them together. Pocalab does the layout and gives you one PDF that prints both sides in register.</p>
+      <p class="case-study-meta-row">Role: Design + Engineering (solo) · June–September 2026 · Shipped</p>
       <ul role="list" class="tags" aria-label="Tech stack">
         <li>React 19</li>
         <li>TypeScript</li>
         <li>Vite</li>
         <li>pdf-lib</li>
-        <li>react-easy-crop</li>
+        <li>Vercel</li>
       </ul>
       <p class="case-study-links">
         <a href="https://pocalab.app" target="_blank" rel="noopener noreferrer">Live demo</a>
@@ -58,77 +44,150 @@
 
     <section>
       <h2>Overview</h2>
-      <p>pocalab is a browser tool for making and printing K-pop photocards — the 55×85 mm trading cards packaged with albums and fan merch. Upload your images, crop them to the official spec with bleed and safe-zone guides, set per-card copy counts, and export a print-ready duplex PDF. No account, no backend, nothing to install.</p>
+      <p>I make photocards. They're a K-pop collecting thing, and the point is that they match: 55 × 85 mm, double-sided, same stock every time, so a card you made sits in a binder next to an official one without announcing itself. I made them in a Canva template with the bleed and cut lines drawn in by hand. Pocalab is that template turned into a tool.</p>
+
+      <figure class="media-figure">
+        <picture>
+          <source srcset="/assets/pocalab/pocalab-deck.webp" type="image/webp">
+          <img src="/assets/pocalab/pocalab-deck.png" width="1682" height="790"
+               alt="Pocalab's deck screen with a full US Letter sheet of nine photocards, each showing a front and back thumbnail with edit, download, and copy-count controls, above a Download PDF button and the before-you-print checklist."
+               fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption>Nine cards, one sheet, one PDF.</figcaption>
+      </figure>
     </section>
 
     <section>
       <h2>The problem</h2>
-      <p>K-pop fans who make custom photocards have one realistic option: a manual workflow in Canva. The problem isn't that Canva can't do it — I had a template with bleed zones, cut lines, and alignment guides — the problem is that it never gets faster. Every batch means finding source images, dragging each one onto the canvas, nudging it into the guides, repeating for the back, repeating for every card in the set, exporting, checking the duplex alignment, sometimes reprinting. If you want two copies of one card and one of another, you duplicate and reposition by hand. The process is identical every time. That's what software is for.</p>
+      <p>The manual version broke in two places. Every card meant re-cropping the same image to the same frame, checking it against guides I'd drawn myself, and doing it again for the back. Then, because a home printer won't hold alignment across a duplex pass, I printed fronts and backs on separate sheets and glued them together: 15 to 20 minutes of adhesive, careful alignment, and bubbles, on every sheet.</p>
+      <p>The second part is what made it worth building. Gluing wasn't a step I wanted to speed up. It only existed because the printing was wrong, and if the printing were right it would disappear.</p>
     </section>
 
     <section>
       <h2>Role &amp; constraints</h2>
-      <p>I built the whole thing: product decisions, all UI design, all front-end code. Client-side only was both a constraint and a deliberate product call — no backend means no accounts, no onboarding, no infrastructure to maintain, and nothing standing between a user and their first PDF. That constraint set the ceiling for persistence (localStorage), image processing (Canvas API), and PDF generation (a pure-JS library that runs in the browser).</p>
+      <p>Solo build, and the whole thing is a static React app with no backend, no accounts, and no network calls. Your images never leave the browser, which for photos of your own face is the correct default and also means there's nothing to run.</p>
+      <p>The constraints came from the paper, not the software. A card is 59 × 89 mm with bleed and 55 × 85 mm trimmed, and those numbers have to survive three unit systems that never meet: the crop canvas works in pixels at 300 DPI, layout works in millimetres, and PDF works in points at 72 to the inch. One pixel at 300 DPI is 0.085 mm. That sounds like nothing until four files have each decided independently what a millimetre is.</p>
     </section>
 
     <section class="case-study-section--approach">
       <h2>Approach</h2>
 
       <h3>Design</h3>
-      <p>The crop editor is the heart of the tool, and its main challenge is showing three overlapping zones — bleed, trim, and safe area — without overwhelming a user who's never printed photocards before. The solution is a key panel beside the crop frame that shows a color swatch, the zone name and its exact dimensions, and a plain-English description of what it means. The zones themselves are color-coded (cyan, red, green), 2 px solid, and <code>pointer-events: none</code> so they never interfere with panning.</p>
-      <p>On desktop, the key sits in a second column beside the crop frame. On mobile, it collapses below the controls. No DOM duplication — just CSS Grid reassigning areas via a media query.</p>
-      <p>Empty-state copy came from in-person testing. A new user assumed the tool made a single card. Adding one line — "Build a deck of up to 9 photocards — then export as a print-ready PDF" — above the upload zone fixed it. The hint disappeared after the first card was added.</p>
-      <p>The mobile layout required its own pass. A sticky header that works on desktop breaks on iOS during momentum scroll; swapping it to <code>position: fixed</code> with compensating padding solved it. The deck action bar, previously two rows totaling 130 px, was collapsed to a single <code>flex-direction: row</code> bar at ~64 px.</p>
+      <p>The crop editor is the product, so it shows the physical card rather than a rectangle. Four guide systems overlay the frame: bleed, trim, safe area, and thirds, with a key underneath that says in plain words what each one means. Most people cropping a photocard have never had to think about why the image has to run past the cut line, and the editor is where they find out.</p>
+
+      <figure class="media-figure">
+        <picture>
+          <source srcset="/assets/pocalab/pocalab-crop-editor.webp" type="image/webp">
+          <img src="/assets/pocalab/pocalab-crop-editor.png" width="1120" height="980"
+               alt="Pocalab's crop editor showing a photo inside the card frame with four overlaid guide systems — cyan bleed, red trim, green safe area, and a rule-of-thirds grid — beside a key explaining each one, above rotate, size, background, and fade controls."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption>Bleed, trim, safe, and thirds, with the key underneath in plain words.</figcaption>
+      </figure>
+
+      <p>Zooming below 100% is allowed on purpose. The image can sit inside the frame with a background colour around it instead of being forced to fill, which is how a lot of the cards I actually want to print are laid out. A low-resolution warning appears but never blocks the export. Printing something slightly soft is a choice the person makes, not an error.</p>
+      <p>Three colour tokens exist purely because of contrast maths, and the reason is written into the CSS next to them. The brand pink fails AA as a fill behind white text at 3.49:1, so filled controls use a darker pink, and the pink used as text needs different values on each theme to clear 4.5:1. The ratios are in the file so the next person to touch them knows why they can't just use the brand colour.</p>
 
       <h3>Engineering</h3>
-      <p>The most precise problem in the project is units. The PDF works in points (72 pt/inch). The crop canvas works in pixels (300 DPI). The layout math works in mm. A 55 mm card has to be exactly 55 mm out of the printer — which means the conversion chain can't accumulate rounding errors. The solution is a single source of truth: <code>dimensions.ts</code> owns <code>mmToPx()</code> and all card constants; <code>pdf.ts</code> owns <code>mmToPt()</code>. Nothing hardcodes a dimension — every number derives from one of those two functions.</p>
-      <p>Duplex alignment is the other precise problem. For long-edge flip, the back page has to be x-mirrored: <code>backSlot.x = sheetWidth − slot.x − slot.w</code>. Get it wrong and every card comes out with the back offset by however far the layout math drifted.</p>
-      <p>pdf-lib weighs ~200 KB gzipped. It's imported dynamically — <code>const &#123; createPhotocardPdf &#125; = await import('./utils/pdf')</code> — so the chunk is only fetched when the user clicks "Download PDF." Initial load doesn't pay for it.</p>
-      <p>The multi-deck model (<code>Project &#123; preset, decks[] &#125;</code>) was the largest structural change. Photo paper presets (4×6, 5×7) fit 2–4 cards per sheet, so users printing 9 cards need multiple sheets. The <code>SET_PRESET</code> action auto-splits cards across new decks and fires a toast only when the split is caused by a preset switch, not when the user manually adds a sheet — a <code>justSwitchedPreset</code> ref tracks the difference.</p>
+      <p>Duplex registration comes down to one line. The back page mirrors each card across the sheet's vertical centre, <code>back.x = sheetWidth − front.x − cardWidth</code>, so that when the paper flips on its long edge every back lands behind its own front. Get it wrong and every card on the sheet is offset by the same amount, which looks like a printer problem and isn't. It's asserted directly in the tests, and the same mirrored geometry drives the crop marks on the back page.</p>
+
+      <figure class="media-figure">
+        <picture>
+          <source srcset="/assets/pocalab/pocalab-pdf-pages.webp" type="image/webp">
+          <img src="/assets/pocalab/pocalab-pdf-pages.png" width="1766" height="1082"
+               alt="Two pages of the exported PDF side by side. The first holds nine photocard fronts in a three-by-three grid with trim lines and TOP labels; the second holds the matching backs, mirrored left to right, with a note in the margin reading &quot;flip long edge&quot;."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption>Page one is the fronts, page two is the backs mirrored across the sheet, so a long-edge flip lands each back behind its own front.</figcaption>
+      </figure>
+
+      <p>The layout function also decides whether a sheet is physically possible, by checking that the margins are at least as wide as the bleed. That's why the photo-paper presets are single-column: two 85 mm cards side by side need 176 mm, and a 4 × 6 sheet is 101.6 mm. The tightest preset that does fit clears its bleed by 0.75 mm, and the UI says so.</p>
+
+      <figure class="media-figure">
+        <picture>
+          <source srcset="/assets/pocalab/pocalab-sheet-preview.webp" type="image/webp">
+          <img src="/assets/pocalab/pocalab-sheet-preview.png" width="800" height="810"
+               alt="Pocalab's sheet preview dialog showing two small sheet diagrams labelled Front and Back with the real card thumbnails in their slots, and a note that the PDF flips the back page so each back prints behind its own front."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption>The preview shows fronts and backs in the same order, and says what the PDF does with them.</figcaption>
+      </figure>
+
+      <p>Letter and photo paper started as two separate PDF pipelines, which is the sort of thing that's fine until the second one hard-codes its own copy of the card size. Merging them into one builder was the largest change in the project. I wrote the safety net first: tests that decode each page's PDF content stream, normalise the image names, round to a thousandth of a point, and snapshot the result. After the merge, all six paper presets produced byte-identical output. That's the evidence the refactor didn't move a single mark on the page.</p>
     </section>
 
     <section>
       <h2>Key decisions &amp; tradeoffs</h2>
       <dl class="key-decisions">
-        <dt>pdf-lib over jsPDF</dt>
-        <dd>jsPDF's main selling point is rendering HTML to PDF — irrelevant when compositing programmatic image data. pdf-lib is TypeScript-native and gives exact point coordinates. The tradeoff: it operates in points, not mm, which required an explicit conversion layer.</dd>
+        <dt>Rounding, not flooring, millimetres to pixels</dt>
+        <dd>The conversion floored, so a 59 mm bleed came out 696 px while every document said 697. I found it because a skipped test had been written against the documentation instead of the behaviour. The first fix corrected the docs down to 696. Twenty minutes later I reversed it: 697 is the closest whole pixel to the physical size, so the code should round and the documents were right all along. Crops exported before the change are a pixel narrower, so the app still recognises the old width when you re-upload one.</dd>
 
-        <dt>Client-side only</dt>
-        <dd>No backend means zero friction to start and zero infrastructure cost. The ceiling is localStorage — no cross-device sync, no user accounts. Acceptable for this use case, and avoids the onboarding tax that kills free tools.</dd>
+        <dt>Borderless printing off, after telling people to turn it on</dt>
+        <dd>
+          <p>The app used to recommend borderless mode for photo paper. A session with the actual printer found that borderless silently scales the page up 2 to 3% to bleed off the edges, and that this was the cause of both the wrong card size and the front-to-back misalignment I'd been seeing. The presets leave real margins, so nothing needs to reach the paper edge. The advice in the app is now the opposite of what it was, and the original wrong answer is still in the history.</p>
 
-        <dt>Static SPA with a crawler lede</dt>
-        <dd>A React SPA with no SSR is invisible to search crawlers. Rather than adding a rendering layer, a visually hidden section in <code>index.html</code> (the standard <code>position: absolute; width: 1px</code> clip pattern) gives crawlers indexable text directly. Simple and maintainable — no server needed.</dd>
+          <figure class="media-figure">
+            <picture>
+              <source srcset="/assets/pocalab/pocalab-print-checklist.webp" type="image/webp">
+              <img src="/assets/pocalab/pocalab-print-checklist.png" width="530" height="230"
+                   alt="A &quot;Before you print&quot; checklist with four items: print at actual size rather than fit or shrink, borderless turned off, cardstock in the rear feeder, and page one first then flip the stack on the long edge for page two."
+                   loading="lazy" decoding="async">
+            </picture>
+            <figcaption>The printer advice that shipped after the hardware session, including the setting that was causing the misalignment.</figcaption>
+          </figure>
+        </dd>
 
-        <dt>Lazy PDF chunk</dt>
-        <dd>The 200 KB bundle is only needed at export time. Splitting it saves ~200 KB on initial load at the cost of a small delay on the first download. The delay is invisible in practice because generating the PDF takes a moment anyway.</dd>
+        <dt>The whole project in one IndexedDB record</dt>
+        <dd>Persistence started in localStorage and died at three or four cards, because each card holds two full-resolution PNGs, about 1.24 MB, against a 5 MB quota. It failed quietly: one toast, and then every later edit was simply not saved. The fix keeps the entire project as a single IndexedDB entry through a small hand-written wrapper, with no new dependency and no change to the data model, so it stayed a storage change and nothing else.</dd>
       </dl>
+
+      <figure class="media-figure">
+        <div class="cs-video">
+          <video class="js-cs-video" muted loop playsinline preload="none"
+                 width="1200" height="602"
+                 poster="/assets/pocalab/pocalab-reflow-poster.jpg"
+                 aria-label="A screen recording of Pocalab. Nine cards on one US Letter sheet are re-flowed into five 4×6 sheets when the paper size changes, with a message reading &quot;Cards split across 5 sheets&quot;.">
+            <source src="/assets/pocalab/pocalab-reflow.webm" type="video/webm">
+            <source src="/assets/pocalab/pocalab-reflow.mp4" type="video/mp4">
+            A screen recording of Pocalab. Nine cards on one US Letter sheet are re-flowed into five 4×6 sheets when the paper size changes, with a message reading “Cards split across 5 sheets”.
+          </video>
+          <button type="button" class="cs-video__toggle" hidden>Pause</button>
+        </div>
+        <figcaption>Switching paper size re-packs every card into the fewest sheets that fit.</figcaption>
+      </figure>
     </section>
 
     <section>
       <h2>Outcome</h2>
-      <p>pocalab shipped with six paper size presets: US Letter and A4 (3×3, nine cards per sheet) and four photo paper layouts (4×6 and 5×7 in 2-up, 3-up, and 4-up configurations). All output is 300 DPI. The tool is live at pocalab.app with no account required.</p>
-      <p>A single sheet of 9 double-sided photocards used to take around <strong>45 minutes</strong> in Canva. With pocalab it's about <strong>12</strong> — roughly <strong>70% faster</strong>, or ~30 minutes saved per sheet. Almost none of that time was the design itself; it was the mechanical busywork around it:</p>
-      <ul>
-        <li><strong>No more gluing.</strong> The old Canva setup couldn't hold double-sided alignment, so fronts and backs had to be printed on separate sheets and glued onto cardstock — 15–20 minutes of adhesive, careful positioning, and bubble-chasing per sheet. pocalab's exact sizing and automatic front/back registration means printing straight onto cardstock, double-sided, and cutting. That step is gone entirely.</li>
-        <li><strong>Set the back once.</strong> Canva required placing all nine backs by hand, even when they were identical. pocalab reuses one back across the whole deck.</li>
-        <li><strong>No mirroring math.</strong> Getting fronts and backs to register after a duplex flip used to take real care — and was the most common cause of a wasted sheet. pocalab handles the x-mirror automatically.</li>
-      </ul>
-      <p>At one sheet a week, that's roughly 26 hours a year back.</p>
+      <p>Live at pocalab.app since June 13, 2026. For my own printing, a nine-card sheet went from about 45 minutes to about 12, and the gluing step is gone. That's my own measurement of my own workflow, so read it as what it is. In-person testing with friends changed the product at least once: someone assumed the tool made a single card, which is why the first screen now says you're building a deck.</p>
+
+      <figure class="media-figure">
+        <picture>
+          <source srcset="/assets/pocalab/pocalab-first-run.webp" type="image/webp">
+          <img src="/assets/pocalab/pocalab-first-run.png" width="2002" height="580"
+               alt="Pocalab's first-run screen reading &quot;Build a deck of up to 9 photocards — then export as a print-ready PDF&quot;, with four example card fronts labelled Selfie, Portrait, Concert, and Group, and a drop zone for uploading an image."
+               loading="lazy" decoding="async">
+        </picture>
+        <figcaption>The first line on the screen came out of watching someone use it.</figcaption>
+      </figure>
+
+      <p>There's a feedback form after every download.</p>
     </section>
 
     <section>
       <h2>Reflection</h2>
-      <p>The <code>Deck → Project</code> data model refactor should have happened earlier. The original single-deck model was fine for letter and A4, but adding photo paper presets required threading a new concept — multiple sheets — through every crop confirmation, copy count, move control, and download button. If multi-sheet had been in scope from day one, the architecture would have been cleaner.</p>
-      <p>The lesson: build what you know you need now, but don't design around a fake constraint you know will break. I knew from the start that photo paper was coming. I just didn't prioritize modeling it correctly up front.</p>
+      <p>The documentation and the code disagreed about one pixel for three months, and a test had quietly encoded the documentation rather than the behaviour, so nothing failed. It was the kind of error that can only surface when something forces the two to meet.</p>
+      <p>The feature I was most excited about at the start, a two-hole calibration trick for printers that can't hold registration on their own, still isn't built. It turned out most of what it was meant to fix was actually the borderless setting, which took a session with the printer to find. The unbuilt clever feature and the setting that was the real answer are both still in the backlog notes.</p>
     </section>
 
     <footer>
       <p>an MCL Studio project</p>
       <p class="build-credit">Designed and built by hand with Claude Code — plain HTML, CSS, and vanilla JS, no framework.</p>
-      <p class="footer-date">Last updated June 2026</p>
+      <p class="footer-date">Last updated September 2026</p>
     </footer>
   </main>
 
   <script src="/scripts/main.js?v=1" defer></script>
+  <script src="/scripts/case-study-video.js?v=2" defer></script>
 </body>
 </html>
