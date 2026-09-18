@@ -1,0 +1,14 @@
+# Cloudflare Pages deploy config for matthewclau.com.
+#
+# Only `site/` is the website. `docs/`, `dev/` and `.claude/` are dev-only and
+# must never be served — before MAT-716 they were, because Pages built from the
+# repo root with no build step.
+#
+# This file overrides the Build output directory in the Pages dashboard, which
+# is the point: the setting lives in the repo and cannot silently drift.
+#
+# `name` must match the Pages project exactly or the build fails.
+
+name = "portfolio"
+pages_build_output_dir = "site"
+compatibility_date = "2026-09-16"
