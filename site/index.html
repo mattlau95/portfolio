@@ -85,7 +85,7 @@
               <div class="project-card-body">
                 <p class="featured-label">★ Featured case study</p>
                 <h3>ollae</h3>
-                <p>Built for my weekly pickup volleyball group, where the headcount lived in thumbs-up reactions across several group chats. One link goes into every chat. Players add a name and see who else is going. The organizer types or dictates the plan, and Claude turns it into the event.</p>
+                <p>Built for the weekly pickup volleyball games I organize, where the headcount lived in thumbs-up reactions across several group chats. One link goes into every chat and unfurls as an event card wherever it lands. Players add a name and see who else is going. The organizer types or dictates the plan; Claude fills in the event and picks the emoji for the preview. It still runs our games every week.</p>
                 <p class="project-links">
                   <a href="/projects/ollae.html">Read Case Study</a>
                   <a href="https://ollae.app" target="_blank" rel="noopener noreferrer">Live demo</a>
@@ -121,11 +121,11 @@
 
           <li class="project-card">
             <a class="project-card-media" href="/projects/kumon-automation.html">
-              <img class="project-thumb" src="/assets/thumbnails/kumon-automation.webp" alt="Kumon Grading Automation — browser extension popup" width="800" height="600">
-              <h3>Kumon Grading Automation</h3>
+              <img class="project-thumb" src="/assets/thumbnails/kumon-automation.webp" alt="Kumon Grading Tools — browser extension popup" width="800" height="600">
+              <h3>Kumon Grading Tools</h3>
             </a>
             <a href="/projects/kumon-automation.html">Read Case Study</a>
-            <p>Chrome extension for Kumon's grading portal. It turns a <strong>multi-day grading backlog into a 25-minute unattended run</strong>, and adds a typed-notes tool so graders can leave handwritten-style notes on worksheets, which the platform can't do on its own.</p>
+            <p>Two Chrome extensions for Kumon's grading portals, which have no API. One clears the correction backlog by driving the UI directly: a <strong>multi-day manual queue clears unattended in about 25 minutes</strong>, and marking stays with the instructor. The other turns typed notes into pen strokes on worksheets, since writing legibly with a trackpad was impractical.</p>
             <ul role="list" class="tags" aria-label="Tech stack">
               <li>JavaScript</li>
               <li>Chrome Extension MV3</li>
@@ -155,7 +155,7 @@
             </p>
           </li>
         </ul>
-        <p class="also-built">Also built: a <a href="/projects/worship-slides.html">worship slides generator</a> that turns PDF setlists into PowerPoint decks, and an <a href="/projects/vbs-scheduler.html">availability scheduler</a> for a church band.</p>
+        <p class="also-built">Also built: ghosted, a job-discovery pipeline that pulls postings from the Greenhouse, Lever, and Ashby APIs, scores them with Claude Haiku against a rubric I tune by hand, and emails me a Monday digest (<a href="https://github.com/mattlau95/ghosted" target="_blank" rel="noopener noreferrer">repo</a>); a <a href="/projects/worship-slides.html">worship slides generator</a> that turns PDF setlists into PowerPoint decks; and an <a href="/projects/vbs-scheduler.html">availability scheduler</a> for a church band.</p>
       </section>
       <section id="process">
         <h2>How I Build</h2>
@@ -165,7 +165,7 @@
             <span class="workflow-cmd">/_ capture</span>
             <div class="workflow-body">
               <h3>Capture, then triage</h3>
-              <p>Quick notes go into an inbox via a custom /capture command; a separate /triage pass turns them into scoped Linear issues.</p>
+              <p>Quick notes go into an inbox via a custom /capture command; a separate /triage pass drafts them as scoped Linear issues and creates only the ones I approve.</p>
             </div>
           </li>
           <li class="workflow-row">
@@ -186,7 +186,7 @@
             <span class="workflow-cmd">/_ audit</span>
             <div class="workflow-body">
               <h3>UX as tooling</h3>
-              <p>Design quality and WCAG 2.2 accessibility compliance shouldn't rely on memory. They live inside a repeatable, programmatic /audit command.</p>
+              <p>Design quality and WCAG 2.2 accessibility compliance shouldn't rely on memory. They live in a repeatable /audit command that checks a build against my written standard (WCAG 2.2 AA, Core Web Vitals, and rules for AI output: editable, overrideable, uncertainty shown) and tiers findings P0–P2.</p>
             </div>
           </li>
           <li class="workflow-row">
@@ -224,15 +224,31 @@
           </li>
 
           <li class="experience-entry">
+            <p class="experience-dates"><time>2025–Present</time></p>
+            <h3>Operations & Tooling Assistant · Kumon Learning Center</h3>
+            <p>I run the center's day-to-day with the instructors: 70+ students a week, parent communication, first-line Kumon Connect support. The two extensions below came out of doing that work.</p>
+            <ul>
+              <li>Built a Chrome extension that clears the correction backlog in Class-Navi, the grading portal, by driving the UI directly, since the platform has no API. Marking stays with the instructor. About 7 seconds a worksheet, so a <strong>multi-day manual queue clears unattended in roughly 25 minutes</strong>; in use since June 2026.</li>
+              <li>Under the hood: a synthetic-event helper so Angular's change detection accepts scripted clicks, and a bulk mode that re-scans the gradebook after each worksheet so it survives re-renders.</li>
+              <li>Built a second extension that turns typed hints into pen strokes on Kumon Connect worksheets, since writing legible notes with a trackpad was impractical. In daily use when grading online.</li>
+            </ul>
+            <ul role="list" class="tags" aria-label="Skills">
+              <li>JavaScript</li>
+              <li>Chrome Extension MV3</li>
+            </ul>
+          </li>
+
+          <li class="experience-entry">
             <p class="experience-dates"><time>2022–2024</time></p>
             <h3>UX/UI Designer · Collette Vacations</h3>
             <p class="project-links">
               <a href="/projects/collette.html">Read Case Study</a>
             </p>
-            <p>Designed and shipped marketing and booking-flow features, and built the foundation other designers and engineers worked from.</p>
+            <p>Designed Collette's marketing and booking flows across four brands, and built the design system the rest of the team worked from.</p>
             <ul>
-              <li>Built Collette's first design system in Figma and introduced Dev Mode to a 6–8 person development team, replacing Zeplin exports and hand-made diagrams.</li>
-              <li>Designed tour, pricing, and booking flows across 4 brands; shipped Compare Tours (2023); ran 200+ UserTesting sessions and nine competitive studies.</li>
+              <li>Built Collette's first design system in Figma and introduced Dev Mode to a 6–8 person development team, replacing Zeplin exports and hand-drawn spacing diagrams as the handoff artifact.</li>
+              <li>Designed tour, pricing, and booking flows across four brands, including Compare Tours (2023).</li>
+              <li>Ran 200+ UserTesting sessions with Collette's 55–65+ buyer, including nine head-to-head studies against seven competitors, and presented a findings deck for each study.</li>
             </ul>
             <ul role="list" class="tags" aria-label="Skills">
               <li>Figma</li>
@@ -240,23 +256,6 @@
               <li>Dev Mode</li>
               <li>Usability Testing</li>
               <li>Atomic Design</li>
-            </ul>
-          </li>
-
-          <li class="experience-entry">
-            <p class="experience-dates"><time>2025–Present</time></p>
-            <h3>Operations & Tooling Assistant · Kumon Learning Center</h3>
-            <p>Leveraged custom automation to optimize daily learning center workflows and student progress pipelines.</p>
-            <ul>
-              <li>Built a Chrome extension (Manifest V3) to automate the grading-correction backlog on the Kumon Connect platform, converting a highly manual, multi-day administrative process into an unattended ~25-minute automated run.</li>
-              <li>Eliminated operational bottlenecks to ensure real-time progression tracking for 70+ active students weekly.</li>
-              <li>Audited and troubleshooted platform workflows while maintaining brand-aligned digital production assets.</li>
-            </ul>
-            <ul role="list" class="tags" aria-label="Skills">
-              <li>JavaScript</li>
-              <li>Workflow Automation</li>
-              <li>Scripting</li>
-              <li>Internal Tools</li>
             </ul>
           </li>
 
@@ -293,6 +292,7 @@
           <li class="experience-entry">
             <p class="experience-dates"><time>2013–2017</time></p>
             <h3>B.A. Computer Science · Rutgers University</h3>
+            <p>Three years on the university's Sakai LMS help desk while a student.</p>
           </li>
         </ol>
       </section>

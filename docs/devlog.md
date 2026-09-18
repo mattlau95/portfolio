@@ -4,6 +4,78 @@
 
 ---
 
+## 2026-09-18 — Homepage copy pass: Experience, cards, How I Build
+
+Copy and order only. No classes, components, links, badge styles or layout
+changed, and no case study page was touched.
+
+**Switches as run:** SWITCH 1 **ON** (Kumon card heading renamed), SWITCH 2
+**OFF** (default Kumon intro, no "my parents' center"), SWITCH 3 **OFF**
+(physician startup entry not added; its copy stays in the brief's appendix
+until approved).
+
+**Experience now reads in strict reverse chronology** — MCL Studio → Kumon →
+Collette → Freelance UX/UI → Freelance Graphic → Rutgers. Only Kumon and
+Collette swapped; the other four moved as whole blocks, untouched. The point
+is that the two 2025–Present roles now sit together instead of being split by
+a 2022–2024 entry.
+
+**Kumon entry rewritten.** Intro, all three bullets and the badge row. The old
+copy was résumé-voice ("Leveraged custom automation to optimize daily learning
+center workflows") and carried a factual error: it said the backlog extension
+ran on Kumon Connect. It runs on **Class-Navi**. The new copy names the right
+platform, says marking stays with the instructor, and gives the mechanism —
+a synthetic-event helper so Angular's change detection accepts scripted clicks,
+and a bulk mode that re-scans the gradebook so it survives re-renders. Badges
+trimmed to `JavaScript` and `Chrome Extension MV3`; `Workflow Automation`,
+`Scripting` and `Internal Tools` are category tags, and this badge system is
+stack only.
+
+**Collette entry** got a lighter pass: new intro and three bullets in place of
+two, splitting the old run-on second bullet so the 200+ UserTesting sessions
+get their own line with the buyer demographic and the nine head-to-head
+studies. Heading, dates, case study link and badge row all kept.
+
+**Rutgers** gains one intro-style line about three years on the university's
+Sakai LMS help desk. A `<p>`, not a bullet and not a heading, so the document
+outline is unchanged.
+
+**Cards.** ollae's description now says the link unfurls as an event card and
+that Claude picks the preview emoji, and ends on the thing that actually
+matters — it still runs the games every week. The Kumon card becomes **Kumon
+Grading Tools**, plural, because it is two extensions, not one; its copy now
+says so and keeps exactly one bold metric. Collette and pocalab untouched.
+
+**"Also built"** gains ghosted, with a repo link rather than a case study link
+since it has no case study yet. Three links in the line now.
+
+**How I Build** — two blurbs. /capture+/triage now says the triage pass drafts
+issues and creates only the ones I approve, which is what it actually does.
+/audit now names what the command checks against: WCAG 2.2 AA, Core Web
+Vitals, and the AI-output rules, tiered P0–P2. The other three rows unchanged.
+
+**One thing the brief asked for that does not exist:** it opens with "read
+`system.md` (the build plan)". There is no `system.md` in this repo — it is a
+label in the How I Build section (`index.html:172`), the token standing for
+"Spec before code". The actual build plan is `docs/PROJECT.md`, which is what
+was read. Worth knowing before someone goes looking for the file.
+
+**Audit** — `audit-2026-09-18-copy.md`. 0 P0, 0 P1, 2 P2. Zero axe violations,
+accessibility and best-practices held at 100, CLS flat at 0.0037, 169/169
+local references resolve. Badge contrast explicitly re-confirmed after the
+Kumon row was trimmed: all nine `ul.tags` rows at 15.59:1 against a 4.5:1
+requirement, and the "Also built" line and its links at 8.03:1 with underlines
+carrying the link affordance rather than colour.
+
+Two P2s came out of it. The Kumon thumbnail's alt text still said "Kumon
+Grading Automation" — SWITCH 1 was scoped to heading text only, so it was
+flagged rather than changed, then approved and fixed in this same commit; the
+alt now matches the heading. The other is that Collette puts its case study
+link above its intro where MCL Studio puts it below — pre-existing, left
+alone, but more visible now the entries sit closer together.
+
+---
+
 ## 2026-09-18 — Token table gets swatches (Claude Design import)
 
 Imported the **Token Table** design from the Claude Design project "Design
