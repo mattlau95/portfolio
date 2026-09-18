@@ -30,6 +30,13 @@ deploying the folder.
   dashboard setting, which is the point: the deploy root lives in the repo,
   next to the tree it describes.
 
+**The Pages build config now lives in `wrangler.toml`, not the dashboard.**
+Worth knowing before it costs you twenty minutes: `pages_build_output_dir`
+in that file *overrides* the Build output directory in the Cloudflare Pages
+project settings. Change the dashboard value and nothing happens — the build
+keeps using `site` and the dashboard field just sits there looking
+authoritative. To move the deploy root, edit `wrangler.toml` and commit it.
+
 **`scripts/` became `dev/`, because the first pass left the name meaning two
 things.** MAT-716's target tree had no `site/scripts/` at all, but every page
 loads `/scripts/main.js` plus three case-study scripts, so leaving `scripts/`
