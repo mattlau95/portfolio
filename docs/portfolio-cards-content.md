@@ -15,7 +15,7 @@
 * - React 19, TypeScript 6. Vite 8, pdf-lib 1.17, react-easy-crop 5.5, playwright, Figma MCP
 **Case Study File:** "C:\Users\mattl\portfolio\docs\case-study-pocalab.md"
 **Github Repo:** https://github.com/mattlau95/pocalab
-**Live Demo:** https://pocalab.com
+**Live Demo:** https://pocalab.app
 
 ## Praise Slides ##
 **Description:** Converts church worship PDF setlists into presentation-ready .pptx decks in seconds, with a drag-and-drop editor, auto lyric cleanup, and full multi-song set support.

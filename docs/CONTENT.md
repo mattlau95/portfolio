@@ -155,10 +155,10 @@ platform. Built it for Thursday volleyball; works for anything informal.
 - Note: the no-account, drop-a-link flow is the point — friction is the thing it
   removes.
 
-### pocalab — pocalab.com
+### pocalab — pocalab.app
 Browser-based K-pop photocard maker — upload, crop, and arrange cards into print-ready PDF sheets. Manage multiple decks, set per-card or shared backs, adjust copy counts, and choose standard print layout presets. Built it to replace the manual Canva workflow I used to fight every time I printed a sheet.
 - Tags: `React 19` `TypeScript` `Vite` `pdf-lib` `react-easy-crop` `Vercel`
-- Demo: https://pocalab.com  ·  Repo: https://github.com/mattlau95/pocalab
+- Demo: https://pocalab.app  ·  Repo: https://github.com/mattlau95/pocalab
 - Thumbnail: `[/assets/thumbnails/pocalab.webp]`
 - **Badge:** 45 min → 12 min per sheet · ~70% faster · ~26 hrs/yr saved
 - Note: a real personal-pain-point tool. The duplex registration eliminated the gluing step entirely — fronts and backs now print straight onto cardstock, cut-ready.
