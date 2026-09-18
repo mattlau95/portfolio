@@ -41,8 +41,11 @@ competing with them.
 `edison-dental-thm.webp`, `vbs-scheduler.webp`, `worship-slides.webp`, about
 122 KB together. Two of those (`edison-dental-thm`, `vbs-scheduler`) were
 already unused before today. They are left in place deliberately rather than
-deleted: any of them comes straight back if a project returns to a card. Worth
-a sweep if they are still unused in a few weeks.
+deleted: any of them comes straight back if a project returns to a card.
+
+**[C] Confirmed keep, 2026-09-18.** Raised and kept on purpose. Not dead weight
+to be swept on a later pass — the projects they belong to may return to cards,
+and regenerating a thumbnail costs more than 122 KB of repo.
 
 **Checks** — no page overflow at any width from 320 to 1440, axe 0 violations
 and 39 passes, all local references resolve. The title underline was verified
