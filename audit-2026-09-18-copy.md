@@ -69,7 +69,7 @@ The `.also-built` links render in the muted body colour rather than the accent, 
 | # | Finding | Checklist ref | Evidence | Fix | Effort |
 |---|---------|---------------|----------|-----|--------|
 | 1 | ✅ **Fixed before commit.** The Kumon card's thumbnail alt text read "Kumon Grading Automation — browser extension popup" while the heading now reads "Kumon Grading Tools". SWITCH 1 was scoped to heading text only, so it was flagged rather than changed; approved and applied in the same commit. | §7 — alt text | `site/index.html:124` | Now reads "Kumon Grading Tools — browser extension popup". | ⚡ |
-| 2 | Entry-internal ordering is inconsistent: MCL Studio runs intro → Read Case Study → bullets, while Collette runs Read Case Study → intro → bullets. Pre-existing, untouched by this change (the brief said keep the link as-is), but the reorder puts the two patterns closer together where the difference is easier to notice. | §10 — affordances / consistency | `#experience` entries 1 and 3 | Move Collette's `p.project-links` below its intro paragraph to match MCL Studio. | ⚡ |
+| 2 | ✅ **Fixed in follow-up.** Entry-internal ordering was inconsistent: MCL Studio ran intro → Read Case Study → bullets, Collette ran Read Case Study → intro → bullets. Pre-existing and outside the copy brief, so flagged rather than changed; approved and applied immediately after. | §10 — affordances / consistency | `#experience` entries 1 and 3 | Collette's `p.project-links` now sits below its intro. Both entries that carry a case study link read h3 → intro → link → bullets. | ⚡ |
 
 ---
 
@@ -90,9 +90,9 @@ Not applicable. The homepage remains a static document with no async actions, ne
 ## Priority action plan
 
 1. ~~**[P2 ⚡]** Decide whether the Kumon thumbnail alt should follow the heading rename.~~ — done, applied before commit.
-2. **[P2 ⚡]** Align Collette's case study link position with MCL Studio's.
+2. ~~**[P2 ⚡]** Align Collette's case study link position with MCL Studio's.~~ — done, applied in follow-up.
 
-Neither gated the ship; one is already closed.
+Neither gated the ship, and both are now closed. No findings remain open from this audit.
 
 ---
 

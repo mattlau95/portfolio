@@ -70,9 +70,11 @@ carrying the link affordance rather than colour.
 Two P2s came out of it. The Kumon thumbnail's alt text still said "Kumon
 Grading Automation" — SWITCH 1 was scoped to heading text only, so it was
 flagged rather than changed, then approved and fixed in this same commit; the
-alt now matches the heading. The other is that Collette puts its case study
-link above its intro where MCL Studio puts it below — pre-existing, left
-alone, but more visible now the entries sit closer together.
+alt now matches the heading. The other was that Collette put its case study
+link above its intro where MCL Studio puts it below — pre-existing and
+outside the copy brief, so flagged rather than changed, then approved and
+fixed too. Both entries that carry a case study link now read heading,
+intro, link, bullets. Nothing from this audit is left open.
 
 ---
 
