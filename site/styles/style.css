@@ -494,13 +494,18 @@ ul.tags {
   }
 }
 
-/* Also built — the third tier, under the card strip. Rows rather than the
-   sentence this replaced: thumbnail, title, one line, whole row is the link.
+/* Also built — the third tier, under the card strip.
 
-   Ported from the Claude Design "Project Tier 3" 1c direction. The design's
-   Source Serif 4 titles map to DM Sans, matching .project-card h3 — only
-   .identity-name and section h2 use the display face here — and its rose
-   accent maps to the site accent, since this palette is committed to one. */
+   Ported from the Claude Design "Project Tier 3" file, direction 1a: title
+   and description share a line with a hairline rule between rows.
+
+   This started as 1c, which puts a 64x44 thumbnail in front of each row.
+   That column was removed: at that size a 4:3 screenshot crops to something
+   unreadable, so it cost two image requests and carried no information, and
+   ghosted — which has no thumbnail — rendered an empty box. Sizing the
+   thumbnails up enough to read would have taken ~120px+, at which point
+   these rows start reading as small cards and stop being a third tier at
+   all. The accent and type map to the site's own, not the design's. */
 
 .also-built {
   margin-top: var(--space-8);
@@ -520,43 +525,23 @@ ul.tags {
   list-style: none;
   padding: 0;
   margin: 0;
+  border-top: 1px solid var(--color-border);
 }
 
 .also-built-list a {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 0 var(--space-4);
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
   padding: var(--space-3) 0;
-  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   color: inherit;
   text-decoration: none;
 }
 
-.also-built-list li:last-child a {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.also-built-thumb {
-  width: 64px;
-  height: 44px;
-  object-fit: cover;
-  border-radius: 3px;
-  background-color: var(--color-border);
-}
-
-/* ghosted has no thumbnail yet. An empty framed box holds the column so the
-   titles stay aligned; aria-hidden, because it carries no information. */
-
-.also-built-thumb--none {
-  display: block;
-  background: none;
-  box-shadow: inset 0 0 0 1px var(--color-border);
-}
-
-/* The global external-link arrow hangs off the <a>, which here is a grid
-   container — it would land as a third grid item and open a second row.
-   Move it onto the title, where it reads as part of the link text. */
+/* The global external-link arrow hangs off the <a>, which here is a flex
+   container — it would become a flex item of its own. Move it onto the
+   title, where it reads as part of the link text. */
 
 .also-built-list a[target="_blank"]::after {
   content: none;
@@ -567,18 +552,18 @@ ul.tags {
   font-size: 0.75em;
 }
 
-.also-built-text {
-  min-width: 0;
-}
+/* Unlike the cards, the title keeps a standing underline: with no thumbnail
+   and no button, it is the only thing marking the row as a link. */
 
 .also-built-title {
-  display: block;
   font-size: var(--text-base);
+  border-bottom: 1px solid rgb(var(--color-accent-rgb) / 0.4);
+  padding-bottom: 1px;
 }
 
 .also-built-desc {
-  display: block;
-  margin-top: var(--space-1);
+  flex: 1 1 260px;
+  min-width: 0;
   font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
@@ -591,34 +576,17 @@ ul.tags {
   border: 1px solid rgb(var(--color-accent-rgb) / 0.22);
   border-radius: var(--radius);
   padding: 0 var(--space-1);
-  margin-left: var(--space-2);
+  margin-left: var(--space-1);
   white-space: nowrap;
 }
 
-/* Matches .project-card-media: the row carries no standing underline, and
-   the title picks one up on hover. Focus comes from the global
-   :focus-visible ring, which is never stripped. */
-
 @media (hover: hover) {
-  .also-built-list a:hover {
-    background: rgb(255 255 255 / 0.025);
-  }
-
   .also-built-list a:hover .also-built-title {
-    text-decoration: underline;
-    text-decoration-color: var(--color-accent);
-  }
-}
-
-@media (max-width: 480px) {
-  .also-built-list a {
-    grid-template-columns: 48px minmax(0, 1fr);
-    gap: 0 var(--space-3);
+    border-bottom-color: var(--color-accent);
   }
 
-  .also-built-thumb {
-    width: 48px;
-    height: 36px;
+  .also-built-list a:hover .also-built-desc {
+    color: var(--color-text);
   }
 }
 

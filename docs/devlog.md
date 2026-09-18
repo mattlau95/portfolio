@@ -4,6 +4,54 @@
 
 ---
 
+## 2026-09-18 — Tier 3 drops the thumbnails (1c → 1a)
+
+The tier-3 rows shipped earlier today with a 64×44 thumbnail per row, direction
+1c from the Claude Design file. **The thumbnail column is gone.** The list is
+now direction **1a**, the hairline ledger: title and description share a line,
+a rule between rows, no images.
+
+**Why.** At 64×44 a 4:3 screenshot crops to something unreadable — it was two
+image requests buying no information. ghosted, which has no thumbnail at all,
+rendered an empty framed box, which made the point plainly: the column existed
+to hold the column. Sizing up was not the answer either. A thumbnail readable
+enough to earn its place needs roughly 120px or more, and at that size these
+rows start reading as small cards, which defeats the reason the third tier
+exists at all.
+
+**What changed with it**
+- The title now carries a standing 1px accent underline. Under 1c the whole
+  row was the link and the underline only appeared on hover; with no thumbnail
+  and no button, the title is the only thing marking a row as a link, so it
+  should not need a mouse to reveal it.
+- Hover now brightens the description as well as the title's underline.
+- The mobile branch got simpler: no thumbnail to resize, so the 480px rule that
+  stepped it 64×44 → 48×36 is gone. The description just wraps under the title
+  when the row is too narrow to hold both, which is 1a's own behaviour.
+- The external-link arrow still has to be moved off the `<a>` onto the title.
+  1c made the `<a>` a grid container, 1a makes it a flex container; either way
+  the global `a[target="_blank"]::after` rule would otherwise become a layout
+  item of its own.
+
+**Rows got shorter,** which is the point: 53px against 77px at 1440, so the
+tier now reads as clearly subordinate to the cards above it instead of
+competing with them.
+
+**Four thumbnails are now unreferenced** — `edison-dental.webp`,
+`edison-dental-thm.webp`, `vbs-scheduler.webp`, `worship-slides.webp`, about
+122 KB together. Two of those (`edison-dental-thm`, `vbs-scheduler`) were
+already unused before today. They are left in place deliberately rather than
+deleted: any of them comes straight back if a project returns to a card. Worth
+a sweep if they are still unused in a few weeks.
+
+**Checks** — no page overflow at any width from 320 to 1440, axe 0 violations
+and 39 passes, all local references resolve. The title underline was verified
+by computed style rather than by eye, since at phone scale a 1px line at 0.4
+alpha is easy to miss in a screenshot: 1px `rgba(96, 200, 240, 0.4)` on all
+three rows at both 375px and 1440px.
+
+---
+
 ## 2026-09-18 — Edison stops calling itself the featured case study
 
 `projects/edison-dental.html` still opened with "★ Featured case study". It
@@ -25,6 +73,10 @@ axe on the Edison page: 0 violations, 39 passes. All local references resolve.
 ---
 
 ## 2026-09-18 — Tier 3 becomes thumbnail rows (Claude Design import)
+
+> **Superseded the same day** — the thumbnail column was removed and the list
+> moved to direction 1a. See "Tier 3 drops the thumbnails" above. Everything
+> below still describes what shipped first, including the thumbnail sizing.
 
 Imported the **Project Tier 3** design from the Claude Design project "Design
 table for matthewclau.com". It offered four directions for the third-tier list
