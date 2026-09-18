@@ -4,6 +4,64 @@
 
 ---
 
+## 2026-09-18 — Shipped: 18 commits to production
+
+Pushed `12a1edc..1543913` to `origin/main`. Cloudflare Pages built from `site/`
+and the deploy is live on both apexes.
+
+**What went out**
+
+| Area | Change |
+|---|---|
+| Homepage | MAT-732 restructure — ollae featured, Collette in the strip, Edison to Experience |
+| Homepage | Copy pass on Experience, project cards and How I Build; Experience now strict reverse chronology |
+| Homepage | Tier 3 "Also built" built as thumbnail rows, then rebuilt as a hairline ledger |
+| Collette | Token table gained colour swatches and token chips |
+| Edison | Stopped calling itself the featured case study |
+| Ollae | Copy update plus the manifest — 12 new images |
+
+**Verified live, not assumed.** Checked the deployed HTML rather than trusting a
+green build:
+
+- Homepage serves `also-built-list`, `Kumon Grading Tools`,
+  `Design system · Collette Vacations`, and the ghosted row. The strings the
+  update removed — `Kumon Grading Automation`, `Six projects` — are gone.
+- `projects/edison-dental` serves `case-study-label">Case study`, so the
+  featured claim is off the page it no longer belongs to.
+- `projects/ollae` serves the kicker, the Korean 올래, the `One Claude call,
+  two jobs` heading, and references to every new asset.
+- Two new assets fetched directly: `ollae-unfurl-discord.webp` returns 200 as
+  `image/webp` at 41,594 bytes, `ollae-emoji-card.webp` 200 at 13,588 bytes.
+  The images are genuinely on the CDN, not just referenced in markup.
+
+**Pre-push gate.** All 8 pages: **0 axe violations, 0 console errors**.
+196 local references, all resolving. Lighthouse locally: accessibility 100,
+best practices 100, CLS 0.002.
+
+**MAT-734 raised as Urgent.** The footer badge still reads
+`99 / 100 / 100 / LCP 1.8s`, dated June 2026, on a site that has changed
+substantially underneath it. Nothing measured this session can confirm or
+refute it — every local run used a bare static server with no compression and
+none of the `_headers` cache rules, which is why local performance sat at
+89–90 with LCP ~2.9s on both the old and new builds alike. The gap is the
+harness, not a regression, but the badge is a public numeric claim and needs a
+production run to stay honest. The ticket also carries the phone spot-check for
+the ollae figure strips, which wrap differently at 375px.
+
+**One deliberate non-change.** The ollae `<meta name="description">` and
+`og:description` still carry the old, longer deck after the copy update
+shortened the visible one to a single line. Left alone on purpose: a meta
+description is a standalone summary for search results and social cards, where
+~150 characters is the target and the new 56-character deck would be thin. The
+existing text is still accurate about the rewritten page, so matching them
+would have been symmetry for its own sake.
+
+**Loose end.** An empty `scripts/checks/` tree at the repo root, left by
+MAT-716, cannot be deleted — a process holds it open. Untracked and empty, so
+it affects neither the repo nor the deploy. It will clear on the next reboot.
+
+---
+
 ## 2026-09-18 — Ollae case study: copy update, then the manifest
 
 Two passes over `projects/ollae.html`, applied in that order because the second
