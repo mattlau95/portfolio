@@ -4,6 +4,71 @@
 
 ---
 
+## 2026-09-18 — Token table gets swatches (Claude Design import)
+
+Imported the **Token Table** design from the Claude Design project "Design
+table for matthewclau.com" into `projects/collette.html`. The design offered
+two treatments: **1a** hairline rows with a header row and a swatch per value,
+and **1b** swatch-led cards with no header. Took 1a, so the real `<table>`,
+its `<caption>` and its `<th scope="col">` all survive — 1b would have traded
+those for divs, and the Sept 15 audit specifically recorded that table's
+semantics as passing.
+
+**What actually changed**
+- Each Value cell gains a 15px rounded swatch beside the hex. It is
+  `aria-hidden`: the hex sitting next to it already names the colour.
+- Code names become chips — `<ul role="list" class="token-chips">` of `<li><code>`,
+  the same idiom as `ul.tags` elsewhere on the site.
+- `thead th` picks up the design's uppercase/letterspaced treatment, scoped to
+  `.token-table` so `.lighthouse-table` keeps sentence case. Verified identical
+  before and after on `edison-dental.html`.
+
+**The brief said the header row was missing. It wasn't.** The table has had a
+real `<thead>` with four `<th scope="col">` since it was built. The variant
+with no header row is 1b, in the design file — not the site. Only the swatch
+was genuinely absent.
+
+**`support.js` is not shipped**, same call as the Kumon race comparison
+(2026-09-16/17). The design's `<sc-for>` / `{{ }}` / `DCLogic` runtime stays in
+the design tool; the five rows are plain markup here.
+
+**The chips use the site accent, not the design's.** The design draws them in
+rose `#E9A7AE`. `PROJECT.md` §7 commits this palette to a single accent, so
+they use `--color-accent` and the `--color-accent-wash` that already existed.
+The layout was imported; the palette wasn't.
+
+**Three width regressions found and fixed before commit**, all caught by
+sweeping 320–1440 against the pre-change build rather than eyeballing desktop:
+
+1. **481px scrolled by 5px.** Just above the breakpoint the chip box returns
+   while the column is still narrow, and `background-cool_strong` pushed
+   `.table-wrap` over. Fixed with `overflow-wrap: anywhere` on the chip, which
+   only bites when the column genuinely cannot hold the token.
+2. **320–340px scrolled**, widths that fitted before the swatch existed. A
+   flex Value cell pins swatch and hex to one line, which adds both to the
+   column's min-content. Fixed by dropping to inline layout under 480px only —
+   doing it at every width backfired, because the table's auto layout then
+   hands the Value column its smaller min-content and stacks the pair on
+   desktop with room to spare.
+3. **Chips read badly at 390px**, breaking to `backgroun / d-cool_str / ong`
+   with a border round each fragment. Under 480px the cell now goes back to the
+   comma-separated run of `<code>` it was before — the rendering P2.1 tuned in
+   `audit-2026-09-15` — with the commas drawn by `li::after`, so the `<li>`
+   elements keep their list semantics for a screen reader. The chip box is a
+   wider-viewport affordance only.
+
+That last one retired the old `.token-table td:nth-child(3)` overflow rule;
+the break target is the chip now, and it is documented in place.
+
+**Checks** — `.table-wrap` fits with no horizontal scroll at every width from
+320 to 1440, matching the pre-change build exactly. axe 0 violations, 35
+passes. All 169 local references resolve. `.lighthouse-table` unchanged.
+
+Note the design project is read-only from here: it is `PROJECT_TYPE_PROJECT`,
+not a design system, so DesignSync can import from it but cannot write back.
+
+---
+
 ## 2026-09-18 — Collette card drops its date (MAT-732 follow-up)
 
 The Collette strip card was titled "Collette Vacations · 2022–2024". It is now
