@@ -4,6 +4,26 @@
 
 ---
 
+## 2026-09-18 — Edison stops calling itself the featured case study
+
+`projects/edison-dental.html` still opened with "★ Featured case study". It
+has not been the featured case study since MAT-732 moved ollae into that slot,
+so two pages claimed it and only one was backed by the homepage. It now reads
+**"Case study"**, which is what every other project page in `site/projects/`
+already says — Collette, Kumon, ollae, pocalab, VBS and Worship Slides are all
+plain "Case study". Edison was the only outlier.
+
+The star stays exactly one place: `index.html`, on the ollae featured card.
+`.case-study-label` needed no change — it is a generic eyebrow rule with
+nothing featured-specific in it, so this is a text swap and nothing more.
+
+Carried as a P1 in `audit-2026-09-18.md` since MAT-732, left alone at the
+time because it was a copy decision on a page that ticket had scoped out.
+
+axe on the Edison page: 0 violations, 39 passes. All local references resolve.
+
+---
+
 ## 2026-09-18 — Tier 3 becomes thumbnail rows (Claude Design import)
 
 Imported the **Project Tier 3** design from the Claude Design project "Design
