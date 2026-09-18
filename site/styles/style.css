@@ -441,6 +441,11 @@ main section code {
   margin-bottom: var(--space-2);
 }
 
+/* .badges is the footer Lighthouse strip only — here and on the Edison case
+   study page, where .cwv-badge is a naming hook with no rules of its own.
+   Cards and timeline entries carry their one metric as a <strong> in the
+   copy, so nothing on the page pairs a badge list with a tag list any more. */
+
 ul.badges,
 ul.tags {
   display: flex;
@@ -449,10 +454,6 @@ ul.tags {
   padding-block: var(--space-2);
   margin-top: var(--space-2);
   margin-bottom: var(--space-4);
-}
-
-ul.badges + ul.tags {
-  margin-top: 0;
 }
 
 .badges li,
@@ -614,7 +615,6 @@ ul.badges + ul.tags {
   border-top: 1px solid var(--color-border);
 }
 
-.featured-card-footer .badges,
 .featured-card-footer .tags {
   margin-top: 0;
   margin-bottom: 0;
