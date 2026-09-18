@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-09-18 — Collette card drops its date (MAT-732 follow-up)
+
+The Collette strip card was titled "Collette Vacations · 2022–2024". It is now
+**"Design system · Collette Vacations"**.
+
+The date was there to stop the card reading as a side project, but it was the
+only date on any card on the page, so it drew the eye for the wrong reason.
+The company name plus a description that opens "Design system and booking-flow
+work across four brands" already does that job. Leading with the discipline
+rather than the years also matches what the card is there to prove — Collette
+is the only team-scale design-system evidence on the homepage.
+
+The years live in the Experience entry, which still reads
+`2022–2024 · UX/UI Designer · Collette Vacations`. Nothing else on the card
+changed: description, the **200+ usability tests** metric, the case study link
+and the "Also built" line are all as shipped.
+
+Note for the open P2 in `audit-2026-09-18.md`: this does **not** fix the ragged
+card heights. The new title is 34 characters against the old 30, so it still
+wraps to two lines at every width from 375px to 1440px while Kumon and pocalab
+take one. Link check still clean at 169 references.
+
+---
+
 ## 2026-09-18 — Homepage restructure (MAT-732)
 
 Reordered Projects around what a hiring manager actually checks first. Final
