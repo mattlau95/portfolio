@@ -4,6 +4,72 @@
 
 ---
 
+## 2026-09-18 — Only site/ ships (MAT-716)
+
+Cloudflare Pages deploys this repo from the root with no build step, which
+means `docs/`, `scripts/`, `tools/` and `.claude/` were all being served.
+`docs/` alone is 18 working files — case-study drafts, the content TODO, this
+log. The `_headers` file had a `/tools/*` noindex rule with a comment
+admitting a header was "the lever available"; the actual lever was to stop
+deploying the folder.
+
+**Change**
+- Everything public moved under `site/`: `index.html`, `404.html`, `_headers`,
+  `styles/`, `projects/`, `gfx/`, `assets/`. All `git mv`, so history follows.
+- `tools/kumon-media/` → `scripts/kumon-media/`. `tools/` is gone; it only ever
+  held that one folder and overlapped with `scripts/` by definition.
+- Loose site-wide files in `assets/` (`photo-primary`, `photo-secondary`,
+  `resume.pdf`) → `assets/shared/`, so every file in `assets/` is now in a
+  folder that says what it is for.
+- `gfx/img/` and `gfx/thumbnails/` → `site/gfx/assets/`, matching the main
+  site's layout. gfx had been the odd one out since it was imported.
+- The four `gfx/*.md` source notes → `docs/gfx/`. They were being served.
+- `_headers` loses the `/tools/*` block, now redundant.
+
+**Two departures from the issue's target tree.** It had no `site/scripts/`,
+but every page loads `/scripts/main.js` plus three case-study scripts —
+leaving `scripts/` at the root as dev-only would have 404'd all four. Site JS
+lives in `site/scripts/`; `checks/` and `kumon-media/` stay in the root
+`scripts/`. And `gfx/projects/` holds HTML pages, not images, so it stayed
+`site/gfx/projects/` rather than folding into `assets/`.
+
+**Public URLs did not change.** `site/` is the server root, so
+`/projects/...`, `/styles/...`, `/scripts/...` and `/assets/<project>/...`
+resolve exactly as before. Only the two intra-site moves needed rewriting:
+`/assets/shared/...` and `/gfx/assets/...`.
+
+**How that was shown rather than asserted.** `scripts/checks/check-links.js`
+went in first, before any move, and took a baseline of the old tree: 14 pages,
+3 stylesheets, 159 local references, zero broken. Immediately after the moves
+it reported 23 broken — exactly the two relocations and nothing else. After
+the rewrite it reports the same 14 / 3 / 159 / zero. It strips HTML comments,
+because `kumon-automation.html` keeps a `<figure>` commented out so its
+unbuilt bulk-run poster does not 404, and scanning it would invent a break.
+
+Served `site/` and walked all 13 pages over HTTP: every page, stylesheet,
+script and asset 200s; `/docs/...`, `/scripts/...`, `/tools/...`,
+`/.claude/...`, the root `audit-*.md` and `/gfx/aduro.md` all 404. `sweep.js`
+across 52 page/viewport combinations found 3 problems, all three already in
+the README's known standing results (skybluefc's injected Instagram iframes,
+edison-dental's overflow at 390/360 — MAT-713). No new regressions.
+
+**gfx privacy was already done.** All five gfx pages already carry
+`noindex, nofollow`, and there is no `robots.txt` or `sitemap.xml` in the repo
+to leak it. One main-site link remains: `404.html` offers "the graphic design
+archive" alongside the homepage and projects links. Left as-is — it is on the
+404 page, it reads deliberate, and removing it is a content call, not a
+restructure.
+
+**`gfx/styles/gfx.css` was already clean too.** It consumes `tokens.css`
+variables rather than redefining them, so there was nothing to dedupe. Left
+untouched.
+
+**Still to do:** point the Pages build output directory at `site`. Until that
+happens, a deploy from the root finds no `index.html`.
+
+---
+
+
 ## 2026-09-17 — Ollae create demo: the example carries a date (MAT-720)
 
 Follow-up to the embeds entry below. The example button read "Board game
