@@ -493,6 +493,16 @@ ul.badges + ul.tags {
   }
 }
 
+/* Also built — the one-line home for projects that no longer earn a card.
+   Keeps Worship Slides and VBS Scheduler linked from somewhere, so their
+   case study pages stay reachable without hunting for the URL. */
+
+.also-built {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-6);
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
