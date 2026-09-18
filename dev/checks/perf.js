@@ -1,6 +1,6 @@
 // perf.js — Lighthouse medians for one page, mobile and desktop.
 //
-//   node scripts/checks/perf.js /projects/kumon-automation.html [runs] [baseUrl]
+//   node dev/checks/perf.js /projects/kumon-automation.html [runs] [baseUrl]
 //
 // Runs N times (default 3) and reports the median, because this harness is
 // bimodal: the same page can land ~1.8s or ~3.1s on LCP from one run to the

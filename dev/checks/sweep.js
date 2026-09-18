@@ -1,7 +1,7 @@
 // sweep.js — every page, every viewport: distorted images, images over the
 // height cap, horizontal overflow, and axe-core violations.
 //
-//   node scripts/checks/sweep.js [baseUrl]
+//   node dev/checks/sweep.js [baseUrl]
 //
 // This is the one to run before shipping anything that touches the figure
 // system. It is what caught the 80% squash on the Collette handoff diagram,

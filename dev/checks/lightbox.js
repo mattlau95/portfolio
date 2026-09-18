@@ -1,6 +1,6 @@
 // lightbox.js — keyboard and behaviour contract for the [data-zoom] lightbox.
 //
-//   node scripts/checks/lightbox.js /projects/collette.html [baseUrl]
+//   node dev/checks/lightbox.js /projects/collette.html [baseUrl]
 //
 // Each assertion here corresponds to a rule in docs/image-conventions.md §6.
 // The Space check is the counter-intuitive one: Space must NOT open the

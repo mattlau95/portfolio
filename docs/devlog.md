@@ -15,9 +15,10 @@ deploying the folder.
 
 **Change**
 - Everything public moved under `site/`: `index.html`, `404.html`, `_headers`,
-  `styles/`, `projects/`, `gfx/`, `assets/`. All `git mv`, so history follows.
-- `tools/kumon-media/` → `scripts/kumon-media/`. `tools/` is gone; it only ever
-  held that one folder and overlapped with `scripts/` by definition.
+  `styles/`, `projects/`, `gfx/`, `assets/`, and the four site scripts. All
+  `git mv`, so history follows.
+- Dev-only tooling is now `dev/`: `dev/checks/` and `dev/kumon-media/`, the
+  latter from `tools/`. Both `tools/` and the root `scripts/` are gone.
 - Loose site-wide files in `assets/` (`photo-primary`, `photo-secondary`,
   `resume.pdf`) → `assets/shared/`, so every file in `assets/` is now in a
   folder that says what it is for.
@@ -25,12 +26,19 @@ deploying the folder.
   site's layout. gfx had been the odd one out since it was imported.
 - The four `gfx/*.md` source notes → `docs/gfx/`. They were being served.
 - `_headers` loses the `/tools/*` block, now redundant.
+- `wrangler.toml` sets `pages_build_output_dir = "site"`. It overrides the
+  dashboard setting, which is the point: the deploy root lives in the repo,
+  next to the tree it describes.
 
-**Two departures from the issue's target tree.** It had no `site/scripts/`,
-but every page loads `/scripts/main.js` plus three case-study scripts —
-leaving `scripts/` at the root as dev-only would have 404'd all four. Site JS
-lives in `site/scripts/`; `checks/` and `kumon-media/` stay in the root
-`scripts/`. And `gfx/projects/` holds HTML pages, not images, so it stayed
+**`scripts/` became `dev/`, because the first pass left the name meaning two
+things.** MAT-716's target tree had no `site/scripts/` at all, but every page
+loads `/scripts/main.js` plus three case-study scripts, so leaving `scripts/`
+at the root as dev-only would have 404'd all four. Splitting it — site JS in
+`site/scripts/`, tooling in the root `scripts/` — fixed the 404s and left one
+name covering both deployed and dev-only code, which is the exact ambiguity
+this restructure existed to remove. `dev/` is unambiguous, and nothing public
+ever referenced the root folder. The other departure from the target tree
+stands: `gfx/projects/` holds HTML pages, not images, so it stayed
 `site/gfx/projects/` rather than folding into `assets/`.
 
 **Public URLs did not change.** `site/` is the server root, so
@@ -38,37 +46,34 @@ lives in `site/scripts/`; `checks/` and `kumon-media/` stay in the root
 resolve exactly as before. Only the two intra-site moves needed rewriting:
 `/assets/shared/...` and `/gfx/assets/...`.
 
-**How that was shown rather than asserted.** `scripts/checks/check-links.js`
-went in first, before any move, and took a baseline of the old tree: 14 pages,
-3 stylesheets, 159 local references, zero broken. Immediately after the moves
-it reported 23 broken — exactly the two relocations and nothing else. After
-the rewrite it reports the same 14 / 3 / 159 / zero. It strips HTML comments,
-because `kumon-automation.html` keeps a `<figure>` commented out so its
-unbuilt bulk-run poster does not 404, and scanning it would invent a break.
+**How that was shown rather than asserted.** `dev/checks/check-links.js` went
+in first, before any move, and took a baseline of the old tree: 14 pages, 3
+stylesheets, 159 local references, zero broken. Immediately after the moves it
+reported 23 broken — exactly the two relocations and nothing else. After the
+rewrite it reports the same 14 / 3 / 159 / zero, and still does after the
+`dev/` rename. It strips HTML comments, because `kumon-automation.html` keeps
+a `<figure>` commented out so its unbuilt bulk-run poster does not 404, and
+scanning it would invent a break.
 
 Served `site/` and walked all 13 pages over HTTP: every page, stylesheet,
-script and asset 200s; `/docs/...`, `/scripts/...`, `/tools/...`,
+script and asset 200s; `/docs/...`, `/dev/...`, `/scripts/...`, `/tools/...`,
 `/.claude/...`, the root `audit-*.md` and `/gfx/aduro.md` all 404. `sweep.js`
 across 52 page/viewport combinations found 3 problems, all three already in
 the README's known standing results (skybluefc's injected Instagram iframes,
 edison-dental's overflow at 390/360 — MAT-713). No new regressions.
 
-**gfx privacy was already done.** All five gfx pages already carry
-`noindex, nofollow`, and there is no `robots.txt` or `sitemap.xml` in the repo
-to leak it. One main-site link remains: `404.html` offers "the graphic design
-archive" alongside the homepage and projects links. Left as-is — it is on the
-404 page, it reads deliberate, and removing it is a content call, not a
-restructure.
+**gfx is now unlinked as well as unindexed.** All five gfx pages already
+carried `noindex, nofollow`, and there is no `robots.txt` or `sitemap.xml` in
+the repo to leak it. The one remaining path in was `404.html`, which offered
+"the graphic design archive" next to the homepage and projects links — a 404
+page being exactly where a curious visitor pokes around. That link is gone;
+the rest of the page is untouched. gfx is reachable by being handed the URL.
 
 **`gfx/styles/gfx.css` was already clean too.** It consumes `tokens.css`
 variables rather than redefining them, so there was nothing to dedupe. Left
 untouched.
 
-**Still to do:** point the Pages build output directory at `site`. Until that
-happens, a deploy from the root finds no `index.html`.
-
 ---
-
 
 ## 2026-09-17 — Ollae create demo: the example carries a date (MAT-720)
 

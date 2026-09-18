@@ -1,4 +1,4 @@
-# scripts/checks
+# dev/checks
 
 Verification scripts for the figure system and the page audits. Node + Puppeteer,
 run by hand — **not** part of the site, not loaded by any page, no build step.
@@ -9,12 +9,12 @@ run by hand — **not** part of the site, not loaded by any page, no build step.
 |---|---|---|
 | **Quick checks** — any URL, no setup | Lighthouse, axe, pa11y | `npx`, as in Part A of `~/ux-audit-kit/AUDIT.md` |
 | **Site checks** — this repo's figure system | `sweep.js`, `figures.js`, `lightbox.js`, `perf.js` | `npm ci` in this folder, then `npm run` |
-| **Link check** — no browser, no install | `check-links.js` | `node scripts/checks/check-links.js`, any time |
+| **Link check** — no browser, no install | `check-links.js` | `node dev/checks/check-links.js`, any time |
 
 Nothing is installed globally or in the home directory. The site checks'
-dependencies live in `scripts/checks/node_modules/`, pinned by `package.json`
+dependencies live in `dev/checks/node_modules/`, pinned by `package.json`
 and `package-lock.json` in this folder, and Puppeteer's Chrome downloads to
-`scripts/checks/.cache/puppeteer/` (set in `.puppeteerrc.cjs`). Both folders are
+`dev/checks/.cache/puppeteer/` (set in `.puppeteerrc.cjs`). Both folders are
 gitignored. The repo root still has no `package.json` (`docs/PROJECT.md` §2), so
 Cloudflare Pages' build detection is unaffected.
 
@@ -24,8 +24,8 @@ Cloudflare Pages' build detection is unaffected.
 so it runs before `npm ci` and in a clean clone:
 
 ```bash
-node scripts/checks/check-links.js          # defaults to site/
-node scripts/checks/check-links.js site
+node dev/checks/check-links.js          # defaults to site/
+node dev/checks/check-links.js site
 ```
 
 It reports local `href`/`src`/`srcset`/`poster`/`url()` references that resolve
@@ -36,9 +36,10 @@ It strips HTML comments before scanning, on purpose: `kumon-automation.html`
 keeps a whole `<figure>` commented out so its unbuilt poster does not 404, and
 scanning commented markup would report a break that is not there.
 
-A clean run on `site/` today is 14 pages, 3 stylesheets, 159 references, zero
-broken — the same numbers the pre-`site/` tree gave before MAT-716, which is how
-that restructure was shown to change nothing.
+A clean run on `site/` today is 14 pages, 3 stylesheets, 158 references, zero
+broken. The pre-`site/` tree gave 159 before MAT-716, and holding that number
+through the moves is how the restructure was shown to change nothing; the one
+reference that went is the `/gfx/` link the 404 page used to carry.
 
 ## Quick checks (npx)
 
@@ -51,7 +52,7 @@ npx pa11y https://www.matthewclau.com/projects/ollae
 `@axe-core/cli` and `pa11y` are npx-only: they aren't in this folder's
 `package.json`, so npx fetches the latest into npm's cache wherever you run
 them. `lighthouse` is also a pinned dependency here (for `perf.js`), so
-`npx lighthouse` run from `scripts/checks/` after `npm ci` uses that pinned
+`npx lighthouse` run from `dev/checks/` after `npm ci` uses that pinned
 version; run anywhere else, it fetches the latest.
 
 ## Site checks (npm ci)
@@ -59,7 +60,7 @@ version; run anywhere else, it fetches the latest.
 One-time setup, and again whenever `package-lock.json` changes:
 
 ```bash
-cd scripts/checks
+cd dev/checks
 npm ci
 ```
 
@@ -79,7 +80,7 @@ npx serve -l 4321 site
 | `lightbox.js` | Does the `[data-zoom]` lightbox honour its keyboard contract? |
 | `perf.js` | Lighthouse LCP/CLS/Performance medians, mobile and desktop. |
 
-Run them through `npm run` from `scripts/checks/`, so Puppeteer finds
+Run them through `npm run` from `dev/checks/`, so Puppeteer finds
 `.puppeteerrc.cjs` and its Chrome. A bare `node sweep.js` from the repo root
 looks in `~/.cache/puppeteer` instead and fails to launch.
 
@@ -90,8 +91,8 @@ npm run lightbox -- /projects/collette.html
 npm run perf     -- /projects/kumon-automation.html 3
 ```
 
-From the repo root, add `--prefix scripts/checks`:
-`npm --prefix scripts/checks run figures -- /projects/collette.html`.
+From the repo root, add `--prefix dev/checks`:
+`npm --prefix dev/checks run figures -- /projects/collette.html`.
 
 All four take an optional trailing base URL (default `http://localhost:4321`).
 `sweep`, `figures` and `lightbox` exit non-zero on failure, so they can gate a
@@ -125,7 +126,7 @@ absolute number, measure production.
 To get a baseline for a before/after, stash and re-run:
 
 ```bash
-git stash push -u && npm --prefix scripts/checks run perf -- /projects/collette.html 5; git stash pop
+git stash push -u && npm --prefix dev/checks run perf -- /projects/collette.html 5; git stash pop
 ```
 
 ## Known standing results

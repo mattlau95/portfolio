@@ -52,7 +52,7 @@
 
     <!-- Race comparison hero. One side-by-side clip (1424x648, 64px label bar
          on top) shown as two cropped panels driven by one shared clock —
-         scripts/race-comparison.js. The filename is versioned: /assets/* is
+         /scripts/race-comparison.js. The filename is versioned: /assets/* is
          cached immutable, so changed content needs a new name (MAT-715). -->
     <figure class="media-figure figure--wide race js-race" data-left-finish="50.7" data-right-finish="2.3">
       <div class="race__bar">
@@ -250,7 +250,7 @@
       <h2>Outcome</h2>
 
       <!-- Bulk run figure. Uncomment once the clip exists — left commented so the
-           missing poster does not 404. Build it with scripts/kumon-media/make_bulk_timelapse.py,
+           missing poster does not 404. Build it with dev/kumon-media/make_bulk_timelapse.py,
            copy the output to /assets/kumon-automation/, fill in the [brackets], and set
            height from `ffprobe -v error -show_entries stream=width,height`.
       <figure class="media-figure">

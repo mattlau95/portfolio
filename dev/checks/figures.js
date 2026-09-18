@@ -1,6 +1,6 @@
 // figures.js — figure widths and caption alignment on one page.
 //
-//   node scripts/checks/figures.js /projects/collette.html [baseUrl]
+//   node dev/checks/figures.js /projects/collette.html [baseUrl]
 //
 // The rule being checked (docs/image-conventions.md §3): every caption's left
 // edge matches its image's left edge, at every width, with no exceptions. Also
