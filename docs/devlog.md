@@ -29,8 +29,11 @@ entry are about Edison, so the entry would have been empty.
 > "Also built" line was added in MAT-732 for exactly this reason — to keep it
 > and Worship Slides reachable after their cards were removed. The page is
 > still live and still resolves by direct URL, and there is no sitemap for it
-> to fall out of, but nothing on the site points at it any more. Putting it
-> back is one `<li>`.
+> to fall out of, but nothing on the site points at it any more.
+>
+> **[C] Confirmed deliberate, 2026-09-18.** Raised and kept out on purpose —
+> not an oversight, and not something to re-flag on the next audit. Restoring
+> it is one `<li>` in the list whenever it earns a reason to come back.
 
 **ghosted is marked In progress**, as a small mono chip next to the title in
 the site accent. Neither the chip nor its wording came from the design — the
