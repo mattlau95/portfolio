@@ -4,6 +4,84 @@
 
 ---
 
+## 2026-09-18 — Ollae case study: copy update, then the manifest
+
+Two passes over `projects/ollae.html`, applied in that order because the second
+overwrites part of the first.
+
+**Pass 1 — the copy update** (`docs/ollae-case-study-sep-18-copy-update.md`).
+Overview, The problem, Role & constraints, Design, Engineering, Key decisions,
+Outcome and Reflection all take the new wording. Role & constraints gains
+`<h3>Role</h3>` and `<h3>Constraints</h3>`; Engineering gains
+`<h4>One Claude call, two jobs</h4>` and `<h4>Link previews</h4>`. The heading
+outline stays properly nested — H1 → H2 → H3 → H4, no skipped levels.
+
+**Pass 2 — the manifest** (`docs/ollae-case-study-sep-18-manifest.md`). Seven
+images and three copy edits: the Korean kicker under the H1, the 올래 sentence
+closing the Role paragraph, and the preview-cards line narrowed from
+"iMessage, WhatsApp, Telegram, and WeChat" to the four that are actually
+shown and verified.
+
+**The Claude implementation images.** The copy update has one image placeholder
+in the engineering section, for the emoji in its three contexts; that is now a
+three-up strip. The create-event screenshots had no placeholder, so they became
+a second strip after the paragraph that describes them — input, parse preview,
+finished event. That figure is an addition, not something the copy asked for,
+and it is one block to delete if it reads as redundant next to the live create
+embed directly below it.
+
+**`[Confirm: tapping it asks for an email address]`** was a marker in the copy,
+and the assets settled it: `ollae-remindme-expanded` shows the email field, a
+Remind me button, and the note that the address is used once and deleted. The
+sentence ships as fact on that evidence rather than as a bracket.
+
+**Six alt texts were wrong on the first pass and are fixed.** I wrote them from
+the surrounding prose instead of from the images. The body copy's example is
+volleyball; the actual screenshots are a "Pickup Basketball" event at Sonny
+Werlin Gym, and the emoji Claude picked is a basketball. Every alt on the six
+new images is now written from what is on screen. The manifest's own seven alts
+were supplied with the assets and were already accurate — checked against the
+renders, not assumed.
+
+**Two layout problems, both fixed by the system that already existed**
+- Every strip collapsed into a stack. `--figure-max-h` is 512px, which is right
+  for a single figure and far too tall for a row: three 900px-wide screenshots
+  came to 1187px inside a 692px column. `.cs-states img` now caps at 20rem.
+  Images smaller than that are untouched, so the Kumon popup row is unaffected.
+- The Remind me pair still wrapped at 1440px. The cause is the one
+  `docs/image-conventions.md` §3 documents: `contain: inline-size` was only on
+  the *outer* caption, so a sentence-length inner caption drove the figure's
+  `fit-content` width instead of the image. Inner captions now contain too.
+
+No new layout primitives were needed — `.media-figure`, `.cs-states` and
+`.figure--wide` already covered a pair, two trios and a four-up.
+
+**Where things sit now.** Remind me pair and the parse trio are one row from
+768px up. The emoji trio takes two lines, because a 375×307 crop, a 375×667
+phone screen and a 519×398 card cannot share a row without the portrait one
+becoming unreadably narrow. The four unfurls render as a 2×2 in the wide track
+from 1024px up; a literal row of four would put each at about 225px, which is
+the size at which a screenshot stops saying anything.
+
+**Checks** — Lighthouse on this page before and after: performance 90 → 90,
+LCP 2.9s → 2.9s, CLS 0.002 → 0.002, accessibility 100, best practices 100.
+Total transfer 196 → 208 KiB: twelve new images cost 12 KiB up front because
+all of them are lazy and below the fold. axe 0 violations. 196 local
+references, all resolving.
+
+**Still open**
+- The `<meta name="description">` and `og:description` still carry the old
+  longer deck. The copy update shortened the visible deck to one line; the meta
+  was not in scope and is now out of step with it.
+- Key decisions kept its `<dl>` rather than the markdown's bold-led paragraphs.
+  The `<dt>`/`<dd>` pair is the better semantic fit and is already styled.
+- The manifest anchors the Messenger screenshot to "the second paragraph, the
+  one ending '…except a name'". The copy update rewrote that paragraph out of
+  existence, so it sits at the end of The problem instead — the same place, in
+  the new text.
+
+---
+
 ## 2026-09-18 — Tier 3 drops the thumbnails (1c → 1a)
 
 The tier-3 rows shipped earlier today with a 64×44 thumbnail per row, direction

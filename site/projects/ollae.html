@@ -27,7 +27,8 @@
     <header class="case-study-header">
       <p class="case-study-label">Case study</p>
       <h1>Ollae</h1>
-      <p class="case-study-deck">The right tool for a pickup game or team lunch is a link. Ollae gives the organizer one URL to post in the group chat, and anyone who opens it can enter a name and RSVP without setting anything up.</p>
+      <p class="case-study-kicker"><span lang="ko">올래</span> · Korean for &ldquo;wanna come?&rdquo;</p>
+      <p class="case-study-deck">The right tool for a pickup game or team lunch is a link.</p>
       <p class="case-study-meta-row">Role: Design + Engineering (solo, full-stack) · May–June 2026 · Shipped</p>
       <ul role="list" class="tags" aria-label="Tech stack">
         <li>Go</li>
@@ -73,27 +74,64 @@
 
     <section>
       <h2>Overview</h2>
-      <p>I run a weekly pickup volleyball game. Getting a headcount meant posting the same message in three group chats and a few DMs, counting thumbs-up reactions, and trying to remember who was in. Ollae is what I built to stop doing that. The organizer describes the event in a sentence and gets a link; everyone who opens it sees who's already coming and adds their name, or a plus-one.</p>
+      <p>Every Thursday from May to August, I run a pickup volleyball game at my church. Anywhere from 12 to 30-plus people come, and they don't all live in the same chat. There's a Facebook Messenger group, a WeChat group for our Mandarin-speaking members, and a handful of people I invite one by one. Every week I posted the same invite in all of those places, then tallied the replies by hand. Ollae is what I built to stop doing that. The organizer describes the event in a sentence and gets a link. Anyone who opens it sees who's already coming and adds their name, plus any guests they're bringing.</p>
     </section>
 
     <section>
       <h2>The problem</h2>
-      <p>Every recurring group event has this problem. Someone floats the idea, replies scatter across threads, and whoever is organizing counts heads by hand. The tools that exist don't fit a casual group: most need an account, which is a real barrier when half the players are friends of friends, and the rest live inside one platform when the group is spread across three.</p>
-      <p>So the whole product follows one rule: it has to be a link. You share it the way you'd share a video, and the person on the other end can answer before the page has asked them for anything except a name.</p>
+      <p>Every recurring group event runs into this. Someone floats the idea, replies scatter across threads, and the organizer counts heads by hand. There's a second cost, too. People are more likely to come when they can see others are already in, and a thumbs-up in one group chat is invisible to everyone in the other.</p>
+      <p>I looked at what already exists. Google Calendar works well for a team that's fully bought in, but not everyone uses it. Partiful requires an account and is built for bigger, one-time parties, so a fancy invite every week felt like overkill. Meetup, Eventbrite, and rec-league apps all require signups and do far more than I needed. All I needed from each person was a name and a yes or no.</p>
+      <p>So the whole product follows one rule: it has to be a link. You share it the way you'd share a video, and the person on the other end can reply with nothing but their name.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/ollae/ollae-unfurl-messenger.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <picture>
+            <source srcset="/assets/ollae/ollae-unfurl-messenger.webp" type="image/webp">
+            <img src="/assets/ollae/ollae-unfurl-messenger.png" width="900" height="937" loading="lazy" decoding="async"
+                 alt="A group chat message reading &quot;Please RSVP for this Thursday volleyball 6:30pm!&quot; above an Ollae link preview card titled Weekly Volleyball, showing the date, the location, a volleyball illustration, and an RSVP Now button.">
+          </picture>
+        </a>
+        <figcaption>The ask and the answer in the same thread.</figcaption>
+      </figure>
     </section>
 
     <section>
       <h2>Role &amp; constraints</h2>
-      <p>I owned all of it: product decisions, the Figma designs, the Go backend, the React frontend, deployment, and the naming, which had to happen twice. The original name, Showup.gg, turned out to have a pending trademark from another company, found the day before launch.</p>
-      <p>The no-accounts rule was a product decision, and it decided everything downstream: how identity works, how editing works, how the organizer gets back in. If any part of it needed an account, the product wasn't worth building.</p>
+      <h3>Role</h3>
+      <p>This was a solo project. I planned it with Claude, designed the main flow in Figma with Claude's input and a shared set of design tokens, wrote the spec, and built it with Claude Code, the same way I build everything on this site. I also handled deployment and the naming, which happened twice: the original name, Showup.gg, turned out to have a pending trademark from another company. I found it the day before launch. Ollae is <span lang="ko">올래</span>, Korean for &ldquo;wanna come?&rdquo;, which is the only question the product asks.</p>
+
+      <h3>Constraints</h3>
+      <p>Not requiring accounts was a product decision, and it shaped everything downstream: how identity works, how editing works, and how the organizer gets back in. If an attendee needed an account, the product wasn't worth building. It works because these are casual events and the link only reaches people who were invited, so a name is enough identity.</p>
     </section>
 
     <section class="case-study-section--approach">
       <h2>Approach</h2>
 
       <h3>Design</h3>
-      <p>The RSVP flow has three states: default, selected, and success, and all three were designed in Figma before any frontend code. Every control sits in the lower half of the screen, where a thumb reaches one-handed. The UI was designed dark from the start.</p>
-      <p>The decision I'd defend hardest is "Remind me." The first design had three equal buttons: In, Out, Maybe. Three equal choices invite hedging, and "maybe" gives people permission to never decide. The shipped version has two buttons, I'm in and Can't make it, with "Not sure yet, remind me closer to the date" as a small text link underneath. That's a different question: are you coming, with an honest option for people who need a day. In the data, remind_me is its own RSVP status, and it sends a reminder email 24 hours before the event.</p>
+      <p>The RSVP flow has three states (default, selected, and success), and I designed all three in Figma before writing any frontend code. Every control sits in the lower half of the screen, where a thumb reaches one-handed. I designed it dark-mode first.</p>
+      <p>The decision I'd defend hardest is &ldquo;Remind me.&rdquo; The first design had three equal buttons: In, Out, and Maybe. Three equal choices invite hedging, and &ldquo;maybe&rdquo; gives people permission to never decide. The shipped version has two buttons, <strong>I'm in</strong> and <strong>Can't make it</strong>, with &ldquo;Not sure yet, remind me closer to the date&rdquo; as a small text link underneath. That changes the question to &ldquo;are you coming?&rdquo; while still giving an honest out to anyone who needs a day to decide. In the data, <code>remind_me</code> is its own RSVP status. Tapping it asks for an email address, and Ollae sends a reminder 24 hours before the event.</p>
+
+      <figure class="media-figure">
+        <div class="cs-states">
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-remindme-expanded.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-remindme-expanded.png" width="900" height="1185" loading="lazy" decoding="async"
+                   alt="Ollae's RSVP form with a name filled in, &quot;I'm in&quot; and &quot;Can't make it&quot; buttons, and the &quot;Not sure yet — remind me closer to the date&quot; link expanded to show an email field, a Remind me button, and a note that the address is used for one reminder then deleted.">
+            </picture>
+            <figcaption>Tapping the text link opens a third answer, not a shrug.</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-remindme-confirmed.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-remindme-confirmed.png" width="900" height="938" loading="lazy" decoding="async"
+                   alt="Ollae's confirmation screen with a bell, the heading &quot;We'll remind you!&quot;, the line &quot;Matthew L · Remind me&quot;, and a link back to view who's coming.">
+            </picture>
+            <figcaption>Recorded as its own status, with a reminder due the day before.</figcaption>
+          </figure>
+        </div>
+      </figure>
 
       <div class="embed" id="try-it">
         <p class="embed__lead">This event is pretend. The list is real. Add your name.</p>
@@ -113,9 +151,71 @@
 
       <h3>Engineering</h3>
       <p>Go and Postgres on Fly.io for the API, React 19 and TypeScript on Vercel for the app. The stack was the easy part; the work was in the edge cases.</p>
-      <p>Link previews were the first edge case. The handler serves preview tags to crawlers and the React app to real browsers.</p>
-      <p>Each event gets its own preview card, a 1200×630 image rendered in Go. The emoji on it comes from Claude in the same call that parses the description, so it costs nothing extra: "volleyball at Johnson Park" gets a volleyball, "Valorant with the boys" gets a game controller.</p>
-      <p>Creating an event is one text box. The organizer types the plan the way they'd type it in the chat, Claude Haiku turns it into a title, date, time, and place, and an editable preview shows what it understood, with a plain form as the fallback.</p>
+
+      <h4>One Claude call, two jobs</h4>
+      <p>Creating an event is one text box. The organizer types the plan the way they'd type it in the group chat, in whatever order it comes to mind. Claude Haiku turns it into a title, date, start time, and location. An editable preview shows what it understood, and a plain form is available as a fallback. Nobody has to wrestle with a date picker. Because the input is just text, it works equally well with voice dictation, which keeps getting better.</p>
+
+      <figure class="media-figure">
+        <div class="cs-states">
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-parse-1-input.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-parse-1-input.png" width="375" height="667" loading="lazy" decoding="async"
+                   alt="Ollae's Create Event screen with the sentence &quot;Pickup Basketball at the Sonny Werlin Gym on Saturday 10/17, 11am&quot; typed into the description box, above a Create Event button and a &quot;Fill in manually instead&quot; link.">
+            </picture>
+            <figcaption>Type it like a text</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-parse-2-preview.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-parse-2-preview.png" width="375" height="667" loading="lazy" decoding="async"
+                   alt="The editable preview of what Claude understood, with Event Name &quot;Pickup Basketball&quot;, Date 10/17/2026, Time 11:00 AM, and Location &quot;Sonny Werlin Gym&quot; in separate fields, above a &quot;Yes! Create the Event&quot; button and a &quot;Try a different description&quot; link.">
+            </picture>
+            <figcaption>Check what it understood</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-parse-3-created.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-parse-3-created.png" width="375" height="788" loading="lazy" decoding="async"
+                   alt="The finished event page for Pickup Basketball on Saturday, October 17 at 11:00 AM, reading &quot;0 attending — no one's responded yet, be the first&quot;, with a name field, I'm in and Can't make it buttons, a remind-me link, and a Submit button.">
+            </picture>
+            <figcaption>Share the link</figcaption>
+          </figure>
+        </div>
+        <figcaption>One text box to a shareable link. The middle screen is the one that matters — nothing is created until the organizer agrees with the parse.</figcaption>
+      </figure>
+
+      <p>The same call also picks an emoji: &ldquo;volleyball at Johnson Park&rdquo; gets 🏐, and &ldquo;Valorant with the boys&rdquo; gets 🎮. The emoji appears next to each name on the attendee list, on the success screen after someone RSVPs, and on the link preview card. It adds personality at no extra cost.</p>
+
+      <figure class="media-figure">
+        <div class="cs-states">
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-emoji-attendees.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-emoji-attendees.png" width="375" height="307" loading="lazy" decoding="async"
+                   alt="The Pickup Basketball event header and attendee list, reading &quot;1 attending · 1 response&quot; above the entry &quot;Matthew L is in&quot; followed by a basketball emoji.">
+            </picture>
+            <figcaption>Attendee list</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-emoji-success.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-emoji-success.png" width="375" height="667" loading="lazy" decoding="async"
+                   alt="Ollae's success screen: &quot;You're on the list!&quot; above the line &quot;Matthew L · I'm in&quot; followed by a basketball emoji, and a &quot;View who's coming&quot; link.">
+            </picture>
+            <figcaption>Success screen</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-emoji-card.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-emoji-card.png" width="519" height="398" loading="lazy" decoding="async"
+                   alt="The Ollae link preview in Discord: a card headed Pickup Basketball over basketball line art, with the date, the location, an RSVP Now button, and a basketball icon in the corner.">
+            </picture>
+            <figcaption>Preview card</figcaption>
+          </figure>
+        </div>
+        <figcaption>The same emoji, in all three places it shows up. One Claude call pays for both jobs.</figcaption>
+      </figure>
 
       <div class="embed" data-embed="create">
         <p class="embed__lead">Try <button type="button" class="embed-example" data-prefill="Board game night @ Alexander Library Saturday at 12:30pm"><span class="embed-part embed-part--title" data-part="Board game night">Board game night<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span> @ <span class="embed-part embed-part--place" data-part="Alexander Library">Alexander Library<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span> <span class="embed-part embed-part--date" data-part="Saturday">Saturday<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span> at <span class="embed-part embed-part--time" data-part="12:30pm">12:30pm<svg class="embed-part__check" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only embed-part__state"> (matched)</span></span></button>, or describe your own event. It's the same parser the app uses, so whatever you type becomes a real event page, deleted after three days.</p>
@@ -131,6 +231,9 @@
         <p class="embed__open"><a href="https://ollae.app/create" target="_blank" rel="noopener">Open in a new tab</a></p>
       </div>
 
+      <h4>Link previews</h4>
+      <p>When someone pastes an Ollae link into a chat, the messaging app fetches it to build a preview, but a React app gives that crawler an almost empty page. So the handler serves preview tags to crawlers and the full app to real browsers. Each event gets its own 1200×630 preview card rendered in Go, featuring the event's emoji.</p>
+
       <p>The full write-up, including the crawler detection and the query behind the organizer token, is in the repo.</p>
     </section>
 
@@ -138,26 +241,65 @@
       <h2>Key decisions &amp; tradeoffs</h2>
       <dl class="key-decisions">
         <dt>One parse call, on submit</dt>
-        <dd>One Claude call when the organizer hits Create is fast enough to feel instant. Streaming on every keystroke would feel more alive and cost about ten times as much for a 15-word input, and nobody needs live feedback while typing "volleyball Saturday 2pm."</dd>
+        <dd>One Claude call when the organizer hits Create is fast enough to feel instant. Parsing as the organizer types would feel more alive, but it would cost about ten times as much for a 15-word input, and nobody needs live feedback while typing &ldquo;volleyball Saturday 2pm.&rdquo;</dd>
 
         <dt>Store the time as typed</dt>
         <dd>Events are in person and local. A 7pm event should read 7pm to everyone, so the time is stored and displayed exactly as entered, with no timezone conversion anywhere in the pipeline.</dd>
 
         <dt>Organizer access is a link, too</dt>
-        <dd>Creating an event returns an edit link with a random token in it, and the API accepts changes only when the token matches. The token sits in a URL, so it shows up in browser history; for a pickup-game tool the tappable link is worth that, and it keeps the no-accounts rule intact.</dd>
+        <dd>Creating an event returns an edit link with a random token in it, and the API accepts changes only when the token matches. Because the token sits in a URL, it shows up in browser history. For a pickup-game tool, the tappable link is worth that tradeoff, and it keeps the no-accounts rule intact.</dd>
       </dl>
     </section>
 
     <section>
       <h2>Outcome</h2>
-      <p>It went into the volleyball group's chats on May 19, 2026, and the group used it that day. The first day surfaced a use case I hadn't planned for: groups RSVPing as a unit. Guest counts shipped a week later. Preview cards work reliably in iMessage, WhatsApp, Telegram, and WeChat.</p>
+      <p>Ollae went into the volleyball group's chats on May 19, 2026, and the group used it that day. The first day surfaced a use case I hadn't planned for: people RSVPing for a whole group at once. Guest counts, so one person can RSVP for several, shipped a week later. Preview cards work in iMessage, WhatsApp, Messenger, and Discord.</p>
+
+      <figure class="media-figure figure--wide">
+        <div class="cs-states">
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-unfurl-imessage.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-unfurl-imessage.png" width="900" height="627" loading="lazy" decoding="async"
+                   alt="The Ollae link preview in iMessage, showing the event card above the title and the ollae.app domain.">
+            </picture>
+            <figcaption>iMessage</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-unfurl-whatsapp.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-unfurl-whatsapp.png" width="900" height="798" loading="lazy" decoding="async"
+                   alt="The Ollae link preview in WhatsApp, showing the event card above the title, the description, and the ollae.app domain with the Ollae logo as the site icon.">
+            </picture>
+            <figcaption>WhatsApp</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-unfurl-messenger-card.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-unfurl-messenger-card.png" width="900" height="627" loading="lazy" decoding="async"
+                   alt="The Ollae link preview in Facebook Messenger, showing the event card above the title and the ollae.app domain.">
+            </picture>
+            <figcaption>Messenger</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source srcset="/assets/ollae/ollae-unfurl-discord.webp" type="image/webp">
+              <img src="/assets/ollae/ollae-unfurl-discord.png" width="900" height="740" loading="lazy" decoding="async"
+                   alt="The Ollae link preview in Discord, where the event card is nested inside Discord's own embed with the title and description repeated above it.">
+            </picture>
+            <figcaption>Discord</figcaption>
+          </figure>
+        </div>
+        <figcaption>Four clients, four different treatments, the same tags.</figcaption>
+      </figure>
+
       <p>The list under Design is live. The names on it are people who read this page.</p>
     </section>
 
     <section>
       <h2>Reflection</h2>
       <p>The timezone bug showed up twice, in different forms, and both times the cause was the same: somewhere in the pipeline a naive datetime string was being treated as UTC. The lesson is easy to state and apparently hard to remember. Decide your time semantics once, at the schema, and enforce them everywhere.</p>
-      <p>The naming cost most of a session. The trademark search should have been step one; instead it happened the day before launch. Ollae turned out to be the better name anyway.</p>
+      <p>The naming cost most of a day. The trademark search should have been step one; instead it happened the day before launch. Ollae turned out to be the better name anyway.</p>
     </section>
 
     <footer>

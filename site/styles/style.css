@@ -749,6 +749,29 @@ ul.tags {
   margin-bottom: var(--space-2);
 }
 
+/* Kicker — the Korean gloss under the title. Same mono voice as
+   .case-study-label above it, but muted and not uppercased: it is a
+   translation, and upper-casing "wanna come?" would shout the one
+   question the product asks. */
+
+.case-study-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+  margin-top: var(--space-2);
+}
+
+/* h4 — introduced by the Ollae engineering section. Without a rule it
+   renders at the UA default, which is smaller than body copy and reads
+   as bold paragraph text rather than a heading. */
+
+.case-study h4 {
+  font-size: var(--text-base);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-2);
+}
+
 .case-study-header h1 {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
@@ -1193,6 +1216,18 @@ ul.tags {
   align-items: center;
 }
 
+/* A row of images needs a tighter height cap than a single figure. At the
+   --figure-max-h of 512px, three 900px-wide screenshots come to 1187px in a
+   692px column, so every strip collapsed into a stack. 20rem lets three
+   portrait shots sit in one row in the column, and four landscape ones fall
+   into a readable 2x2 in the wide track. Images smaller than this render at
+   their natural size and are unaffected — nothing is ever upscaled
+   (docs/image-conventions.md 1). */
+
+.cs-states img {
+  max-height: 20rem;
+}
+
 .cs-states figure {
   width: fit-content;
   max-width: 100%;
@@ -1205,6 +1240,11 @@ ul.tags {
   line-height: var(--leading-normal);
   color: var(--color-text-muted);
   margin-top: var(--space-2);
+  /* Same reason as .media-figure > figcaption (docs/image-conventions.md 3):
+     without it the caption is part of the figure max-content width, so a
+     sentence-length label sizes fit-content to the caption instead of the
+     image and pushes its neighbour onto the next line. */
+  contain: inline-size;
 }
 
 /* Lightbox — a native <dialog> built by main.js. The trigger stays a real
