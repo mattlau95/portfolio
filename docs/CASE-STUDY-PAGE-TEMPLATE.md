@@ -38,6 +38,14 @@ That means:
 - **Cache-bust versions move together.** If you bump `style.css?v=9`, bump it on
   all seven pages and on `index.html`/`404.html` in the same commit. A page left
   on an old `?v=` is the most likely way this site ships a visual bug.
+- **The same rule applies to every script, and it is easier to forget.** Editing
+  `scripts/foo.js` without bumping its `?v=` ships the edit to the origin while
+  the CDN keeps serving the old file to the URL the page actually requests —
+  the deploy looks green and the feature is simply dead. Caught exactly this
+  way once: `atm-embed.js` gained the Reddit loader, kept `?v=1`, and the
+  button never un-hid in production. To check a live one, fetch it twice, once
+  as the page requests it and once with a throwaway query string; different
+  byte counts mean a stale `?v=`.
 - `<html lang="en">`. Foreign-language runs get their own `lang` — Ollae uses
   `<span lang="ko">올래</span>`.
 
