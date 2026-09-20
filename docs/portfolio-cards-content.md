@@ -76,3 +76,12 @@
 ## Claude Commands ##
 **for description, metrics, and tech stack:**i need a short blurb description (<175 characters) for my website's porfolio that features this project. Then metrics badges, then tech stack badges. Can you do that for me? (Note: just provide info for the badges. example: 45 min -> 12 mion per ssheet, 70% faster, React 19, Typescript, etc.) provide list of metrics and tech stacks in same line for each, separated by a comma.
 **for case study md file:** take a look at "C:\Users\mattl\portfolio\docs\CASE-STUDY-TEMPLATE.md" and create a case study with this in mind and save it in the same folder
+## ATM Hack ##
+**Description:** Fan-made recreation of the NoPixel GTA RP button-mash ATM hack. The original's numbers aren't public, so the difficulty was fitted from seven streamer clips — press value, ring push-back, and per-checkpoint scaling — and verified against my own logged runs.
+**Metrics:**
+* - 626 runs from 249 players in the first 19 hours, ~2.3% of the ring per press, 4 hours build time
+**Tech Stack:**
+* - HTML, CSS, Vanilla JS, Canvas, Google Apps Script, Google Sheets, Python, itch.io
+**Case Study File:** C:\Users\mattl\portfolio\docs\case-study-atm-hack.md
+**Github Repo:**
+**Live Demo:** https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack

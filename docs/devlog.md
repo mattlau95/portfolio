@@ -4,6 +4,85 @@
 
 ---
 
+## 2026-09-19 — New case study: ATM Hack, with a playable embed
+
+Eighth case study, built from `docs/case-study-atm-hack.md` and the five
+sources in `dev/gta-atm-media/`. First page on the site to embed a third-party
+product rather than one of mine.
+
+**Page.** `site/projects/atm-hack.html`, standard build-case-study shape —
+header, seven sections, `dl.key-decisions`, four figures. Three deviations from
+the standard shape: the `build-credit` line reads "Designed and directed by me;
+analysis and code by Claude", the header links are "Play it on itch.io" and an
+in-page anchor rather than Live demo / Repo (there is no repo to link), and the
+third section is **Role**, not "Role & constraints" — [C] constraints were cut
+from this page, so the heading no longer promises them.
+
+**The embed.** The itch.io frame sits directly after the header, outside any
+`<section>`, on the `.figure--wide` track. It reuses the Ollae `.embed` stage —
+poster screenshot, hidden button, nothing requested from itch until someone
+asks — via a new `scripts/atm-embed.js` (~25 lines, no postMessage protocol;
+itch serves at a fixed 1280×820 so the stage carries that ratio in CSS).
+`.embed--game` also had to restate the lead/note type rules, because the block
+sits outside `main section` and inherits none of them.
+
+**Small screens hand off instead of embedding.** The wide track is 326px at
+390, and 1280×820 scaled into that is unplayable. Under 700px the button is
+replaced by a real `<a>` to itch.io, which also covers the JS-off case — the
+button only ever appears if the script ran.
+
+**Assets.** No ImageMagick, cwebp, sharp or PIL on this machine, so the five
+PNGs were converted with the Chrome that ships with `dev/checks`'s Puppeteer
+(`canvas.toDataURL('image/webp', q)`), including the two crops: the gameplay
+ring plate (1280×720 out of a 2043×1208 screenshot that is mostly empty
+background) and the 800×600 card thumbnail. Six files, 7.8–36.7 KB each.
+
+**Verified.**
+
+- `check-links`: 15 pages, 210 local references, all resolving.
+- `sweep`: atm-hack clean at 1440/1024/390/360 — no overflow, no axe
+  violations, no over-cap images. The 3 problems the sweep reports are
+  pre-existing and on other pages: `skybluefc` `frame-title(3)` (the three
+  YouTube iframes do carry `title`, so this is nested cross-origin frames) and
+  `edison-dental` horizontal scroll at 390 and 360 (`553>390`). Neither page
+  changed here beyond its `?v=` bump.
+- `figures`: all 4 captions aligned at every viewport.
+- `lightbox`: 14/14 on the three zoomable figures.
+- Clicked the button headless: the poster is replaced by an iframe at
+  969×620 with the itch src and `is-live` set.
+
+**Registered.** Card added to `site/index.html` after pocalab; entry appended
+to `docs/portfolio-cards-content.md`; `/projects/atm-hack.html` added to
+`dev/checks/lib.js` so it is swept from now on. `style.css` bumped to `?v=10`
+across all 15 pages.
+
+**Spectrogram added (same day).** The draft's third figure landed as
+`atm-double-click` (800×450 and @2x 1600×900, WebP + PNG), placed after
+*Tested it on myself* as a zoomable `.media-figure` with a `<picture>` and a
+800w/1600w `srcset`. It went on the **column** track, not `figure--wide`:
+`.media-figure figure--wide` puts a height-capped image in a 969px box, so the
+image centres at 909px while the caption stays at the box's left edge — a 26px
+drift that `figures.js` catches and §3 forbids. The wide track on this page
+belongs to the embed anyway. Also gave the embed poster `fetchpriority="high"`;
+it is the LCP element and carried no loading hint at all.
+
+[C] Proposed trimming *Tested it on myself* so the prose stopped repeating the
+51 ms / 87 presses / 177 clicks the figure already states — **declined, copy
+kept as written**. The numbers appear in both the paragraph and the figure, and
+they agree; the repetition is deliberate.
+
+**Open.** One figure the draft asks for still does not exist — the "Everyone's
+attempts" tally with the leaderboard. That section is written without it.
+No `@2x` exists for the other five images on the page: each was exported at
+its final size, so a 2x would be an upscale. The two analysis
+charts label Garek by his RP character name, "Gloryon", which the shipped game
+and the page prose do not use. Glossed in two places rather than regenerating
+the charts: the first chart's caption states it outright, and *Checked it*
+carries the inline "Garek's (Gloryon)". The caption is what a reader hits
+first, alongside the legend that prints the name.
+
+---
+
 ## 2026-09-18 — Shipped: 18 commits to production
 
 Pushed `12a1edc..1543913` to `origin/main`. Cloudflare Pages built from `site/`
