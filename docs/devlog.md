@@ -4,6 +4,59 @@
 
 ---
 
+## 2026-09-19 — MAT-736: the figure set redone, and a false positive in sweep
+
+Four figures came in re-exported, each as WebP and PNG at 1× and 2×.
+`atm-results`, `atm-progress` and `atm-checkpoints` replace the soft 1×-only
+versions; `atm-attempts` is new, and closes the last item the original draft
+asked for. The two charts are dark-themed now and label **Garek**, so the
+Gloryon gloss has nothing left to explain.
+
+All four ship as a `<picture>` with a WebP `<source>`, a PNG fallback and a
+1×/2× `srcset`, lazy, zoomable. Verified in the browser: WebP served at every
+breakpoint, 1× at DPR 1 and 2× at DPR 2.
+
+**`atm-results` needed its own `sizes`.** At 692×817 the §1 height cap binds
+before the column does — it paints **434×512** at desktop, not 692 wide — so
+its `sizes` says `434px` where the other three say `692px`. Measured rather
+than assumed; §2 is explicit that getting this wrong is silent, since the
+browser just fetches a file larger than it paints.
+
+**A distortion failure that wasn't.** `sweep` flagged `DISTORT 2%
+atm-attempts.webp` at 390 and 360. The file is exactly 692×179, as declared.
+The check compared `getBoundingClientRect()` — the **border** box — against
+`naturalWidth/naturalHeight`, the content box. `.media-figure img` carries a
+1px border under a global `border-box` sizing, so the rect is 2px taller than
+the pixels drawn. On a tall image that rounds away. On a 84px-tall one it is
+2.4% of the height, and reads as distortion.
+
+Fixed in `sweep.js` by subtracting border and padding before comparing.
+Proved it masks nothing: measured all **228** images across 14 pages × 4
+viewports under both formulas. Old flagged 2, both `atm-attempts` (2.11%,
+2.30%). New flags 0, and those two land at 0.39% and 0.41%. The worst residual
+anywhere is 0.41%, against a 2% threshold — every other image moved *down* by
+the same border bias, and none was near the line to begin with. The bug was
+latent; it needed an image flat enough to expose it.
+
+**`atm-description` too.** The panel screenshot was re-exported as a tighter
+386×399 crop — the old 518×399 carried a strip of game background down its
+left edge. Converted and rebuilt as a `<picture>` with a PNG fallback, though
+386 is the source's native width so there is still no 2× for it.
+
+**Sources.** `.gitignore` now ignores `dev/gta-atm-media/*` with one exception,
+`Screenshot (Gameplay).png` — the 2043×1208 gameplay master, which exists
+nowhere else and is what every ring crop came from. 13 files ignored, that one
+trackable, matching how `dev/kumon-media` and `dev/ollae-media` are handled.
+
+**Captions.** All four approved and applied. The results caption names the
+35.9s clear, the progress caption drops the Gloryon gloss and calls the fails
+dashed rather than flat, and the checkpoints caption softens "for everyone" to
+"for almost everyone" — Fuslie's CP2 was faster than her CP1, so the old line
+was not true. "Gloryon" now appears nowhere in `site/` or in the case-study
+doc; it survives here, in the log, which is where a superseded name belongs.
+
+---
+
 ## 2026-09-19 — ATM Hack: copy pass, Reddit embed, and a CLS bug the page exposed
 
 Second pass on the new case study. `docs/case-study-atm-hack.md` was rewritten

@@ -33,8 +33,22 @@ const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-
           if (!img.naturalWidth || !r.width) continue;
           // object-fit: cover is a deliberate crop, not a distortion
           if (getComputedStyle(img).objectFit !== 'fill') continue;
+          // Compare content box to content box. getBoundingClientRect() is the
+          // border box, and .media-figure img carries a 1px border under a
+          // global border-box sizing, so the rect is 2px wider and 2px taller
+          // than the pixels being drawn. On a tall image that rounds away; on
+          // a flat one it does not — atm-attempts is 692x179, where 2px of
+          // border is 2.4% of the height and reads as a 2% distortion that
+          // isn't there.
+          const cs = getComputedStyle(img);
+          const inset = (a, b) =>
+            parseFloat(cs['border' + a + 'Width']) + parseFloat(cs['border' + b + 'Width']) +
+            parseFloat(cs['padding' + a]) + parseFloat(cs['padding' + b]);
+          const w = r.width - inset('Left', 'Right');
+          const h = r.height - inset('Top', 'Bottom');
+          if (w <= 0 || h <= 0) continue;
           const natural = img.naturalWidth / img.naturalHeight;
-          const drift = Math.abs(natural - r.width / r.height) / natural * 100;
+          const drift = Math.abs(natural - w / h) / natural * 100;
           if (drift > 2) {
             bad.push(`DISTORT ${drift.toFixed(0)}% ${img.currentSrc.split('/').pop()}`);
           }
