@@ -4,6 +4,66 @@
 
 ---
 
+## 2026-09-19 — ATM Hack: copy pass, Reddit embed, and a CLS bug the page exposed
+
+Second pass on the new case study. `docs/case-study-atm-hack.md` was rewritten
+by hand, then the page was synced to it — the doc led this time, not the page.
+
+**Copy.** [C] decisions, all the author's: the `~2.3%` metric is gone (it means
+nothing on first read without its context); `4 hours` is now labelled *from
+start to launch*, since that is time-to-launch and the work continued after;
+`19 hours` became *overnight* in both the metric and the Outcome sentence; the
+626 figure is stated as **verified** runs, with the 60 autoclicker runs
+explicitly outside that count and the note that runs are still arriving. The
+84% first-try clear rate is no longer hedged — it is framed as the intended
+shape, matching the streamers' 5 of 7: achievable overall, frustrating at the
+last ring.
+
+The *Checked it* section and the Reflection's middle paragraph were cut from
+the doc and are now gone from the page too. Flagged twice before applying.
+
+**Reddit embed.** The r/NoPixel post sits in Outcome, click-to-load. Reddit's
+own embed is a blockquote plus an async script; the blockquote is kept as real
+content that reads and links out on its own, and `embed.reddit.com/widgets.js`
+is only fetched on a press. Verified: 0 requests to reddit on load, 2 after the
+click. Loading it eagerly would have injected an untitled third-party iframe —
+the same `frame-title` violation §8 records against skybluefc's Instagram
+embeds — and put the first axe violation on this page.
+
+**The CLS bug.** `perf` showed mobile CLS at 0.107, over threshold. Isolated it
+against the committed version of the same page on the same harness: 0.008 →
+0.107, so it was this round's. Cause: `.case-study-metrics` is `flex-wrap`, so
+where it breaks depends on text width, which differs between the fallback font
+and DM Mono. At 412px a **two**-item list is one row before the webfont lands
+and two after — 54px → 140px, dropping everything below it by 86px. Three
+items are already wrapped in both states and shift by nothing. Removing the
+third metric is what exposed it.
+
+Fixed with a quantity query — `li:first-child:nth-last-child(2)` — pinning the
+two-metric case to one per row under 700px, so it cannot touch the
+three-metric pages. Re-measured all five: every delta is now 0, and Edison,
+VBS and worship-slides are unchanged at their old heights.
+
+ATM Hack mobile: **CLS 0.107 → 0.005, Perf 88 → 91.**
+
+**Corrected.** I expected this to fix `kumon-automation` too, since it is the
+other two-metric page and showed the identical 86px jump. It did not: kumon
+went 0.250 → 0.238 only. Its dominant shift is its `h1` — "Kumon Class-Navi
+Automation" wraps to three lines in the fallback and two in DM Serif Display,
+156px → 104px, pulling the page up 53px. That is the display-font metric
+mismatch, not the metrics wrap, and it needs a `size-adjust` fallback
+`@font-face` rather than a layout fix. Still open.
+
+**Also still site-wide, not this page's doing:** mobile LCP sits at ~2.9s on
+every case study on this harness (2.91 on untouched worship-slides), and
+desktop CLS is over threshold everywhere (0.172–0.210), both from the same
+unmatched font metrics. Harness numbers, not production — `npx serve` sends no
+compression and no cache headers.
+
+`style.css` bumped to `?v=12` across all 15 pages.
+
+---
+
 ## 2026-09-19 — New case study: ATM Hack, with a playable embed
 
 Eighth case study, built from `docs/case-study-atm-hack.md` and the five
