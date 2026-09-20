@@ -8,15 +8,6 @@
 **Github Repo:** https://github.com/mattlau95/ollae
 **Live Demo:** https://ollae.app
 
-## pocalab ##
-**Description:** Print K-pop photocards to the official 55×85 mm spec with bleed and safe-zone guides, then export a print-ready duplex PDF — no account, no backend, no Canva.
-**Metrics:** ~70% faster, 45 min → 12 min per sheet
-**Tech Stack:**
-* - React 19, TypeScript 6. Vite 8, pdf-lib 1.17, react-easy-crop 5.5, playwright, Figma MCP
-**Case Study File:** "C:\Users\mattl\portfolio\docs\case-study-pocalab.md"
-**Github Repo:** https://github.com/mattlau95/pocalab
-**Live Demo:** https://pocalab.app
-
 ## Praise Slides ##
 **Description:** Converts church worship PDF setlists into presentation-ready .pptx decks in seconds, with a drag-and-drop editor, auto lyric cleanup, and full multi-song set support.
 **Metrics:**
@@ -58,6 +49,27 @@
 **Case Study File:** C:\Users\mattl\portfolio\docs\case-study-kumon-class-navi-automation.md
 **Github Repo:** https://github.com/mattlau95/edison-dental-27
 **Live Demo:** https://edison-dental-27.vercel.app
+**Homepage row:** Patient-facing rebuild for a returning client, moving the site from WordPress to Next.js — 94 Lighthouse on mobile, 100 on accessibility.
+**Homepage row links to:** /projects/edison-dental.html
+
+
+# Also built
+
+Homepage rows, not cards — `.also-built-list` under the card strip. A row is one
+line of description and nothing else, so the card copy above is the source and
+the **Homepage row** line below is what actually ships.
+
+## pocalab ##
+**Description:** Print K-pop photocards to the official 55×85 mm spec with bleed and safe-zone guides, then export a print-ready duplex PDF — no account, no backend, no Canva.
+**Metrics:** ~70% faster, 45 min → 12 min per sheet
+**Tech Stack:**
+* - React 19, TypeScript 6. Vite 8, pdf-lib 1.17, react-easy-crop 5.5, playwright, Figma MCP
+**Case Study File:** "C:\Users\mattl\portfolio\docs\case-study-pocalab.md"
+**Github Repo:** https://github.com/mattlau95/pocalab
+**Live Demo:** https://pocalab.app
+**Homepage row:** Browser-based K-pop photocard maker — upload, crop, and lay out print-ready PDF sheets, with duplex calibration so fronts and backs line up.
+**Homepage row links to:** https://pocalab.app
+**Moved out of the card grid 2026-09-20** so the grid holds three cards. `site/projects/pocalab.html` is still live.
 
 
 ---
@@ -76,8 +88,9 @@
 ## Claude Commands ##
 **for description, metrics, and tech stack:**i need a short blurb description (<175 characters) for my website's porfolio that features this project. Then metrics badges, then tech stack badges. Can you do that for me? (Note: just provide info for the badges. example: 45 min -> 12 mion per ssheet, 70% faster, React 19, Typescript, etc.) provide list of metrics and tech stacks in same line for each, separated by a comma.
 **for case study md file:** take a look at "C:\Users\mattl\portfolio\docs\CASE-STUDY-TEMPLATE.md" and create a case study with this in mind and save it in the same folder
-## ATM Hack ##
-**Description:** Fan-made recreation of the NoPixel GTA RP button-mash ATM hack. The original's numbers aren't public, so the difficulty was fitted from seven streamer clips — press value, ring push-back, and per-checkpoint scaling — and verified against my own logged runs.
+## GTA RP Minigame Recreation ##
+**Renamed from "ATM Hack" 2026-09-20; `site/projects/atm-hack.html` renamed to match. The itch.io build is still called ATM Hack.**
+**Description:** A rebuild of the button-mash ATM robbery from NoPixel, a GTA RP server most people can't get into. With no access to its numbers, I calibrated the difficulty from seven streamer clips and my own keyboard tests, which caught the audio analysis counting every press twice. Shared on Reddit: **626 runs from 249 players in 19 hours.**
 **Metrics:**
 * - 626 runs from 249 players in the first 19 hours, ~2.3% of the ring per press, 4 hours build time
 **Tech Stack:**

@@ -36,10 +36,15 @@ It strips HTML comments before scanning, on purpose: `kumon-automation.html`
 keeps a whole `<figure>` commented out so its unbuilt poster does not 404, and
 scanning commented markup would report a break that is not there.
 
-A clean run on `site/` today is 14 pages, 3 stylesheets, 158 references, zero
-broken. The pre-`site/` tree gave 159 before MAT-716, and holding that number
-through the moves is how the restructure was shown to change nothing; the one
-reference that went is the `/gfx/` link the 404 page used to carry.
+A clean run on `site/` today is **15 pages, 3 stylesheets, 235 references**,
+zero broken. Re-count and update this line whenever it moves — it is only worth
+writing down if it can be diffed against, and it had been left at 158 long
+enough that it could not be.
+
+> Kept for the history it records: at MAT-716 the number was 158, against 159
+> for the pre-`site/` tree, and holding it across the moves is how the
+> restructure was shown to change nothing. The one reference that went is the
+> `/gfx/` link the 404 page used to carry.
 
 ## Quick checks (npx)
 
@@ -75,7 +80,7 @@ npx serve -l 4321 site
 
 | Script | What it answers |
 |---|---|
-| `sweep.js` | Is anything broken anywhere? All 13 pages × 4 viewports: distorted images, images over the height cap, horizontal overflow, axe violations. |
+| `sweep.js` | Is anything broken anywhere? All 14 pages × 4 viewports (56 combinations): distorted images, images over the height cap, horizontal overflow, axe violations. |
 | `figures.js` | Does every caption's left edge match its image, and is each figure on the width track it should be? |
 | `lightbox.js` | Does the `[data-zoom]` lightbox honour its keyboard contract? |
 | `perf.js` | Lighthouse LCP/CLS/Performance medians, mobile and desktop. |
@@ -128,6 +133,16 @@ To get a baseline for a before/after, stash and re-run:
 ```bash
 git stash push -u && npm --prefix dev/checks run perf -- /projects/collette.html 5; git stash pop
 ```
+
+> **This line currently fails on Windows, and fails in the worst way.** An empty
+> `scripts/checks/` is still sitting in the repo root — untracked leftover from
+> the MAT-716 rename of `scripts/` to `dev/`. `stash push -u` cannot remove it
+> (`failed to remove scripts/checks: Permission denied`), so it aborts partway:
+> the stash entry is created, the working tree is *not* cleaned, and the
+> `stash pop` then refuses with "local changes would be overwritten". Nothing is
+> lost — the working tree still has the changes and the stash is a duplicate —
+> but the baseline never runs and you are left holding a stash to reconcile.
+> Removing the empty directory fixes it.
 
 ## Known standing results
 

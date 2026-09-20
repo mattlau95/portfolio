@@ -530,27 +530,63 @@ ul.tags {
   margin-bottom: var(--space-3);
 }
 
+/* The name gets a column of its own, so every description starts at the same
+   left edge instead of wherever the name before it happened to end. The track
+   is sized once, on the <ul>, as max-content off the widest name; each row
+   subgrids onto it — through the <a>, which is the whole row’s hit area and
+   would otherwise be an opaque flex container in between. Baselines are
+   aligned rather than tops, because the name and the description are set at
+   different sizes.
+
+   Row heights are deliberately left to the content. grid-auto-rows: 1fr would
+   pad a one-line row out to match a three-line one and put back the ragged
+   whitespace the column was added to remove; evening the rows is a copy job,
+   not a CSS one. */
+
 .also-built-list {
   list-style: none;
   padding: 0;
   margin: 0;
   border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: var(--space-4);
+}
+
+.also-built-list > li,
+.also-built-list a {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
 }
 
 .also-built-list a {
-  display: flex;
-  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-1) var(--space-4);
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
   color: inherit;
   text-decoration: none;
 }
 
-/* The global external-link arrow hangs off the <a>, which here is a flex
-   container — it would become a flex item of its own. Move it onto the
-   title, where it reads as part of the link text. */
+/* Below the name column’s width plus a readable description the two stop
+   fitting on one line — same call, and the same breakpoint, as .workflow-row. */
+
+@media (max-width: 768px) {
+  .also-built-list,
+  .also-built-list > li,
+  .also-built-list a {
+    grid-template-columns: 1fr;
+  }
+
+  .also-built-list a {
+    align-items: start;
+    row-gap: var(--space-1);
+  }
+}
+
+/* The global external-link arrow hangs off the <a>, which here is a grid
+   container — it would become a grid item of its own, landing in the name
+   column. Move it onto the title, where it reads as part of the link text. */
 
 .also-built-list a[target="_blank"]::after {
   content: none;
@@ -565,13 +601,13 @@ ul.tags {
    and no button, it is the only thing marking the row as a link. */
 
 .also-built-title {
+  justify-self: start;
   font-size: var(--text-base);
   border-bottom: 1px solid rgb(var(--color-accent-rgb) / 0.4);
   padding-bottom: 1px;
 }
 
 .also-built-desc {
-  flex: 1 1 260px;
   min-width: 0;
   font-size: var(--text-sm);
   color: var(--color-text-muted);

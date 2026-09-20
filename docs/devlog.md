@@ -4,6 +4,80 @@
 
 ---
 
+## 2026-09-20 — Homepage: the ATM card renamed, pocalab demoted, "Also built" gets a name column
+
+Three changes to `index.html`, one of which needed CSS.
+
+**The ATM card is now "GTA RP Minigame Recreation".** The old title named the
+thing the way the itch.io build names it; the new one names what it *is* to
+someone scanning a portfolio, which is the job a card title has. The
+description was rewritten to match and now leads with the rebuild rather than
+with "fan-made recreation". `projects/atm-hack.html` was renamed the same way
+— h1, `<title>`, `og:title`, and both description metas — and its kicker lost
+the "A GTA RP minigame" opener that the new h1 had started repeating.
+
+**Three strings on that page still say ATM Hack, on purpose:** the itch.io
+embed's `data-title`, and the two alt texts that describe the game's own
+screens. The product is called ATM Hack. The card title is a portfolio label
+for it, not a rename of the build, and alt text describing a screen should say
+what the screen says.
+
+**pocalab came out of the card grid and into "Also built".** The grid now
+holds three standard cards under the featured one — Collette, Kumon, ATM —
+which is exactly one row of `repeat(3, 1fr)` at 1440 and 1024, where before
+the fourth card wrapped to a second band on its own. Placed third of four in
+the list, which is alphabetical (Edison, ghosted, pocalab, Worship Slides).
+
+> **`projects/pocalab.html` is now linked from nowhere on the site.** Its row
+> points at `pocalab.app`, the live demo, not at the case study — the same
+> state `vbs-scheduler.html` has been in since 2026-09-18, and accepted for
+> the same reason. **[C] Deliberate.** The page is live and resolves by direct
+> URL; the thumbnail and case-study assets were all left in place. Pointing
+> the row at `/projects/pocalab.html` instead is a one-attribute change if it
+> ever earns one.
+
+**"Also built" gets a name column.** The rows were a flex line — title, then
+description wherever the title happened to end — so four rows meant four
+different left edges for the description. Now the `<ul>` is a grid of
+`max-content 1fr`, sized once off the widest name ("Worship Slides
+Generator", 200.7px), and each row subgrids onto it.
+
+The subgrid has to be declared **twice**, on the `<li>` and again on the
+`<a>`. The `<a>` is the whole row's hit area, so it sits between the list and
+the two spans; left as a flex container it would have been opaque to the
+parent's tracks and the column would never have reached the spans.
+
+Two smaller things fell out of it. `.also-built-title` needed
+`justify-self: start`, or its standing underline — the only thing marking a
+row as a link — stretched the full width of the name column instead of
+stopping at the text. And the comment on the external-link arrow still said
+the `<a>` was a flex container; it is a grid container now, and the arrow
+would land in the name column rather than after the title if that rule were
+ever removed.
+
+**No `grid-auto-rows: 1fr`.** Forcing equal row heights would pad a one-line
+row out to match a three-line one and put back the ragged whitespace the
+column was added to remove. The rows were evened out in copy instead: Edison
+Dental 27's one-liner became two lines by naming the Lighthouse numbers. All
+four rows now measure exactly two lines at 1440 and at 1024.
+
+Stacks at 768px — the same breakpoint, and the same call, as `.workflow-row`,
+which is the same shape.
+
+**Checks.** `npm run sweep`: 3 problems across 56 combinations, all three the
+documented standing results (skybluefc's three Instagram iframes;
+edison-dental's 553px overflow at 390/360, MAT-713). `index.html` clean at all
+four viewports. `check-links`: 15 pages, 235 references, all resolve.
+`style.css` `?v=14 → ?v=15` on all 14 pages.
+
+> `dev/checks/README.md` still advertises a clean run as **14 pages, 3
+> stylesheets, 158 references**. It is 15 and 235 today, and was before this
+> change too — the tree has grown since that line was written. Pre-existing
+> drift, noted because that number is written down as a regression check and
+> currently cannot serve as one.
+
+---
+
 ## 2026-09-20 — MAT-735: metric-matched fallbacks, and the `ch` that was really moving the page
 
 Every CLS number on the site is now **0.000**, mobile and desktop, on all three
