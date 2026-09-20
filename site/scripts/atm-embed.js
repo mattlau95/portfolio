@@ -28,3 +28,24 @@
     iframe.focus({ preventScroll: true });
   });
 })();
+
+// The Reddit post in Outcome. The blockquote is real content — a titled link
+// to the thread, its author and its subreddit — so with JS off, or before the
+// button is pressed, it still reads and still links out. Only on a press does
+// embed.reddit.com's widgets.js get fetched and turn it into a live card, so
+// the page costs nothing to a reader who never asks for it.
+(() => {
+  const btn = document.querySelector('[data-reddit-load]');
+  if (!btn) return;
+
+  btn.hidden = false;
+  btn.addEventListener('click', () => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.charset = 'UTF-8';
+    script.src = 'https://embed.reddit.com/widgets.js';
+    document.body.appendChild(script);
+    btn.disabled = true;
+    btn.textContent = 'Loading…';
+  }, { once: true });
+})();

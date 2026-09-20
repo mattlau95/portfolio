@@ -822,6 +822,23 @@ ul.tags {
   margin: var(--space-8) 0;
 }
 
+/* Where this wraps depends on text width, which differs between the fallback
+   font and DM Mono. With exactly two metrics the line fits on one row before
+   the webfont loads and two after it — measured at 412px, the list goes 54px
+   to 140px and drops everything below it by 86px mid-load. Three metrics are
+   already wrapped in both states, so they shift by nothing.
+
+   The quantity query pins the two-metric case to one per row at phone widths,
+   where the height is then the same in both fonts. Scoped this way it cannot
+   touch the three-metric pages. */
+
+@media (max-width: 700px) {
+  .case-study-metrics > li:first-child:nth-last-child(2),
+  .case-study-metrics > li:first-child:nth-last-child(2) ~ li {
+    flex-basis: 100%;
+  }
+}
+
 .metric-value {
   display: block;
   font-family: var(--font-display);
@@ -2000,4 +2017,45 @@ main section .embed__status:empty {
   .embed--game .embed__load--away {
     display: flex;
   }
+}
+
+/* The Reddit post — /projects/atm-hack (scripts/atm-embed.js). Reddit's own
+   embed is a blockquote plus an async script; the blockquote is kept as real
+   content and the script is only fetched on a press, so a reader who never
+   asks for the live card pays nothing for it. Styled as a quiet card, not a
+   pull quote: it is a citation, not something being quoted for its words. */
+
+.embed--reddit blockquote {
+  margin: 0;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  line-height: var(--leading-relaxed);
+}
+
+.embed--reddit blockquote a:first-child {
+  font-size: var(--text-lg);
+}
+
+.reddit-load {
+  margin-top: var(--space-4);
+  min-height: 44px;                /* WCAG 2.5.8 target size */
+  padding-inline: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-bg);
+  background-color: var(--color-accent);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.reddit-load:hover {
+  background-color: var(--color-text);
+}
+
+.reddit-load[disabled] {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: default;
 }
