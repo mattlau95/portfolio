@@ -325,7 +325,7 @@ main {
 /* Content sections — Phase 2 */
 
 main section {
-  max-width: 65ch;
+  max-width: 44.45em;   /* was 65ch — see the note on .case-study */
 }
 
 main section + section {
@@ -772,10 +772,19 @@ ul.tags {
 
 /* Edison Dental case study page */
 
+/* 44.45em, not 65ch. `ch` is the advance of "0", and it differs between DM
+   Sans and any fallback, so this column measured 642px before the webfont
+   landed and 756px after. The whole page re-laid out on swap, and that one
+   reflow was the entire desktop CLS — metric-matching the fallback fixes
+   text height, not column width. em depends only on font-size, so the
+   measure still tracks the fluid type scale and no longer moves:
+   65 x 0.68391 (DM Sans ch/em, measured) = 44.45em. The 55ch deck and the
+   60ch captions were converted the same way; DM Mono is 0.6 ch/em exactly. */
+
 .case-study {
   position: relative;
   z-index: 1;
-  max-width: 65ch;
+  max-width: 44.45em;
   margin-inline: auto;
   padding: var(--space-16) var(--space-8);
 }
@@ -854,7 +863,7 @@ ul.tags {
   font-size: var(--text-lg);
   color: var(--color-text-muted);
   margin-bottom: var(--space-6);
-  max-width: 55ch;
+  max-width: 37.62em;   /* was 55ch */
 }
 
 .case-study-meta-row {
@@ -1171,7 +1180,7 @@ ul.tags {
   font-size: var(--text-xs);
   line-height: var(--leading-normal);
   color: var(--color-text-muted);
-  max-width: 60ch;
+  max-width: 36em;   /* was 60ch, mono is 0.6 ch/em */
   margin-top: var(--space-4);
 }
 

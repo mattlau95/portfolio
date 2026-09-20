@@ -4,6 +4,79 @@
 
 ---
 
+## 2026-09-20 — MAT-735: metric-matched fallbacks, and the `ch` that was really moving the page
+
+Every CLS number on the site is now **0.000**, mobile and desktop, on all three
+pages measured. It took two fixes, and the second was not the one the ticket
+predicted.
+
+**Before → after** (`npm run perf`, 3 runs per preset, local harness):
+
+| Page | Mobile CLS | Mobile Perf | Desktop CLS | Desktop Perf |
+|---|---|---|---|---|
+| kumon-automation | 0.238 → **0.000** | 78 → **90** | 0.050 → **0.000** | 99 → 99 |
+| ollae | 0.002 → **0.000** | 91 → 91 | 0.177 → **0.000** | 91 → **99** |
+| atm-hack | 0.005 → **0.000** | 90 → **91** | 0.201 → **0.000** | 89 → **99** |
+
+**Fix 1 — metric-matched fallback faces.** Three `@font-face` rules in
+`tokens.css`, each a local system font re-proportioned to its webfont, second
+in its stack. Values computed from `@capsizecss/metrics` (added as a dev
+dependency), not eyeballed:
+
+| Family | Fallback | size-adjust | ascent | descent | line-gap |
+|---|---|---|---|---|---|
+| DM Sans | Arial | 104.531% | 94.9001% | 29.6563% | 0% |
+| DM Serif Display | Georgia | 100.0447% | 103.5537% | 33.485% | 0% |
+| DM Mono | Courier New | 99.9837% | 99.2161% | 31.005% | 0% |
+
+Georgia rather than Times New Roman for the display face: its size-adjust is
+100.04% against Times' 109.78%, so it is already almost exactly the right
+width. Note the fonts are served from Google, not shipped, so the metrics come
+from a precomputed source rather than from files in the repo.
+
+That closed kumon's `h1`: it wrapped to three lines in the fallback and two in
+DM Serif Display, 156px → 104px, pulling everything below it up 53px. Both
+states now measure 104px, two lines, with the metrics strip starting at the
+same y. Mobile CLS 0.238 → 0.000.
+
+**Fix 2 — `65ch` was the desktop CLS all along.** Fix 1 did nothing for
+desktop; ollae actually went 0.177 → 0.214. Tracing the shift gave one entry
+at 298ms naming `main.case-study`, with a rect that had not changed — useless
+on its own, so I diffed element geometry across the font swap instead. Text
+was pixel-stable; `figure.shots` images grew 393px → 474px.
+
+The cause was `max-width: 65ch`. `ch` is the advance of the "0" glyph, so a
+ch-based column is a layout width that depends on which font is loaded:
+measured 9.883px per `ch` in the fallback against 11.628px in DM Sans, making
+the column 642px before the swap and 756px after. The whole page re-laid out
+horizontally, and that single reflow was the entire desktop CLS.
+
+`size-adjust` cannot fix this. It matches `xWidthAvg`, the average advance
+across the charset, which is what makes line breaks land in the same place —
+the "0" glyph specifically can still differ, and here it differs by 17.7%.
+
+Converted the four `ch` measures to `em`, which depends only on font-size and
+so stays fluid with the type scale while holding still: `65ch → 44.45em`,
+`55ch → 37.62em` on the deck, `60ch → 36em` on captions (DM Mono is 0.6 ch/em
+exactly). Ratios measured in the browser, not assumed.
+
+**Verified no visual change** once webfonts have loaded, by serving the
+previous CSS through request interception and diffing geometry: atm-hack and
+the homepage identical, ollae 1px on total page height, kumon 1px on one wide
+figure. Sub-pixel rounding between `44.45em` and `65ch`.
+
+**Mobile LCP is still over threshold — and it is not a font problem.**
+2.91s / 2.77s / 2.84s, unchanged. LCP equals FCP on both pages traced, and the
+LCP element is text: kumon's `h1`, atm-hack's deck. Nothing is waiting on a
+font or an image; the paint itself is simply late. The local harness overstates
+it — `npx serve` sends `style.css` raw at 50,427 bytes where production serves
+it brotli'd at 12,516. Worth re-measuring against production before treating
+the number as real. Left `font-display` and the preload block alone, as asked.
+
+`tokens.css` to `?v=3` and `style.css` to `?v=14` across all 15 pages.
+
+---
+
 ## 2026-09-19 — MAT-736: the figure set redone, and a false positive in sweep
 
 Four figures came in re-exported, each as WebP and PNG at 1× and 2×.

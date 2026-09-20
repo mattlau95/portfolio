@@ -1,5 +1,52 @@
 /* tokens.css — single source of truth for color, type, and spacing */
 
+/* Metric-matched fallbacks.
+
+   The three webfonts arrive from Google Fonts, so every page renders in a
+   local font first and reflows when they land. Unmatched, that reflow is what
+   moved the pages: kumon's h1 wrapped to three lines in the fallback and two
+   in DM Serif Display, pulling the page up 53px, and desktop CLS sat at
+   0.17–0.21 everywhere.
+
+   Each face below is the named system font re-proportioned to its webfont, so
+   the first paint occupies the same space as the final one. The numbers are
+   computed, not eyeballed — from @capsizecss/metrics, as
+
+     size-adjust = (xWidthAvg / upm) of the webfont ÷ the same of the fallback
+     *-override  = the webfont's ascent | descent | lineGap
+                   ÷ (its upm x size-adjust)
+
+   Georgia carries DM Serif Display rather than Times New Roman: its
+   size-adjust lands at 100.04% against Times' 109.78%, so it is already very
+   nearly the right width. Recompute these if a family is ever swapped. */
+
+@font-face {
+  font-family: "DM Sans fallback";
+  src: local("Arial");
+  size-adjust: 104.531%;
+  ascent-override: 94.9001%;
+  descent-override: 29.6563%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "DM Serif Display fallback";
+  src: local("Georgia");
+  size-adjust: 100.0447%;
+  ascent-override: 103.5537%;
+  descent-override: 33.485%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "DM Mono fallback";
+  src: local("Courier New");
+  size-adjust: 99.9837%;
+  ascent-override: 99.2161%;
+  descent-override: 31.005%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Color */
   --color-bg: #0f0f0e;
@@ -11,9 +58,9 @@
   --color-border: #2a2a28;
 
   /* Type families */
-  --font-display: "DM Serif Display", Georgia, serif;
-  --font-body: "DM Sans", -apple-system, system-ui, sans-serif;
-  --font-mono: "DM Mono", "SFMono-Regular", Consolas, monospace;
+  --font-display: "DM Serif Display", "DM Serif Display fallback", Georgia, serif;
+  --font-body: "DM Sans", "DM Sans fallback", -apple-system, system-ui, sans-serif;
+  --font-mono: "DM Mono", "DM Mono fallback", "SFMono-Regular", Consolas, monospace;
 
   /* Type scale — fluid, clamps between mobile and desktop */
   --text-xs: clamp(0.75rem, 0.7rem + 0.1vw, 0.8125rem);
