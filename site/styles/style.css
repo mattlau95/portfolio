@@ -69,12 +69,21 @@ a {
   text-decoration-color: var(--color-accent);
 }
 
+/* Two arrows, two meanings. "↗" means the link leaves the site — a new tab, a
+   repo, a live demo, a mail client. "→" means it moves you within it. They
+   were the same glyph until the case-study links started reading as though
+   they pointed off-site. */
+
 a[target="_blank"]::after,
-a[href^="mailto"]::after,
+a[href^="mailto"]::after {
+  content: " ↗";
+  font-size: 0.75em;
+}
+
 .project-card > a:not(.project-card-media)::after,
 .project-card-body > a::after,
 .project-links a[href^="/projects"]::after {
-  content: " ↗";
+  content: " →";
   font-size: 0.75em;
 }
 
@@ -593,6 +602,48 @@ ul.tags {
 .project-card {
   display: flex;
   flex-direction: column;
+}
+
+/* Row alignment across a band of cards.
+
+   Each standard card spans the same six parent rows — thumbnail, title, case
+   study link, description, tags, external links — and subgrids onto them, so
+   a title that wraps to two lines lifts every card's title row together
+   instead of pushing its own link down past its neighbours'. The media link
+   subgrids again across its two rows so the thumbnails stay aligned
+   independently of the titles above them.
+
+   Row gaps are zeroed and the spacing left to the existing margins on the
+   thumbnail, title and link: an inherited 32px parent gutter would otherwise
+   land between every row inside a card. The band gap comes back as padding
+   on the card, and on the featured card as a margin, since it sits on its
+   own full-width row and does not subgrid. */
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 581px) {
+    .project-cards {
+      row-gap: 0;
+    }
+
+    .project-card:not(.project-card--featured) {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 6;
+      row-gap: 0;
+      padding-bottom: var(--space-8);
+    }
+
+    .project-card:not(.project-card--featured) .project-card-media {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+      row-gap: 0;
+    }
+
+    .project-card--featured {
+      margin-bottom: var(--space-8);
+    }
+  }
 }
 
 .project-thumb {
