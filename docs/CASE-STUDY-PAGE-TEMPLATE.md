@@ -38,6 +38,14 @@ That means:
 - **Cache-bust versions move together.** If you bump `style.css?v=9`, bump it on
   all seven pages and on `index.html`/`404.html` in the same commit. A page left
   on an old `?v=` is the most likely way this site ships a visual bug.
+- **Never request a new `?v=` URL before its deploy lands.** Cloudflare serves
+  these with `max-age=31536000, immutable`, so whatever is live when the URL is
+  first requested gets cached under it for a year. Polling
+  `tokens.css?v=3` to watch for a deploy pinned the *old* file at the *new*
+  URL, and the fix shipped to an address that kept serving the previous
+  content. Poll the HTML instead — it revalidates — and only fetch the asset
+  once the page references it. Recovering means burning the version and
+  bumping again.
 - **The same rule applies to every script, and it is easier to forget.** Editing
   `scripts/foo.js` without bumping its `?v=` ships the edit to the origin while
   the CDN keeps serving the old file to the URL the page actually requests —
