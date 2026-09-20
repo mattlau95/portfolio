@@ -73,7 +73,30 @@ it — `npx serve` sends `style.css` raw at 50,427 bytes where production serves
 it brotli'd at 12,516. Worth re-measuring against production before treating
 the number as real. Left `font-display` and the preload block alone, as asked.
 
-`tokens.css` to `?v=3` and `style.css` to `?v=14` across all 15 pages.
+**Measured on production afterwards, and one of the readings above was wrong.**
+kumon-automation, 3 runs per preset against the live site: mobile CLS 0.001,
+Perf 89, LCP 3.06s; desktop CLS 0.000, Perf 99, LCP 0.83s. The CLS fix holds
+end to end — loading the live pages with Google Fonts blocked and unblocked
+gives identical column width, h1 height and total page height on both.
+
+But production mobile LCP is **3.06s against the local 2.91s** — worse, not
+better. The compression argument was real about bytes and wrong about the
+conclusion: real DNS, TLS and origin latency outweigh the 50KB → 12.5KB
+saving under Lighthouse's mobile throttling. The diagnosis stands (LCP equals
+FCP, the element is text, nothing waits on a font or an image), but the number
+to beat is 3.06s and it lives in time-to-first-paint, not in the harness.
+
+**And a self-inflicted one.** Polling `/styles/tokens.css?v=3` to watch for the
+deploy pinned the *old* file at the *new* URL — Cloudflare serves these
+`max-age=31536000, immutable`, so the first request to a version URL caches
+whatever is live at that moment for a year. The fallback faces shipped to an
+address that kept serving the previous content: `?v=3` returned 0 matches for
+them while a cache-bypass query on the same path returned 9. `style.css?v=14`
+was never polled and was fine. `?v=3` is burned; tokens.css went to `?v=4`.
+Written into CASE-STUDY-PAGE-TEMPLATE §1 — poll the HTML, which revalidates,
+and only fetch an asset once the page references it.
+
+`tokens.css` to `?v=4` and `style.css` to `?v=14` across all 15 pages.
 
 ---
 
