@@ -134,15 +134,20 @@ To get a baseline for a before/after, stash and re-run:
 git stash push -u && npm --prefix dev/checks run perf -- /projects/collette.html 5; git stash pop
 ```
 
-> **This line currently fails on Windows, and fails in the worst way.** An empty
-> `scripts/checks/` is still sitting in the repo root — untracked leftover from
-> the MAT-716 rename of `scripts/` to `dev/`. `stash push -u` cannot remove it
-> (`failed to remove scripts/checks: Permission denied`), so it aborts partway:
-> the stash entry is created, the working tree is *not* cleaned, and the
-> `stash pop` then refuses with "local changes would be overwritten". Nothing is
-> lost — the working tree still has the changes and the stash is a duplicate —
-> but the baseline never runs and you are left holding a stash to reconcile.
-> Removing the empty directory fixes it.
+> **Stop the server before running this.** `stash push -u` has to delete every
+> untracked file and directory, and on Windows it cannot delete a directory any
+> running process holds a handle on — a live `npx serve` is enough. When that
+> happens it aborts *partway*: the stash entry is created, the working tree is
+> **not** cleaned, and the `stash pop` then refuses with "local changes would be
+> overwritten". Nothing is lost, since the tree still has the changes and the
+> stash is a duplicate of them, but the baseline never runs and you are left
+> reconciling a stash by hand.
+>
+> Hit once, on an empty `scripts/checks/` left over from the MAT-716 rename of
+> `scripts/` to `dev/`, with `npx serve` running: `failed to remove
+> scripts/checks: Permission denied`. That directory has since been deleted, so
+> this exact instance is gone — but any untracked directory can do it, and the
+> failure looks like a git problem rather than a file-lock one.
 
 ## Known standing results
 
