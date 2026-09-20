@@ -2,6 +2,7 @@
 
 const PAGES = [
   '/',
+  '/projects/atm-hack.html',
   '/projects/collette.html',
   '/projects/edison-dental.html',
   '/projects/kumon-automation.html',

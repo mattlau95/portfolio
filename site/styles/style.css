@@ -1922,3 +1922,82 @@ main section .embed__status:empty {
 .race > figcaption {
   margin-top: 0;
 }
+
+/* Playable itch.io frame — /projects/atm-hack (scripts/atm-embed.js).
+   Reuses the Ollae embed stage with two differences. The game is landscape:
+   itch serves it at 1280x820, so the stage carries that ratio instead of a
+   phone's max-width. And the block sits outside any <section>, so its lead
+   and notes need their own type rules rather than inheriting "main section p". */
+
+.embed--game .embed__lead {
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+.embed--game .embed__stage {
+  max-width: none;
+  aspect-ratio: 1280 / 820;
+}
+
+/* The poster is 16:9 and the stage is not, so cover the difference rather
+   than letterboxing a screenshot that is mostly empty background anyway. */
+
+.embed--game .embed__stage img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.embed--game .embed__frame {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.embed--game .embed__note,
+.embed--game .embed__open {
+  max-width: none;
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* The only <kbd> on the site — same chip idiom as ul.tags and .embed-example,
+   sized to sit inside a line of body copy. */
+
+.embed--game kbd {
+  padding: 0.1em 0.45em;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: var(--color-accent-wash);
+  border: 1px solid rgb(var(--color-accent-rgb) / 0.4);
+  border-radius: var(--radius);
+}
+
+/* Small screens don't get the frame. The wide track is ~326px at 390, and
+   itch serves the game at 1280x820 — scaled into that, it is unplayable.
+   Below the breakpoint the stage hands off to itch's own page instead. The
+   handoff is a real <a>, so it also works with JS off, where the button
+   (revealed by atm-embed.js) never appears at all. */
+
+/* The global external-link arrow becomes a flex item here, so the label has
+   to be held on one line or it wraps and the arrow floats off to the side. */
+
+.embed--game .embed__load--away {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .embed--game .embed__load {
+    display: none;
+  }
+
+  .embed--game .embed__load--away {
+    display: flex;
+  }
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATM Hack — Case Study | Matthew C. Lau</title>
+  <meta name="description" content="A GTA RP minigame, rebuilt from Twitch clips. Without real numbers from NoPixel, you can't make a perfect copy — so I measured it from streamer footage, tested it on my own hands, and let the community fill in the rest.">
+  <meta property="og:title" content="ATM Hack — Case Study | Matthew C. Lau">
+  <meta property="og:description" content="A GTA RP minigame, rebuilt from Twitch clips. Without real numbers from NoPixel, you can't make a perfect copy — so I measured it from streamer footage, tested it on my own hands, and let the community fill in the rest.">
+  <meta property="og:type" content="article">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0e'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' fill='%2360c8f0' text-anchor='middle'>M</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
+
+  <link rel="stylesheet" href="/styles/tokens.css?v=2">
+  <link rel="stylesheet" href="/styles/style.css?v=10">
+</head>
+<body>
+  <div class="spotlight" aria-hidden="true"></div>
+
+  <main class="case-study">
+    <a class="back-link" href="/#projects">← Back to projects</a>
+
+    <header class="case-study-header">
+      <p class="case-study-label">Case study</p>
+      <h1>ATM Hack</h1>
+      <p class="case-study-kicker">A GTA RP minigame, rebuilt from Twitch clips</p>
+      <p class="case-study-deck">Without real numbers from NoPixel, you can't make a perfect copy. So I measured it from streamer clips, tested it on my own hands, and let the community fill in the rest.</p>
+      <p class="case-study-meta-row">Role: Design + Direction, with Claude doing the analysis and code · September 2026 · Shipped</p>
+      <ul role="list" class="case-study-metrics">
+        <li>
+          <span class="metric-value">626 runs</span>
+          <span class="metric-label">from 249 players in the first 19 hours</span>
+        </li>
+        <li>
+          <span class="metric-value">~2.3%</span>
+          <span class="metric-label">of the ring per press, fitted from streamer footage</span>
+        </li>
+        <li>
+          <span class="metric-value">4 hours</span>
+          <span class="metric-label">spent on the project before launch</span>
+        </li>
+      </ul>
+      <ul role="list" class="tags" aria-label="Tech stack">
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>Vanilla JS</li>
+        <li>Canvas</li>
+        <li>Google Apps Script</li>
+        <li>Google Sheets</li>
+        <li>Python</li>
+        <li>itch.io</li>
+      </ul>
+      <p class="case-study-links">
+        <a href="https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack" target="_blank" rel="noopener noreferrer">Play it on itch.io</a>
+        <a href="#play">Play it here ↓</a>
+      </p>
+    </header>
+
+    <div class="embed embed--game figure--wide" id="play">
+      <p class="embed__lead">Mash <kbd>E</kbd> to fill the ring and clear three checkpoints before the timer runs out. The ring pushes back harder the fuller it gets. Your run is drawn over the streamers' when you finish.</p>
+      <div class="embed__stage" data-src="https://itch.io/embed-upload/19298136?color=333333" data-title="ATM Hack (playable)">
+        <img src="/assets/atm-hack/atm-ring.webp" width="1280" height="720" fetchpriority="high" decoding="async"
+             alt="The ATM Hack screen: a glowing cyan ring about two-thirds full of white, a white key cap marked E at its centre, and three dashes underneath — two lit cyan for cleared checkpoints, the third still grey.">
+        <button type="button" class="embed__load" hidden>Play it here</button>
+        <a class="embed__load embed__load--away" href="https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack" target="_blank" rel="noopener noreferrer">Play on itch.io</a>
+      </div>
+      <p class="embed__note">Fan-made, unaffiliated with NoPixel, and free — I make nothing from it.</p>
+      <p class="embed__open"><a href="https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack" target="_blank" rel="noopener noreferrer">Open on itch.io</a></p>
+    </div>
+
+    <section>
+      <h2>Overview</h2>
+      <p>I enjoy a very niche form of entertainment: GTA RP on NoPixel 5.0, a custom Grand Theft Auto V server where people role-play as characters and most of them livestream it. The server is full of little minigames and puzzles, called hacks. One of them is a plain button masher, and it's more interesting than it sounds — I watched a streamer named Blau fail it and wanted to try it myself. NoPixel 5.0 isn't open to most people, so I spent a few hours with Claude recreating the hack as closely as we could, put it on itch.io, and posted it to the NoPixel subreddit for the community to play.</p>
+    </section>
+
+    <section>
+      <h2>The problem</h2>
+      <p>I have no numbers from the people who built the original. No press value, no push-back rate, no checkpoint thresholds. Everything I could learn about how the hack behaves had to come from watching other people play it on stream, which is a recording of the output, not the rules that produced it.</p>
+      <p>That makes the whole project a measurement problem rather than a build problem. The button masher itself is an afternoon of code. Getting it to feel like <em>the</em> button masher — hard in the same places, failing for the same reason — is the part that needed evidence.</p>
+    </section>
+
+    <section>
+      <h2>Role</h2>
+      <p>A solo project built over about a day. I broke down the hack's mechanics from streamer clips, worked with Claude to measure and calibrate the difficulty, and set up a way to keep tuning it with data from the community. The split that made it work: Claude did the frame-by-frame analysis and wrote the code, and I brought the things it couldn't — knowing the game, knowing when a result looked wrong, and being the test subject.</p>
+    </section>
+
+    <section class="case-study-section--approach">
+      <h2>Approach</h2>
+
+      <h3>Design</h3>
+      <p>The UI stays close to the real one, which was less work than it sounds: NoPixel's font is Barlow, a Google Font, and the hack itself is a ring, a key cap, and three checkpoint dashes. Getting those proportions right matters more than any effect — it's the thing people recognise from stream.</p>
+
+      <figure class="media-figure">
+        <img src="/assets/atm-hack/atm-description.webp" width="518" height="399" loading="lazy" decoding="async"
+             alt="The game's side panel, headed FAN-MADE HACK TRAINER above the title ATM HACK. It explains: mash E to fill the ring and clear three checkpoints before time runs out, the ring pushes back harder the fuller it gets, every checkpoint is tougher than the last, and your run is compared against streamers who passed and failed it on stream. Below, a FASTEST CLEARS · V1 heading reads &ldquo;No clears yet. Be the first.&rdquo;">
+        <figcaption>The panel at launch, before anyone had played it.</figcaption>
+      </figure>
+
+      <p>The fun is in what happens afterward. When your run ends, it's drawn over the streamers' runs on the same axes, so you're not looking at a score — you're looking at where you sat in the pack, and which of them you'd have beaten. That comparison is the reason to play twice.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/atm-hack/atm-results.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <img src="/assets/atm-hack/atm-results.webp" width="717" height="741" loading="lazy" decoding="async"
+               alt="The results screen: a CLEARED tag above &ldquo;HACK COMPLETE: 34.6 S&rdquo; and the line &ldquo;7.7 presses per second overall. Closest streamer run: Garek.&rdquo; A chart plots ring progress against time from 0 to 50 seconds, with the player's white curve running through five coloured streamer curves toward CP3, and Blau's failed run unchecked in the legend. A table under it lists each checkpoint: the player's time, their pace, and the same checkpoint for xQc, Fuslie, Garek, Lysium, and Valkyrae.">
+        </a>
+        <figcaption>Your run in white, over the five clears. The pace column is the number people actually chase.</figcaption>
+      </figure>
+
+      <h3>Engineering</h3>
+
+      <h4>Watched the ring</h4>
+      <p>I pulled clips of seven attempts — five clears and two fails — and had Claude track how full the ring was in every frame. The pattern came out clearly. Each press adds a small chunk, the ring slides back constantly, and the slide-back gets stronger both as the ring fills and with each checkpoint passed.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/atm-hack/atm-progress.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <img src="/assets/atm-hack/atm-progress.webp" width="777" height="401" loading="lazy" decoding="async"
+               alt="A line chart titled &ldquo;ATM hack progress over time (checkpoints cleared + current ring fill)&rdquo;, plotting progress from 0 to 3 against seconds since the hack UI appeared, out to 120 seconds. Five winning runs climb to 3.0 and stop, between 14 and 46 seconds. The two failing runs climb quickly to about 2.8 and then stay flat, wobbling just under the finish for the rest of the clip.">
+        </a>
+        <figcaption>Seven clips. The two flat lines at the top are the fails. Gloryon is Garek's character name.</figcaption>
+      </figure>
+
+      <p>That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. You don't lose this hack by being late. You lose it by being fast enough to reach the last ring and not fast enough to close it.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/atm-hack/atm-checkpoints.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <img src="/assets/atm-hack/atm-checkpoints.webp" width="772" height="356" loading="lazy" decoding="async"
+               alt="A table headed &ldquo;Checkpoint times (seconds)&rdquo; with columns for player, CP1, CP2, CP3 and total. xQc 3.6, 4.7, 5.5, total 13.8. Fuslie 6.4, 5.4, 8.9, total 20.7. Gloryon 6.4, 8.6, 18.2, total 33.2. Lysium 7.8, 11.9, 19.6, total 39.3. Valkyrae 7.7, 12.9, 25.0, total 45.6. Blau 8.6, 11.6, then stalled about 100 seconds, fail. Unknown 6.0, 9.5, then stalled about 86 seconds, fail.">
+        </a>
+        <figcaption>The same seven runs as numbers. Each checkpoint costs more than the one before it, for everyone.</figcaption>
+      </figure>
+
+      <h4>Listened to the keyboards</h4>
+      <p>Knowing how fast the ring moved wasn't enough on its own — I needed to know how fast the person was pressing to move it that much. So Claude detected keyboard clicks in the stream audio, starting from the loud stretches I'd flagged, and matched them against the ring's speed at the same moment. That produced a first model, and a number I didn't believe: it had streamers holding 12–15 presses a second for over a minute. I'm a decent masher and I top out around 9.</p>
+
+      <h4>Tested it on myself</h4>
+      <p>Rather than argue with the model, I became the control group. I asked for a prototype that logs the exact time of every press, then recorded my own keyboard while playing it. Lining the two up explained everything: my keyboard makes two clicks per press, one on the way down and one on the way back up, about 51 ms apart. My speed test had 87 presses in it. The detector heard 177 clicks. The streamers' audio had the same double-click signature, which meant the first estimate of their speed was roughly twice the real number.</p>
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/atm-hack/atm-double-click@2x.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <picture>
+            <source type="image/webp"
+                    srcset="/assets/atm-hack/atm-double-click.webp 800w, /assets/atm-hack/atm-double-click@2x.webp 1600w"
+                    sizes="(min-width: 756px) 692px, calc(100vw - 4rem)">
+            <img src="/assets/atm-hack/atm-double-click.png"
+                 srcset="/assets/atm-hack/atm-double-click.png 800w, /assets/atm-hack/atm-double-click@2x.png 1600w"
+                 sizes="(min-width: 756px) 692px, calc(100vw - 4rem)"
+                 width="800" height="450" loading="lazy" decoding="async"
+                 alt="Two stacked timelines covering about 0.6 seconds of Matt's 10-second speed test. The top row shows five white tick marks, one for each key press the game logged. Below it, a spectrogram of the microphone recording shows ten bright vertical streaks, in pairs. A dashed line drops from each logged press onto the first streak of its pair, and a second streak follows about 50 milliseconds later. One pair is labeled DOWN and UP with an arrow marking a gap of about 51 milliseconds. A footer reads: Full 10-second test, 87 presses logged, 177 clicks heard, median gap 51 ms.">
+          </picture>
+        </a>
+        <figcaption>Each press made two clicks, one on the way down and one on the way up, so counting clicks in stream audio doubled every speed I measured.</figcaption>
+      </figure>
+
+      <h4>Checked it</h4>
+      <p>With the correction applied, the model reproduces the streamers' checkpoint times at speeds a human can actually hold. The check I trust most is the one I didn't tune for: my own winning run landed between Garek's (Gloryon) and Lysium's, which is where a decent masher should land, without anything being adjusted to make that happen. Where it settled — each press is worth about 2.3% of the ring, the first checkpoint is close to free, the second needs about 5 presses a second, and the last needs you to hold about 7.5 through the final stretch.</p>
+    </section>
+
+    <section>
+      <h2>Key decisions &amp; tradeoffs</h2>
+      <dl class="key-decisions">
+        <dt>Model the push-back, not a timer</dt>
+        <dd>A &ldquo;press X times in Y seconds&rdquo; rule would have been far easier to build and to tune, but it can't produce the stall the two fails show — under a timer you either make it or you're late, and nobody sits at 85% for ninety seconds. The catch is that video alone can't separate push-back that grows with fill from each press being worth less as the ring fills. Both fit the curves. I went with the one that matches the push-back you can see on screen.</dd>
+
+        <dt>A Google Sheet instead of a real backend</dt>
+        <dd>Free, about fifteen minutes to set up, and the data lands somewhere I can just open and read. The cost showed up immediately: Apps Script is slow to wake, so successful saves looked like failures until retries went in.</dd>
+
+        <dt>Check every run on the server</dt>
+        <dd>The server replays each submitted run through the official settings, so faked times and 200-press-per-second autoclickers bounce off. On day one someone turned their autoclicker down to just under my speed limit and landed at number two. Replay proves a run follows the rules; it doesn't prove a human played it.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Outcome</h2>
+      <p>I launched on itch.io and posted it to the NoPixel subreddit. The fanbase is dedicated enough that I was fairly confident of finding people who'd try it.</p>
+      <p>The post brought in <strong>626 runs from 249 players</strong> in the first 19 hours, 339 of them in a single two-hour burst. 90% of verified runs cleared, and 84% of players cleared on their first try. That's a much higher pass rate than the streamers' 5 of 7 — but seven clips is a tiny sample, and fails are what gets clipped, so the streamer number is biased toward failure and mine probably isn't the same measurement at all.</p>
+      <p>The server caught 60 autoclicker runs. The one that slipped under the speed limit gets fixed in v1.1. The real gap is the feedback I most wanted: only 40 &ldquo;how did it compare&rdquo; ratings from people who've played the actual hack, most of them on mouse or phone rather than a keyboard. I want considerably more of those before I touch the difficulty for v2.</p>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>I'm happy with how this turned out, and mostly with how fast it went. It showed me how much is possible in a day when the work is split along the right seam: Claude does the heavy analysis and writes the code, and I bring what it can't — knowing the game, noticing when an output looks wrong, and being the test subject when the only way to settle a disagreement is to record my own hands.</p>
+      <p>That double-click discovery is the part I'd generalise. The model wasn't wrong because the analysis was bad; it was wrong because the instrument was measuring something slightly different from what we assumed it measured. The fix wasn't better maths, it was one afternoon of checking the instrument against a known input.</p>
+      <p>The best part was watching the Google Sheet fill up as people from the community played it.</p>
+    </section>
+
+    <footer>
+      <p>an MCL Studio project</p>
+      <p class="build-credit">Designed and directed by me; analysis and code by Claude — plain HTML, CSS, and vanilla JS, no framework.</p>
+      <p class="footer-date">Last updated September 2026</p>
+    </footer>
+  </main>
+
+  <script src="/scripts/main.js?v=1" defer></script>
+  <script src="/scripts/atm-embed.js?v=1" defer></script>
+</body>
+</html>
