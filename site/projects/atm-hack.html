@@ -16,7 +16,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css?v=2">
-  <link rel="stylesheet" href="/styles/style.css?v=12">
+  <link rel="stylesheet" href="/styles/style.css?v=13">
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
@@ -43,7 +43,7 @@
       <ul role="list" class="tags" aria-label="Tech stack">
         <li>HTML</li>
         <li>CSS</li>
-        <li>Vanilla JS</li>
+        <li>JavaScript</li>
         <li>Canvas</li>
         <li>Google Apps Script</li>
         <li>Google Sheets</li>
@@ -91,20 +91,32 @@
       <p>The UI stays close to the real one, which was less work than it sounds: NoPixel's font is Barlow, a Google Font, and the hack itself is a ring, a key cap, and three checkpoint dashes. Getting those proportions right matters more than any effect — it's the thing people recognise from stream.</p>
 
       <figure class="media-figure">
-        <img src="/assets/atm-hack/atm-description.webp" width="518" height="399" loading="lazy" decoding="async"
-             alt="The game's side panel, headed FAN-MADE HACK TRAINER above the title ATM HACK. It explains: mash E to fill the ring and clear three checkpoints before time runs out, the ring pushes back harder the fuller it gets, every checkpoint is tougher than the last, and your run is compared against streamers who passed and failed it on stream. Below, a FASTEST CLEARS · V1 heading reads &ldquo;No clears yet. Be the first.&rdquo;">
+        <picture>
+          <source type="image/webp" srcset="/assets/atm-hack/atm-description.webp">
+          <img src="/assets/atm-hack/atm-description.png"
+               width="386" height="399" loading="lazy" decoding="async"
+               alt="The game's side panel, headed FAN-MADE HACK TRAINER above the title ATM HACK. It explains: mash E to fill the ring and clear three checkpoints before time runs out, the ring pushes back harder the fuller it gets, every checkpoint is tougher than the last, and your run is compared against streamers who passed and failed it on stream. Below, a FASTEST CLEARS · V1 heading reads &ldquo;No clears yet. Be the first.&rdquo;">
+        </picture>
         <figcaption>Game instructions</figcaption>
       </figure>
 
       <p>After each run, the game compares it to the streamer runs we studied.</p>
 
       <figure class="media-figure">
-        <a class="figure-zoom" href="/assets/atm-hack/atm-results.webp" data-zoom>
+        <a class="figure-zoom" href="/assets/atm-hack/atm-results@2x.webp" data-zoom>
           <span class="sr-only">View full-size: </span>
-          <img src="/assets/atm-hack/atm-results.webp" width="717" height="741" loading="lazy" decoding="async"
-               alt="The results screen: a CLEARED tag above &ldquo;HACK COMPLETE: 34.6 S&rdquo; and the line &ldquo;7.7 presses per second overall. Closest streamer run: Garek.&rdquo; A chart plots ring progress against time from 0 to 50 seconds, with the player's white curve running through five coloured streamer curves toward CP3, and Blau's failed run unchecked in the legend. A table under it lists each checkpoint: the player's time, their pace, and the same checkpoint for xQc, Fuslie, Garek, Lysium, and Valkyrae.">
+          <picture>
+            <source type="image/webp"
+                    srcset="/assets/atm-hack/atm-results.webp 692w, /assets/atm-hack/atm-results@2x.webp 1384w"
+                    sizes="(min-width: 756px) 434px, calc(100vw - 4rem)">
+            <img src="/assets/atm-hack/atm-results.png"
+                 srcset="/assets/atm-hack/atm-results.png 692w, /assets/atm-hack/atm-results@2x.png 1384w"
+                 sizes="(min-width: 756px) 434px, calc(100vw - 4rem)"
+                 width="692" height="817" loading="lazy" decoding="async"
+                 alt="The ATM Hack results screen after Matt's 35.9-second clear. A Cleared badge and the title Hack complete: 35.9 s sit above the line: 7.6 presses per second overall, closest streamer run Garek. A chart plots progress from 0 to CP3 over 50 seconds, with Matt's white line among colored lines for xQc, Fuslie, Garek, Lysium and Valkyrae, finishing just after Garek's. Below, a table lists Matt's checkpoint times of 5.9, 10.9 and 19.1 seconds at 8.2, 7.1 and 7.7 presses per second next to each streamer's times, then Run it again and Close buttons.">
+          </picture>
         </a>
-        <figcaption>Compare results with streamers</figcaption>
+        <figcaption>The results screen after my 35.9-second clear, plotted against the streamers&rsquo; runs.</figcaption>
       </figure>
 
       <h3>Engineering</h3>
@@ -113,23 +125,39 @@
       <p>I pulled clips of seven attempts — five clears and two fails — and had Claude track how full the ring was in every frame. The pattern came out clearly. Each press adds a small chunk, the ring slides back constantly, and the slide-back gets stronger both as the ring fills and with each checkpoint passed.</p>
 
       <figure class="media-figure">
-        <a class="figure-zoom" href="/assets/atm-hack/atm-progress.webp" data-zoom>
+        <a class="figure-zoom" href="/assets/atm-hack/atm-progress@2x.webp" data-zoom>
           <span class="sr-only">View full-size: </span>
-          <img src="/assets/atm-hack/atm-progress.webp" width="777" height="401" loading="lazy" decoding="async"
-               alt="A line chart titled &ldquo;ATM hack progress over time (checkpoints cleared + current ring fill)&rdquo;, plotting progress from 0 to 3 against seconds since the hack UI appeared, out to 120 seconds. Five winning runs climb to 3.0 and stop, between 14 and 46 seconds. The two failing runs climb quickly to about 2.8 and then stay flat, wobbling just under the finish for the rest of the clip.">
+          <picture>
+            <source type="image/webp"
+                    srcset="/assets/atm-hack/atm-progress.webp 800w, /assets/atm-hack/atm-progress@2x.webp 1600w"
+                    sizes="(min-width: 756px) 692px, calc(100vw - 4rem)">
+            <img src="/assets/atm-hack/atm-progress.png"
+                 srcset="/assets/atm-hack/atm-progress.png 800w, /assets/atm-hack/atm-progress@2x.png 1600w"
+                 sizes="(min-width: 756px) 692px, calc(100vw - 4rem)"
+                 width="800" height="450" loading="lazy" decoding="async"
+                 alt="Line chart of progress over time for seven streamer clips, from 0 to CP3 across 120 seconds. Solid lines for xQc, Fuslie, Garek, Lysium and Valkyrae climb to CP3 between about 14 and 46 seconds, xQc steepest. Dashed lines for Blau and an unknown streamer climb to just under CP3, then run nearly flat for over a minute, labeled: both fails stall short of CP3 for over a minute. A legend on the right marks both as timed out.">
+          </picture>
         </a>
-        <figcaption>Seven clips. The two flat lines at the top are the fails. Gloryon is Garek's character name.</figcaption>
+        <figcaption>Seven clips. The two dashed lines that flatten out near the top are the fails.</figcaption>
       </figure>
 
       <p>That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. I hypothesized that to beat the last checkpoint, the player must reach a specific speed.</p>
 
       <figure class="media-figure">
-        <a class="figure-zoom" href="/assets/atm-hack/atm-checkpoints.webp" data-zoom>
+        <a class="figure-zoom" href="/assets/atm-hack/atm-checkpoints@2x.webp" data-zoom>
           <span class="sr-only">View full-size: </span>
-          <img src="/assets/atm-hack/atm-checkpoints.webp" width="772" height="356" loading="lazy" decoding="async"
-               alt="A table headed &ldquo;Checkpoint times (seconds)&rdquo; with columns for player, CP1, CP2, CP3 and total. xQc 3.6, 4.7, 5.5, total 13.8. Fuslie 6.4, 5.4, 8.9, total 20.7. Gloryon 6.4, 8.6, 18.2, total 33.2. Lysium 7.8, 11.9, 19.6, total 39.3. Valkyrae 7.7, 12.9, 25.0, total 45.6. Blau 8.6, 11.6, then stalled about 100 seconds, fail. Unknown 6.0, 9.5, then stalled about 86 seconds, fail.">
+          <picture>
+            <source type="image/webp"
+                    srcset="/assets/atm-hack/atm-checkpoints.webp 800w, /assets/atm-hack/atm-checkpoints@2x.webp 1600w"
+                    sizes="(min-width: 756px) 692px, calc(100vw - 4rem)">
+            <img src="/assets/atm-hack/atm-checkpoints.png"
+                 srcset="/assets/atm-hack/atm-checkpoints.png 800w, /assets/atm-hack/atm-checkpoints@2x.png 1600w"
+                 sizes="(min-width: 756px) 692px, calc(100vw - 4rem)"
+                 width="800" height="450" loading="lazy" decoding="async"
+                 alt="Grouped bar chart of time per checkpoint for seven streamers, CP1 to CP3 in three shades of cyan. xQc 3.6, 4.7, 5.5 seconds; Fuslie 6.4, 5.4, 8.9; Garek 6.4, 8.6, 18.2; Lysium 7.8, 11.9, 19.6; Valkyrae 7.7, 12.9, 25.0; Blau 8.6, 11.6; unknown streamer 6.0, 9.5. Blau's and the unknown streamer's CP3 bars are red hatched outlines reaching the top of the chart, labeled stalled ~100 s and stalled ~86 s.">
+          </picture>
         </a>
-        <figcaption>The same seven runs as numbers. Each checkpoint costs more than the one before it, for everyone.</figcaption>
+        <figcaption>The same seven runs as numbers. Each checkpoint costs more than the one before it, for almost everyone.</figcaption>
       </figure>
 
       <h4>Listened to the keyboards</h4>
@@ -175,6 +203,23 @@
       <p>The game is launched, and the Reddit post was successful!</p>
       <p>The post brought in <strong>626 verified runs from 249 players</strong> overnight, 339 of them in a single two-hour burst, and they are still coming in. 90% of those runs cleared, and 84% of players cleared on their first try — the same range as the streamers, where 5 of 7 passed. That is the shape I wanted: most people get through it, and the last ring is where it turns frustrating.</p>
 
+
+      <figure class="media-figure">
+        <a class="figure-zoom" href="/assets/atm-hack/atm-attempts@2x.webp" data-zoom>
+          <span class="sr-only">View full-size: </span>
+          <picture>
+            <source type="image/webp"
+                    srcset="/assets/atm-hack/atm-attempts.webp 692w, /assets/atm-hack/atm-attempts@2x.webp 1384w"
+                    sizes="(min-width: 756px) 692px, calc(100vw - 4rem)">
+            <img src="/assets/atm-hack/atm-attempts.png"
+                 srcset="/assets/atm-hack/atm-attempts.png 692w, /assets/atm-hack/atm-attempts@2x.png 1384w"
+                 sizes="(min-width: 756px) 692px, calc(100vw - 4rem)"
+                 width="692" height="179" loading="lazy" decoding="async"
+                 alt="The game's Everyone's attempts panel for v1: three tiles reading 566 attempts, 508 cleared in cyan, and 58 timed out in red, above a bar about nine-tenths cyan and one-tenth red, and the line: 90% of attempts clear the hack.">
+          </picture>
+        </a>
+        <figcaption>Everyone&rsquo;s attempts as of September 19, 2026: 566 verified runs, 90% cleared.</figcaption>
+      </figure>
       <div class="embed embed--reddit">
         <blockquote class="reddit-embed-bq" data-embed-height="240">
           <a href="https://www.reddit.com/r/NoPixel/comments/1wk9xai/i_measured_streamer_footage_to_recreate_the/">I measured streamer footage to recreate the NoPixel ATM button masher hack - try it!!</a><br> by

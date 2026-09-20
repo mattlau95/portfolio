@@ -11,3 +11,9 @@ docs/collette-hub-v6.md
 # Dev-only check tooling (dev/checks) — never committed, never deployed
 node_modules/
 dev/checks/.cache/
+
+# Raw case-study sources stay local, as with dev/kumon-media and dev/ollae-media.
+# The gameplay master is the exception: it exists nowhere else, and every figure
+# cropped from it lives in site/assets/atm-hack/.
+dev/gta-atm-media/*
+!dev/gta-atm-media/Screenshot (Gameplay).png

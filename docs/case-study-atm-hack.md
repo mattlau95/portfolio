@@ -60,7 +60,7 @@ The UI stays close to the real one, which was less work than it sounds: NoPixel'
 
 After each run, the game compares it to the streamer runs we studied.
 
-*Figure: the results screen. Caption — "Compare results with streamers"*
+*Figure: the results screen. Caption — "The results screen after my 35.9-second clear, plotted against the streamers' runs."*
 
 ### Engineering
 
@@ -68,11 +68,11 @@ After each run, the game compares it to the streamer runs we studied.
 
 I pulled clips of seven attempts — five clears and two fails — and had Claude track how full the ring was in every frame. The pattern came out clearly. Each press adds a small chunk, the ring slides back constantly, and the slide-back gets stronger both as the ring fills and with each checkpoint passed.
 
-*Figure: progress-over-time chart. Caption — "Seven clips. The two flat lines at the top are the fails. Gloryon is Garek's character name."*
+*Figure: progress-over-time chart. Caption — "Seven clips. The two dashed lines that flatten out near the top are the fails."*
 
 That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. I hypothesized that to beat the last checkpoint, the player must reach a specific speed.
 
-*Figure: checkpoint times table. Caption — "The same seven runs as numbers. Each checkpoint costs more than the one before it, for everyone."*
+*Figure: checkpoint times table. Caption — "The same seven runs as numbers. Each checkpoint costs more than the one before it, for almost everyone."*
 
 #### Listened to the keyboards
 
@@ -101,6 +101,8 @@ Rather than argue with the model, I became the control group. I tested out the g
 The game is launched, and the Reddit post was successful!
 
 The post brought in **626 verified runs from 249 players** overnight, 339 of them in a single two-hour burst, and they are still coming in. 90% of those runs cleared, and 84% of players cleared on their first try — the same range as the streamers, where 5 of 7 passed. That is the shape I wanted: most people get through it, and the last ring is where it turns frustrating.
+
+*Figure: the Everyone's attempts panel. Caption — "Everyone's attempts as of September 19, 2026: 566 verified runs, 90% cleared."*
 
 *Reddit embed: the r/NoPixel post, "I measured streamer footage to recreate the
 NoPixel ATM button masher hack - try it!!" by u/dolfinz95. Click-to-load —
@@ -131,32 +133,35 @@ The best part was watching the Google Sheet fill up as people from the community
 Assets live in `site/assets/atm-hack/`. All are my own charts and screenshots —
 no stream footage.
 
-| # | File | Size | Where | Zoom |
+| # | File | Size (1× / 2×) | Where | Zoom |
 |---|---|---|---|---|
-| — | `atm-ring.webp` | 1280×720 | embed poster, above the fold (`fetchpriority="high"`) | no |
-| 1 | `atm-description.webp` | 518×399 | Design | no |
-| 2 | `atm-results.webp` | 717×741 | Design | yes |
-| 3 | `atm-progress.webp` | 777×401 | Watched the ring | yes |
-| 4 | `atm-checkpoints.webp` | 772×356 | Watched the ring | yes |
-| 5 | `atm-double-click{,@2x}.{webp,png}` | 800×450, 1600×900 | Tested it on myself | yes |
+| — | `atm-ring.webp` | 1280×720 / — | embed poster, above the fold (`fetchpriority="high"`) | no |
+| 1 | `atm-description.{webp,png}` | 386×399 / — | Design | no |
+| 2 | `atm-results{,@2x}.{webp,png}` | 692×817 / 1384×1635 | Design | yes |
+| 3 | `atm-progress{,@2x}.{webp,png}` | 800×450 / 1600×900 | Watched the ring | yes |
+| 4 | `atm-checkpoints{,@2x}.{webp,png}` | 800×450 / 1600×900 | Watched the ring | yes |
+| 5 | `atm-double-click{,@2x}.{webp,png}` | 800×450 / 1600×900 | Tested it on myself | yes |
+| 6 | `atm-attempts{,@2x}.{webp,png}` | 692×179 / 1384×358 | Outcome | yes |
 
-The spectrogram is the only one with a 2× and a raster fallback; it ships as a
-`<picture>` with an 800w/1600w `srcset`. It sits on the **column** track, not
-`figure--wide` — a height-capped image in a 969px box centres at 909px while
-its caption stays at the box's left edge, which `figures.js` catches and
-`image-conventions.md` §3 forbids.
+Figures 1–6 ship as a `<picture>` with a WebP `<source>` and a PNG fallback.
+Figures 2–6 add a 1×/2× `srcset`; figure 1 has no 2× to offer, so it carries a
+single source. All sit on the **column** track, not `figure--wide` — a
+height-capped image in a 969px box centres at 909px while its caption stays at
+the box's left edge, which `figures.js` catches and `image-conventions.md` §3
+forbids.
+
+`atm-results` is the one figure whose `sizes` differs. At 692×817 the §1 height
+cap binds before the column does, so it paints 434×512 at desktop rather than
+692 wide, and its `sizes` says `434px` where the others say `692px`. Measured,
+not assumed.
 
 ### Still to make
 
-- **The "Everyone's attempts" tally and the leaderboard.** The last figure the
-  original draft asked for. The Outcome section is written without it.
+- Nothing outstanding. The "Everyone's attempts" panel was the last figure the
+  original draft asked for; it landed as figure 6 on 2026-09-19.
 
 ### Known gaps
 
-- **No 2× for figures 1–4 or the embed poster.** Each was exported at its final
-  size, so a 2× would be an upscale. `atm-results` is the one worth
-  regenerating: it paints at 692px from a 717px source, so it is effectively 1×
-  and soft on a retina display.
-- **Figures 3 and 4 label Garek "Gloryon"**, his RP character name, which the
-  shipped game does not use. Glossed rather than regenerated: the caption on
-  figure 3 states it, and *Checked it* carries "Garek's (Gloryon)".
+- **No 2× for `atm-description` or the embed poster.** Both are their sources'
+  native size — 386×399 and a 1280×720 crop of a 2043×1208 master — so a 2×
+  would be an upscale. Everything else on the page ships one.
