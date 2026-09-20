@@ -1,6 +1,7 @@
-# Case study draft: ATM Hack
+# Case study: ATM Hack
 
-*Draft for `site/projects/atm-hack.html`. Written from `docs/case-study-atm-hack.md`.*
+*Record of the copy live at `site/projects/atm-hack.html`. Updated 2026-09-19 to
+match what shipped; edit this and the page together.*
 
 ---
 
@@ -12,69 +13,108 @@
 - **Deck:** Without real numbers from NoPixel, you can't make a perfect copy. So I measured it from streamer clips, tested it on my own hands, and let the community fill in the rest.
 - **Meta row:** Role: Design + Direction, with Claude doing the analysis and code · September 2026 · Shipped
 - **Metrics:**
-  - `626 runs` / `from 249 players in the first 19 hours`
-  - `~2.3%` / `of the ring per press, fitted from streamer footage`
-  - `4 hours` / `time spent on project before launch`
+  - `626 runs` / `from 249 players overnight`
+  - `4 hours` / `from start to launch`
 - **Tags:** HTML · CSS · Vanilla JS · Canvas · Google Apps Script · Google Sheets · Python · itch.io
-- **Links:** [Play it on itch.io](https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack)
+- **Links:** [Play it on itch.io](https://mattlau95.itch.io/gta-nopixel-v-inspired-atm-hack) · Play it here ↓ (in-page anchor to the embed)
+
+## Playable embed
+
+Sits directly after the header, before Overview, on the wide track.
+
+- **Lead:** Mash <kbd>E</kbd> to fill the ring and clear three checkpoints before the timer runs out. The ring pushes back harder the fuller it gets. Your run is drawn over the streamers' when you finish.
+- **Note:** Fan-made, unaffiliated with NoPixel, and free — I make nothing from it.
+- **Link:** Open on itch.io
+
+Click-to-load: the stage is a screenshot until tapped, so nothing is requested
+from itch.io until someone asks to play. Under 700px the button is replaced by
+a plain link to itch.io — the game is served at 1280×820 and does not scale
+into a 326px column.
 
 ---
 
 ## Overview
 
-I enjoy a very niche form of entertainment: GTA RP NoPixel 5.0. It's a custom made server on Grand Theft Auto V where people role play as the characters, most livestream it. Within this game, there are always little mini-games and puzzles, called "hacks". One of them was a simple button masher that was really intriguiging; I saw a streamer named Blau fail it, and I wanted to try it for myself. The NoPixel 5.0 server is not available for most, so I decided to recreate this simple game spent a few hours with Claude recreating it as closely as we could, put it on itch.io, and posted it to Reddit for the community to play. It's free, unaffiliated with NoPixel, and I'm not making money from it.
+I enjoy a very niche form of entertainment: GTA RP on NoPixel 5.0, a custom Grand Theft Auto V server where people role-play as characters and most of them livestream it. The server is full of little minigames and puzzles, called hacks. One of them is a plain button masher, and it's more interesting than it sounds — I watched a streamer named Blau fail it and wanted to try it myself. NoPixel 5.0 isn't open to most people, so I spent a few hours with Claude recreating the hack as closely as we could, put it on itch.io, and posted it to the NoPixel subreddit for the community to play.
 
 ## The problem
 
-I don't have real numbers from the original game developers, I needed to figure out how to recreate the gameplay mechanics and difficulty to be as similar to the real thing as possible. 
+I have no numbers from the people who built the original. No press value, no push-back rate, no checkpoint thresholds. Everything I could learn about how the hack behaves had to come from watching other people play it on stream, which is a recording of the output, not the rules that produced it.
 
-## Role & constraints
+Building a button masher takes an afternoon. But how do we make it feel like the real game?
 
-### Role
+## Role
 
-This was a solo project built over about a day. I broke down the hack's mechanics from streamer clips, worked with Claude to measure and calibrate the difficulty, and set up a way to keep tuning it with data from the community.
+> **[C]** The page has no Constraints subsection. It was written, then cut —
+> the heading is **Role**, not "Role & constraints".
+
+A solo project built over about a day. I broke down the hack's mechanics from streamer clips, worked with Claude to measure and calibrate the difficulty, and set up a way to keep tuning it with data from the community. The split that made it work: Claude did the frame-by-frame analysis and wrote the code, and I brought the things it couldn't — knowing the game, knowing when a result looked wrong, and being the test subject.
 
 ## Approach
 
 ### Design
 
-The game's UI stays close to the real one; the font NoPixel uses is a Google Font (Barlow), and their overall UI is pretty straightforward. The fun comes afterward: your run is drawn over the streamers' runs, so you compare your runs with them.
+The UI stays close to the real one, which was less work than it sounds: NoPixel's font is Barlow, a Google Font, and the hack itself is a ring, a key cap, and three checkpoint dashes. Getting those proportions right matters more than any effect — it's the thing people recognise from stream.
+
+*Figure: the side panel at launch. Caption — "Game instructions"*
+
+After each run, the game compares it to the streamer runs we studied.
+
+*Figure: the results screen. Caption — "Compare results with streamers"*
 
 ### Engineering
 
 #### Watched the ring
 
-I pulled clips of seven attempts: five passes (xQc, Fuslie, Garek, Lysium, Valkyrae) and two fails and had Claude track how full the ring was in every frame. The pattern was clear. Each press adds a small chunk, the ring constantly slides back, and the slide-back gets stronger the fuller the ring is and with each checkpoint. Failing isn't about being slow: both fails got stuck at 70–90% of the last ring for over a minute and a half until time ran out.
+I pulled clips of seven attempts — five clears and two fails — and had Claude track how full the ring was in every frame. The pattern came out clearly. Each press adds a small chunk, the ring slides back constantly, and the slide-back gets stronger both as the ring fills and with each checkpoint passed.
+
+*Figure: progress-over-time chart. Caption — "Seven clips. The two flat lines at the top are the fails. Gloryon is Garek's character name."*
+
+That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. I hypothesized that to beat the last checkpoint, the player must reach a specific speed.
+
+*Figure: checkpoint times table. Caption — "The same seven runs as numbers. Each checkpoint costs more than the one before it, for everyone."*
 
 #### Listened to the keyboards
 
-To figure out how fast people were actually pressing, Claude detected keyboard clicks in the stream audio, starting from the loud stretches I'd flagged, and matched them against how fast the ring moved at the same moment. That gave a first model, but it also said streamers were holding 12–15 presses a second for over a minute. I'm a decent masher and I top out around 9, so that didn't sit right.
+Knowing how fast the ring moved wasn't enough on its own — I needed to know how fast the person was pressing to move it that much. So Claude detected keyboard clicks in the stream audio, starting from the loud stretches I'd flagged, and matched them against the ring's speed at the same moment. The first model it produced had streamers holding 12–15 presses a second for over a minute. I can get about 9 presses per second.
 
 #### Tested it on myself
 
-I asked for a prototype that logs the exact time of every press, then recorded my own keyboard while playing. Lining the two up showed that my keyboard makes two clicks per press: one going down and one coming back up, about 51 ms apart. My speed test had 87 presses; the detector heard 177 clicks. The streamers' audio had the same pattern, which meant my first estimate of their speed was double the real number. I corrected for that.
+Rather than argue with the model, I became the control group. I tested out the game and recorded audio of my own keyboard while playing it. Lining the two up explained everything: my keyboard makes two clicks per press, one on the way down and one on the way back up, about 51 ms apart. My speed test had 87 presses in it, and the detector heard 177 clicks. The streamers' audio had the same double-click signature, which meant the first estimate of their speed was roughly twice the real number.
 
-#### Checked it
+*Figure: the spectrogram. Caption — "Each press made two clicks, one on the way down and one on the way up, so counting clicks in stream audio doubled every speed I measured."*
 
-With the corrected numbers, the model reproduces the streamers' checkpoint times at realistic speeds. My own winning run landed between Garek's and Lysium's times without me tuning anything to make that happen. Where it landed: each press is worth about 2.3% of the ring. The first checkpoint is basically free, the second needs about 5 presses a second, and the last needs you to hold about 7.5 through the final stretch.
+> **[C]** A trim was proposed here, moving 51 ms / 87 / 177 out of the prose now
+> that the figure states them — declined. The repetition is deliberate, and the
+> numbers in the text and the figure agree.
 
 ## Key decisions & tradeoffs
 
-**Model the pushback, not a timer.** A "press X times in Y seconds" rule would've been easier, but it can't produce the stalls the fails show. The catch: from video alone I can't tell pushback that grows with fill apart from each press being worth less as the ring fills. I went with the one that matches the visible push-back.
+**Model the push-back, not a timer.** A "press X times in Y seconds" rule would have been far easier to build and to tune, but it can't produce the stall the two fails show — under a timer you either make it or you're late, and nobody sits at 85% for ninety seconds. The catch is that video alone can't separate push-back that grows with fill from each press being worth less as the ring fills. Both fit the curves. I went with the one that matches the push-back you can see on screen.
 
-**A Google Sheet instead of a real backend.** Free, 15 minutes to set up, and the data lands somewhere I can just open. The cost: Apps Script is slow to wake up, which made successful saves look like failures until retries went in.
+**Share with the Reddit community.** I launched on itch.io and posted it to the NoPixel subreddit. The fanbase is dedicated enough that I was fairly confident of finding people who'd try it.
 
-**Check every run on the server.** The server replays each run through the official settings, so faked times and 200-press-per-second autoclickers bounce off. But on day one, someone turned their autoclicker down to just under my speed limit and landed #2. Replay proves a run follows the rules, not that a human played it.
+**Check for cheating.** The server replays each submitted run under the official settings, so faked times and 200-press-per-second autoclickers bounce off.
 
 ## Outcome
 
-I launched the game on itch.io and made a reddit post in the NoPixel subreddit. The fanbase is pretty dedicated so I was confident I was able to find people to try it. 
+The game is launched, and the Reddit post was successful!
 
-The Reddit post brought in **626 runs from 249 players** in the first 19 hours, 339 of them in one two-hour burst. 90% of verified runs cleared, and 84% of players cleared on their first try. That's higher than the streamers' 5 of 7, but seven clips is tiny, and fails are what gets clipped. The server caught 60 autoclicker runs; the one that slipped through gets fixed in v1.1. The gap: only 40 "how did it compare" ratings from people who've done the real hack, mostly on mouse or phone. I need more before touching the difficulty in v2.
+The post brought in **626 verified runs from 249 players** overnight, 339 of them in a single two-hour burst, and they are still coming in. 90% of those runs cleared, and 84% of players cleared on their first try — the same range as the streamers, where 5 of 7 passed. That is the shape I wanted: most people get through it, and the last ring is where it turns frustrating.
+
+*Reddit embed: the r/NoPixel post, "I measured streamer footage to recreate the
+NoPixel ATM button masher hack - try it!!" by u/dolfinz95. Click-to-load —
+the blockquote is real content and links to the thread on its own, and
+embed.reddit.com/widgets.js is only fetched when the button is pressed, so a
+reader who never asks for the live card pays nothing for it.*
+
+The server caught 60 autoclicker runs on top of those, none of them in the count above. The one that slipped under the speed limit gets fixed in v1.1. The real gap is the feedback I most wanted: only 40 "how did it compare" ratings from people who've played the actual hack, most of them on mouse or phone rather than a keyboard. I want considerably more of those before I touch the difficulty for v2.
 
 ## Reflection
 
-I'm really happy with how it turned out. It showed me how much you can get done in a day when you split the work right: Claude does the heavy analysis and code, and you bring what it can't, like knowing the game, knowing what looks wrong, and being the test subject. The best part was watching the Google Sheet fill up as people from the community played it.
+I'm happy with how this turned out, and mostly with how fast it went. It showed me how much is possible in a day when the work is split along the right seam: Claude does the heavy analysis and writes the code, and I bring what it can't — knowing the game, noticing when an output looks wrong, and being the test subject when the only way to settle a disagreement is to record my own hands.
+
+The best part was watching the Google Sheet fill up as people from the community played it.
 
 ---
 
@@ -86,11 +126,37 @@ I'm really happy with how it turned out. It showed me how much you can get done 
 
 ---
 
-## Figures to make
+## Figures
 
-1. **Hero:** the results screen, with your run over the streamer curves.
-2. **"Watched the ring":** all seven clips' progress over time, with the two fails flattening out below the finish.
-3. **"Tested it on myself":** a zoomed spectrogram of the press/release click pairs, with the ~51 ms gap marked.
-4. **Outcome:** the side panel's "Everyone's attempts" tally and leaderboard.
+Assets live in `site/assets/atm-hack/`. All are my own charts and screenshots —
+no stream footage.
 
-Use your own charts and screenshots only, no stream footage.
+| # | File | Size | Where | Zoom |
+|---|---|---|---|---|
+| — | `atm-ring.webp` | 1280×720 | embed poster, above the fold (`fetchpriority="high"`) | no |
+| 1 | `atm-description.webp` | 518×399 | Design | no |
+| 2 | `atm-results.webp` | 717×741 | Design | yes |
+| 3 | `atm-progress.webp` | 777×401 | Watched the ring | yes |
+| 4 | `atm-checkpoints.webp` | 772×356 | Watched the ring | yes |
+| 5 | `atm-double-click{,@2x}.{webp,png}` | 800×450, 1600×900 | Tested it on myself | yes |
+
+The spectrogram is the only one with a 2× and a raster fallback; it ships as a
+`<picture>` with an 800w/1600w `srcset`. It sits on the **column** track, not
+`figure--wide` — a height-capped image in a 969px box centres at 909px while
+its caption stays at the box's left edge, which `figures.js` catches and
+`image-conventions.md` §3 forbids.
+
+### Still to make
+
+- **The "Everyone's attempts" tally and the leaderboard.** The last figure the
+  original draft asked for. The Outcome section is written without it.
+
+### Known gaps
+
+- **No 2× for figures 1–4 or the embed poster.** Each was exported at its final
+  size, so a 2× would be an upscale. `atm-results` is the one worth
+  regenerating: it paints at 692px from a 717px source, so it is effectively 1×
+  and soft on a retina display.
+- **Figures 3 and 4 label Garek "Gloryon"**, his RP character name, which the
+  shipped game does not use. Glossed rather than regenerated: the caption on
+  figure 3 states it, and *Checked it* carries "Garek's (Gloryon)".

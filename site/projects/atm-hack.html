@@ -16,7 +16,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap"></noscript>
 
   <link rel="stylesheet" href="/styles/tokens.css?v=2">
-  <link rel="stylesheet" href="/styles/style.css?v=10">
+  <link rel="stylesheet" href="/styles/style.css?v=12">
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
@@ -33,15 +33,11 @@
       <ul role="list" class="case-study-metrics">
         <li>
           <span class="metric-value">626 runs</span>
-          <span class="metric-label">from 249 players in the first 19 hours</span>
-        </li>
-        <li>
-          <span class="metric-value">~2.3%</span>
-          <span class="metric-label">of the ring per press, fitted from streamer footage</span>
+          <span class="metric-label">from 249 players overnight</span>
         </li>
         <li>
           <span class="metric-value">4 hours</span>
-          <span class="metric-label">spent on the project before launch</span>
+          <span class="metric-label">from start to launch</span>
         </li>
       </ul>
       <ul role="list" class="tags" aria-label="Tech stack">
@@ -80,7 +76,7 @@
     <section>
       <h2>The problem</h2>
       <p>I have no numbers from the people who built the original. No press value, no push-back rate, no checkpoint thresholds. Everything I could learn about how the hack behaves had to come from watching other people play it on stream, which is a recording of the output, not the rules that produced it.</p>
-      <p>That makes the whole project a measurement problem rather than a build problem. The button masher itself is an afternoon of code. Getting it to feel like <em>the</em> button masher — hard in the same places, failing for the same reason — is the part that needed evidence.</p>
+      <p>Building a button masher takes an afternoon. But how do we make it feel like the real game?</p>
     </section>
 
     <section>
@@ -97,10 +93,10 @@
       <figure class="media-figure">
         <img src="/assets/atm-hack/atm-description.webp" width="518" height="399" loading="lazy" decoding="async"
              alt="The game's side panel, headed FAN-MADE HACK TRAINER above the title ATM HACK. It explains: mash E to fill the ring and clear three checkpoints before time runs out, the ring pushes back harder the fuller it gets, every checkpoint is tougher than the last, and your run is compared against streamers who passed and failed it on stream. Below, a FASTEST CLEARS · V1 heading reads &ldquo;No clears yet. Be the first.&rdquo;">
-        <figcaption>The panel at launch, before anyone had played it.</figcaption>
+        <figcaption>Game instructions</figcaption>
       </figure>
 
-      <p>The fun is in what happens afterward. When your run ends, it's drawn over the streamers' runs on the same axes, so you're not looking at a score — you're looking at where you sat in the pack, and which of them you'd have beaten. That comparison is the reason to play twice.</p>
+      <p>After each run, the game compares it to the streamer runs we studied.</p>
 
       <figure class="media-figure">
         <a class="figure-zoom" href="/assets/atm-hack/atm-results.webp" data-zoom>
@@ -108,7 +104,7 @@
           <img src="/assets/atm-hack/atm-results.webp" width="717" height="741" loading="lazy" decoding="async"
                alt="The results screen: a CLEARED tag above &ldquo;HACK COMPLETE: 34.6 S&rdquo; and the line &ldquo;7.7 presses per second overall. Closest streamer run: Garek.&rdquo; A chart plots ring progress against time from 0 to 50 seconds, with the player's white curve running through five coloured streamer curves toward CP3, and Blau's failed run unchecked in the legend. A table under it lists each checkpoint: the player's time, their pace, and the same checkpoint for xQc, Fuslie, Garek, Lysium, and Valkyrae.">
         </a>
-        <figcaption>Your run in white, over the five clears. The pace column is the number people actually chase.</figcaption>
+        <figcaption>Compare results with streamers</figcaption>
       </figure>
 
       <h3>Engineering</h3>
@@ -125,7 +121,7 @@
         <figcaption>Seven clips. The two flat lines at the top are the fails. Gloryon is Garek's character name.</figcaption>
       </figure>
 
-      <p>That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. You don't lose this hack by being late. You lose it by being fast enough to reach the last ring and not fast enough to close it.</p>
+      <p>That chart settles what failing actually is. Neither fail was slow: both reached the last ring quickly, then sat at 70–90% of it for more than a minute and a half while the timer ran out. I hypothesized that to beat the last checkpoint, the player must reach a specific speed.</p>
 
       <figure class="media-figure">
         <a class="figure-zoom" href="/assets/atm-hack/atm-checkpoints.webp" data-zoom>
@@ -137,10 +133,10 @@
       </figure>
 
       <h4>Listened to the keyboards</h4>
-      <p>Knowing how fast the ring moved wasn't enough on its own — I needed to know how fast the person was pressing to move it that much. So Claude detected keyboard clicks in the stream audio, starting from the loud stretches I'd flagged, and matched them against the ring's speed at the same moment. That produced a first model, and a number I didn't believe: it had streamers holding 12–15 presses a second for over a minute. I'm a decent masher and I top out around 9.</p>
+      <p>Knowing how fast the ring moved wasn't enough on its own — I needed to know how fast the person was pressing to move it that much. So Claude detected keyboard clicks in the stream audio, starting from the loud stretches I'd flagged, and matched them against the ring's speed at the same moment. The first model it produced had streamers holding 12–15 presses a second for over a minute. I can get about 9 presses per second.</p>
 
       <h4>Tested it on myself</h4>
-      <p>Rather than argue with the model, I became the control group. I asked for a prototype that logs the exact time of every press, then recorded my own keyboard while playing it. Lining the two up explained everything: my keyboard makes two clicks per press, one on the way down and one on the way back up, about 51 ms apart. My speed test had 87 presses in it. The detector heard 177 clicks. The streamers' audio had the same double-click signature, which meant the first estimate of their speed was roughly twice the real number.</p>
+      <p>Rather than argue with the model, I became the control group. I tested out the game and recorded audio of my own keyboard while playing it. Lining the two up explained everything: my keyboard makes two clicks per press, one on the way down and one on the way back up, about 51 ms apart. My speed test had 87 presses in it, and the detector heard 177 clicks. The streamers' audio had the same double-click signature, which meant the first estimate of their speed was roughly twice the real number.</p>
 
       <figure class="media-figure">
         <a class="figure-zoom" href="/assets/atm-hack/atm-double-click@2x.webp" data-zoom>
@@ -158,9 +154,6 @@
         </a>
         <figcaption>Each press made two clicks, one on the way down and one on the way up, so counting clicks in stream audio doubled every speed I measured.</figcaption>
       </figure>
-
-      <h4>Checked it</h4>
-      <p>With the correction applied, the model reproduces the streamers' checkpoint times at speeds a human can actually hold. The check I trust most is the one I didn't tune for: my own winning run landed between Garek's (Gloryon) and Lysium's, which is where a decent masher should land, without anything being adjusted to make that happen. Where it settled — each press is worth about 2.3% of the ring, the first checkpoint is close to free, the second needs about 5 presses a second, and the last needs you to hold about 7.5 through the final stretch.</p>
     </section>
 
     <section>
@@ -169,25 +162,33 @@
         <dt>Model the push-back, not a timer</dt>
         <dd>A &ldquo;press X times in Y seconds&rdquo; rule would have been far easier to build and to tune, but it can't produce the stall the two fails show — under a timer you either make it or you're late, and nobody sits at 85% for ninety seconds. The catch is that video alone can't separate push-back that grows with fill from each press being worth less as the ring fills. Both fit the curves. I went with the one that matches the push-back you can see on screen.</dd>
 
-        <dt>A Google Sheet instead of a real backend</dt>
-        <dd>Free, about fifteen minutes to set up, and the data lands somewhere I can just open and read. The cost showed up immediately: Apps Script is slow to wake, so successful saves looked like failures until retries went in.</dd>
+        <dt>Share with the Reddit community</dt>
+        <dd>I launched on itch.io and posted it to the NoPixel subreddit. The fanbase is dedicated enough that I was fairly confident of finding people who'd try it.</dd>
 
-        <dt>Check every run on the server</dt>
-        <dd>The server replays each submitted run through the official settings, so faked times and 200-press-per-second autoclickers bounce off. On day one someone turned their autoclicker down to just under my speed limit and landed at number two. Replay proves a run follows the rules; it doesn't prove a human played it.</dd>
+        <dt>Check for cheating</dt>
+        <dd>The server replays each submitted run under the official settings, so faked times and 200-press-per-second autoclickers bounce off.</dd>
       </dl>
     </section>
 
     <section>
       <h2>Outcome</h2>
-      <p>I launched on itch.io and posted it to the NoPixel subreddit. The fanbase is dedicated enough that I was fairly confident of finding people who'd try it.</p>
-      <p>The post brought in <strong>626 runs from 249 players</strong> in the first 19 hours, 339 of them in a single two-hour burst. 90% of verified runs cleared, and 84% of players cleared on their first try. That's a much higher pass rate than the streamers' 5 of 7 — but seven clips is a tiny sample, and fails are what gets clipped, so the streamer number is biased toward failure and mine probably isn't the same measurement at all.</p>
-      <p>The server caught 60 autoclicker runs. The one that slipped under the speed limit gets fixed in v1.1. The real gap is the feedback I most wanted: only 40 &ldquo;how did it compare&rdquo; ratings from people who've played the actual hack, most of them on mouse or phone rather than a keyboard. I want considerably more of those before I touch the difficulty for v2.</p>
+      <p>The game is launched, and the Reddit post was successful!</p>
+      <p>The post brought in <strong>626 verified runs from 249 players</strong> overnight, 339 of them in a single two-hour burst, and they are still coming in. 90% of those runs cleared, and 84% of players cleared on their first try — the same range as the streamers, where 5 of 7 passed. That is the shape I wanted: most people get through it, and the last ring is where it turns frustrating.</p>
+
+      <div class="embed embed--reddit">
+        <blockquote class="reddit-embed-bq" data-embed-height="240">
+          <a href="https://www.reddit.com/r/NoPixel/comments/1wk9xai/i_measured_streamer_footage_to_recreate_the/">I measured streamer footage to recreate the NoPixel ATM button masher hack - try it!!</a><br> by
+          <a href="https://www.reddit.com/user/dolfinz95/">u/dolfinz95</a> in
+          <a href="https://www.reddit.com/r/NoPixel/">NoPixel</a>
+        </blockquote>
+        <button type="button" class="reddit-load" data-reddit-load hidden>Load the Reddit post</button>
+      </div>
+      <p>The server caught 60 autoclicker runs on top of those, none of them in the count above. The one that slipped under the speed limit gets fixed in v1.1. The real gap is the feedback I most wanted: only 40 &ldquo;how did it compare&rdquo; ratings from people who've played the actual hack, most of them on mouse or phone rather than a keyboard. I want considerably more of those before I touch the difficulty for v2.</p>
     </section>
 
     <section>
       <h2>Reflection</h2>
       <p>I'm happy with how this turned out, and mostly with how fast it went. It showed me how much is possible in a day when the work is split along the right seam: Claude does the heavy analysis and writes the code, and I bring what it can't — knowing the game, noticing when an output looks wrong, and being the test subject when the only way to settle a disagreement is to record my own hands.</p>
-      <p>That double-click discovery is the part I'd generalise. The model wasn't wrong because the analysis was bad; it was wrong because the instrument was measuring something slightly different from what we assumed it measured. The fix wasn't better maths, it was one afternoon of checking the instrument against a known input.</p>
       <p>The best part was watching the Google Sheet fill up as people from the community played it.</p>
     </section>
 
